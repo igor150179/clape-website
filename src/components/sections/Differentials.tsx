@@ -54,6 +54,7 @@ export function Differentials() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <SectionHeading
+            eyebrow="O forno"
             title="Por que o CLAPE é diferente de tudo no mercado"
             dark
           />

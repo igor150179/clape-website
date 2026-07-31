@@ -17,6 +17,7 @@ export function BiscottoHighlight() {
           videoAlt={VIDEOS.pedraBiscotto.alt}
         >
           <SectionHeading
+            eyebrow="A pedra"
             title="A alma napolitana: pedra Biscotto Saputo legítima"
             dark={false}
             align="left"
@@ -37,7 +38,7 @@ export function BiscottoHighlight() {
           </div>
           <Link
             href="/biscotto"
-            className="mt-8 inline-flex items-center justify-center rounded-full bg-clape-orange px-6 py-3 text-sm font-semibold text-white transition hover:bg-clape-amber"
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-clape-orange px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-clape-amber hover:shadow-glow"
           >
             Saiba mais sobre a Biscotto
           </Link>

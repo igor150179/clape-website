@@ -1,8 +1,10 @@
+import { FadeIn } from "@/components/ui/FadeIn";
 import { cn } from "@/lib/utils";
 
 type SectionHeadingProps = {
   title: string;
   subtitle?: string;
+  eyebrow?: string;
   dark?: boolean;
   className?: string;
   align?: "left" | "center";
@@ -11,6 +13,7 @@ type SectionHeadingProps = {
 export function SectionHeading({
   title,
   subtitle,
+  eyebrow,
   dark = false,
   className,
   align = "center",
@@ -23,23 +26,40 @@ export function SectionHeading({
         className,
       )}
     >
-      <h2
-        className={cn(
-          "font-display text-3xl font-bold tracking-[-0.02em] sm:text-4xl lg:text-5xl",
-          dark ? "text-clape-cream" : "text-clape-dark",
-        )}
-      >
-        {title}
-      </h2>
-      {subtitle && (
-        <p
+      {eyebrow && (
+        <FadeIn delay={0}>
+          <div
+            className={cn(
+              "mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] text-clape-orange",
+              align === "center" && "justify-center",
+            )}
+          >
+            <span className="h-px w-8 bg-clape-orange/50" aria-hidden />
+            {eyebrow}
+          </div>
+        </FadeIn>
+      )}
+      <FadeIn delay={0.05}>
+        <h2
           className={cn(
-            "mt-4 text-base leading-relaxed sm:text-lg",
-            dark ? "text-clape-cream/75" : "text-clape-dark/70",
+            "font-display text-3xl font-bold tracking-[-0.02em] sm:text-4xl lg:text-5xl",
+            dark ? "text-clape-cream" : "text-clape-dark",
           )}
         >
-          {subtitle}
-        </p>
+          {title}
+        </h2>
+      </FadeIn>
+      {subtitle && (
+        <FadeIn delay={0.1}>
+          <p
+            className={cn(
+              "mt-4 text-base leading-relaxed sm:text-lg",
+              dark ? "text-clape-cream/75" : "text-clape-dark/70",
+            )}
+          >
+            {subtitle}
+          </p>
+        </FadeIn>
       )}
     </div>
   );

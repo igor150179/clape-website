@@ -39,12 +39,13 @@ function YoutubeIcon({ className }: { className?: string }) {
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-clape-dark-deep">
+    <footer className="relative bg-clape-cream">
+      <div className="h-[3px] w-full bg-gradient-to-r from-clape-orange via-clape-amber to-clape-orange" aria-hidden />
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-3">
           <div>
-            <Logo size="lg" />
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-clape-cream/70">
+            <Logo size="lg" variant="color" />
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-clape-dark/60">
               A felicidade só existe quando compartilhada.
             </p>
           </div>
@@ -58,7 +59,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-clape-cream/70 transition hover:text-clape-cream"
+                    className="text-sm text-clape-dark/65 transition hover:text-clape-dark"
                   >
                     {link.label}
                   </Link>
@@ -67,7 +68,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/#lista-espera"
-                  className="text-sm text-clape-cream/70 transition hover:text-clape-cream"
+                  className="text-sm text-clape-dark/65 transition hover:text-clape-dark"
                 >
                   Reserva
                 </Link>
@@ -85,7 +86,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram CLAPE"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-clape-cream transition hover:border-clape-orange hover:text-clape-orange"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-clape-dark/15 text-clape-dark/70 transition hover:border-clape-orange hover:text-clape-orange"
               >
                 <InstagramIcon className="h-5 w-5" />
               </a>
@@ -94,7 +95,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook CLAPE"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-clape-cream transition hover:border-clape-orange hover:text-clape-orange"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-clape-dark/15 text-clape-dark/70 transition hover:border-clape-orange hover:text-clape-orange"
               >
                 <FacebookIcon className="h-5 w-5" />
               </a>
@@ -103,7 +104,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube CLAPE"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-clape-cream transition hover:border-clape-orange hover:text-clape-orange"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-clape-dark/15 text-clape-dark/70 transition hover:border-clape-orange hover:text-clape-orange"
               >
                 <YoutubeIcon className="h-5 w-5" />
               </a>
@@ -111,7 +112,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-8 text-center text-sm text-clape-cream/50">
+        <div className="mt-12 border-t border-clape-dark/10 pt-8 text-center text-sm text-clape-dark/45">
           © {SITE.name} {new Date().getFullYear()}. Todos os direitos reservados.
         </div>
       </div>

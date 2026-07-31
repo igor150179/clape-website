@@ -25,7 +25,7 @@ export function Testimonials() {
     <section className="bg-clape-dark py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
-          <SectionHeading title="Quem leva, ama." dark />
+          <SectionHeading eyebrow="Depoimentos" title="Quem leva, ama." dark />
         </FadeIn>
 
         <div className="grid gap-6 md:grid-cols-3">

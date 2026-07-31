@@ -47,7 +47,7 @@ export function FAQ() {
     <section id="faq" className="bg-clape-dark py-20 sm:py-28">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
-          <SectionHeading title="Perguntas frequentes" dark />
+          <SectionHeading eyebrow="Dúvidas" title="Perguntas frequentes" dark />
         </FadeIn>
 
         <div className="space-y-3">

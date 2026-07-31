@@ -24,9 +24,45 @@ body {
   background-color: var(--clape-dark);
   color: var(--clape-cream);
   font-family: var(--font-inter), system-ui, sans-serif;
+  position: relative;
+}
+
+/* Grão sutil sobre toda a página — a textura tátil do aço escovado */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 ::selection {
   background-color: rgba(244, 121, 32, 0.35);
   color: #fff;
+}
+
+/* Scrollbar de assinatura — trilho grafite, polegar em degradê Chama → Brasa */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--clape-dark-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--clape-orange), var(--clape-amber));
+  border-radius: 999px;
+  border: 2px solid var(--clape-dark-deep);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--clape-amber), var(--clape-orange));
+}
+
+html {
+  scrollbar-color: var(--clape-orange) var(--clape-dark-deep);
 }

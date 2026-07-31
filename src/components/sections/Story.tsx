@@ -22,6 +22,7 @@ export function Story() {
 
           <FadeIn delay={0.15} direction="left">
             <SectionHeading
+              eyebrow="A origem"
               title="Nascido de uma viagem à Itália. Batizado pelos meus filhos."
               dark={false}
               align="left"

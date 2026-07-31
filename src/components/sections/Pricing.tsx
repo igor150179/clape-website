@@ -32,6 +32,7 @@ export function Pricing() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <SectionHeading
+            eyebrow="A coleção"
             title="A coleção CLAPE"
             subtitle="Cada peça é montada conforme a demanda — e, de tempos em tempos, algumas unidades saem prontas do ateliê."
             dark={false}

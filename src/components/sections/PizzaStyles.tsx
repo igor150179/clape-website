@@ -8,6 +8,7 @@ export function PizzaStyles() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <SectionHeading
+            eyebrow="Versatilidade"
             title="Um forno. Infinitos estilos."
             subtitle="De 160°C a mais de 500°C. Você no controle."
             dark

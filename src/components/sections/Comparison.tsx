@@ -48,6 +48,7 @@ export function Comparison() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <SectionHeading
+            eyebrow="O comparativo"
             title="O Padrão CLAPE"
             subtitle="Não fazemos como o mercado faz. Fazemos como deveria ser feito."
             dark={false}

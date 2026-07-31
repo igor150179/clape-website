@@ -1,7 +1,15 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { Play } from "lucide-react";
+import type { PointerEvent as ReactPointerEvent } from "react";
 import { useRef, useState } from "react";
 import { PremiumVideo } from "@/components/PremiumVideo";
 import { VideoLightbox } from "@/components/VideoLightbox";
@@ -18,14 +26,31 @@ export function Hero() {
   });
   const videoY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 48]);
 
+  const spotlightX = useMotionValue(-400);
+  const spotlightY = useMotionValue(-400);
+  const spotlightBg = useMotionTemplate`radial-gradient(680px circle at ${spotlightX}px ${spotlightY}px, rgba(244,121,32,0.16), transparent 65%)`;
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLElement>) => {
+    if (reduceMotion) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    spotlightX.set(event.clientX - rect.left);
+    spotlightY.set(event.clientY - rect.top);
+  };
+
   return (
     <>
       <section
         ref={sectionRef}
+        onPointerMove={handlePointerMove}
         className="relative min-h-screen overflow-hidden bg-clape-dark"
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,121,32,0.14),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(248,156,27,0.08),transparent_45%)]" />
+        <motion.div
+          className="pointer-events-none absolute inset-0 hidden lg:block"
+          style={{ background: spotlightBg }}
+          aria-hidden
+        />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-clape-dark to-transparent" />
 
         <div className="relative z-10 mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-4 pb-24 pt-32 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:pb-20 lg:pt-36">
@@ -55,7 +80,7 @@ export function Hero() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-clape-orange px-8 py-4 text-base font-semibold text-white transition hover:bg-clape-amber"
+                className="inline-flex items-center justify-center rounded-full bg-clape-orange px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-clape-amber hover:shadow-glow-lg"
               >
                 Falar com o Igor
               </a>

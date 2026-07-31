@@ -28,6 +28,7 @@ export function Engineering() {
           videoAlt={VIDEOS.engenhariaMedidas.alt}
         >
           <SectionHeading
+            eyebrow="Engenharia"
             title="Engenharia obsessiva. Cada norma da pizza napolitana, respeitada."
             dark
             align="left"

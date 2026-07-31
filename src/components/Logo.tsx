@@ -4,33 +4,36 @@ import { cn } from "@/lib/utils";
 type LogoProps = {
   className?: string;
   size?: "sm" | "md" | "lg";
+  variant?: "negative" | "color";
 };
 
 const sizes = {
-  sm: { container: "rounded-md px-2 py-1", image: "h-5" },
-  md: { container: "rounded-lg px-3 py-1.5", image: "h-7 sm:h-8" },
-  lg: { container: "rounded-xl px-4 py-2", image: "h-9 sm:h-10" },
+  sm: { image: "h-6" },
+  md: { image: "h-8 sm:h-9" },
+  lg: { image: "h-11 sm:h-12" },
 };
 
-export function Logo({ className, size = "md" }: LogoProps) {
+const sources = {
+  negative: "/images/logo-negative.png",
+  color: "/images/logo-color.png",
+};
+
+export function Logo({ className, size = "md", variant = "negative" }: LogoProps) {
   const s = sizes[size];
 
   return (
-    <span
+    <Image
+      src={sources[variant]}
+      alt="clapé — Forno de pizza napolitana artesanal"
+      width={1024}
+      height={544}
       className={cn(
-        "inline-flex shrink-0 items-center justify-center bg-white shadow-md ring-1 ring-black/5",
-        s.container,
+        "w-auto shrink-0 object-contain",
+        variant === "negative" && "drop-shadow-[0_2px_10px_rgba(0,0,0,0.25)]",
+        s.image,
         className,
       )}
-    >
-      <Image
-        src="/images/logo.png"
-        alt="clapé — Forno de pizza napolitana artesanal"
-        width={1024}
-        height={544}
-        className={cn("w-auto object-contain", s.image)}
-        priority
-      />
-    </span>
+      priority
+    />
   );
 }

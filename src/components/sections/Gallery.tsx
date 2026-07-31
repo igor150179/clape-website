@@ -34,6 +34,7 @@ export function Gallery() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <SectionHeading
+            eyebrow="Em detalhe"
             title="O CLAPE de perto."
             subtitle="Acabamento, engenharia e materiais — sem atalhos."
             dark={false}

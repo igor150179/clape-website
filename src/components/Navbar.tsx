@@ -62,7 +62,7 @@ export function Navbar() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center rounded-full bg-clape-orange px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-clape-amber"
+              className="inline-flex items-center rounded-full bg-clape-orange px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-clape-amber hover:shadow-glow"
             >
               Falar com o Igor
             </a>
@@ -119,7 +119,7 @@ export function Navbar() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-10 inline-flex items-center justify-center rounded-full bg-clape-orange px-6 py-3 text-base font-semibold text-white"
+                className="mt-10 inline-flex items-center justify-center rounded-full bg-clape-orange px-6 py-3 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-clape-amber hover:shadow-glow"
                 onClick={() => setMobileOpen(false)}
               >
                 Falar com o Igor
