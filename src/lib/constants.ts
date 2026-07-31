@@ -3,15 +3,14 @@ export const SITE = {
   title: "CLAPE | Forno de Pizza Napolitana Artesanal",
   description:
     "Forno de pizza napolitana artesanal brasileiro com pedra Biscotto italiana legítima. Compacto, engenharia patenteada e feito à mão. Entre na lista de espera.",
-  headline: "A pizza napolitana que muda a sua mesa.",
+  headline: "O fogo de Nápoles, feito à mão para a sua mesa.",
   subheadline:
-    "Forno artesanal brasileiro com pedra Biscotto italiana legítima. Engenharia patenteada. Feito à mão para reunir quem você ama.",
-  price: 5990,
-  currency: "BRL",
+    "Cada forno CLAPE é construído um a um, no Brasil — pedra Biscotto Saputo legítima, engenharia patenteada e solda a laser invisível. Para reunir quem você ama.",
+  availability:
+    "Cada CLAPE é montado conforme a demanda. De tempos em tempos, unidades prontas saem do ateliê para entrega imediata.",
 } as const;
 
-// TODO: trocar pelo número real
-export const WHATSAPP_URL = "https://wa.me/5511000000000";
+export const WHATSAPP_URL = "https://wa.me/5511947632211";
 export const INSTAGRAM_URL = "https://www.instagram.com/clape.forno/";
 export const FACEBOOK_URL = "https://www.facebook.com/p/Clape-61556664961261/";
 export const YOUTUBE_URL = "https://www.youtube.com/@clapeforno";

@@ -69,7 +69,7 @@ export function Footer() {
                   href="/#lista-espera"
                   className="text-sm text-clape-cream/70 transition hover:text-clape-cream"
                 >
-                  Lista de Espera
+                  Reserva
                 </Link>
               </li>
             </ul>

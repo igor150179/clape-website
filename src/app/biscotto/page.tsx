@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { WHATSAPP_URL } from "@/lib/constants";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { ProductShot } from "@/components/ui/ProductShot";
 import { PageHero } from "@/components/ui/PageHero";
@@ -104,12 +104,14 @@ export default function BiscottoPage() {
               calibrada, testada e pronta para entregar pizza napolitana autêntica desde o
               primeiro uso.
             </p>
-            <Link
-              href="/#lista-espera"
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-8 inline-flex items-center justify-center rounded-full bg-clape-orange px-8 py-4 text-base font-semibold text-white transition hover:bg-clape-amber"
             >
-              Entrar na Lista de Espera
-            </Link>
+              Falar com o Igor
+            </a>
           </FadeIn>
         </div>
       </section>

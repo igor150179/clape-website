@@ -2,11 +2,10 @@
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Play } from "lucide-react";
-import Link from "next/link";
 import { useRef, useState } from "react";
 import { PremiumVideo } from "@/components/PremiumVideo";
 import { VideoLightbox } from "@/components/VideoLightbox";
-import { SITE } from "@/lib/constants";
+import { SITE, WHATSAPP_URL } from "@/lib/constants";
 import { VIDEOS } from "@/lib/videos";
 
 export function Hero() {
@@ -25,7 +24,7 @@ export function Hero() {
         ref={sectionRef}
         className="relative min-h-screen overflow-hidden bg-clape-dark"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(232,118,45,0.14),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(244,121,32,0.14),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(248,156,27,0.08),transparent_45%)]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-clape-dark to-transparent" />
 
@@ -40,7 +39,7 @@ export function Hero() {
               animate={reduceMotion ? undefined : { scale: [1, 1.02, 1] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
             >
-              🔥 Pizzas autênticas em 60 segundos
+              Feito à mão no Brasil · Pizza em 60 segundos
             </motion.span>
 
             <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-clape-cream sm:text-5xl lg:text-6xl xl:text-7xl">
@@ -52,12 +51,14 @@ export function Hero() {
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Link
-                href="/#lista-espera"
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-clape-orange px-8 py-4 text-base font-semibold text-white transition hover:bg-clape-amber"
               >
-                Entrar na Lista de Espera
-              </Link>
+                Falar com o Igor
+              </a>
               <button
                 type="button"
                 onClick={() => setLightboxOpen(true)}
@@ -108,7 +109,7 @@ export function Hero() {
           >
             <div className="rounded-2xl border border-white/10 bg-clape-dark/80 px-5 py-4 backdrop-blur-md">
               <p className="text-xs font-semibold uppercase tracking-wider text-clape-orange">
-                Certificado
+                Origem
               </p>
               <p className="mt-1 font-display text-sm font-bold text-clape-cream">
                 Pedra Biscotto Italiana Legítima

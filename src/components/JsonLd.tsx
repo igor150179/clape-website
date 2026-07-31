@@ -12,8 +12,6 @@ export function JsonLd() {
     },
     offers: {
       "@type": "Offer",
-      price: SITE.price.toFixed(2),
-      priceCurrency: SITE.currency,
       availability: "https://schema.org/PreOrder",
       url: "https://clape.com.br",
     },

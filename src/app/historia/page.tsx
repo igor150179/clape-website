@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { WHATSAPP_URL } from "@/lib/constants";
 import { PremiumVideo } from "@/components/PremiumVideo";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { PageHero } from "@/components/ui/PageHero";
@@ -92,17 +92,20 @@ export default function HistoriaPage() {
                 <p>
                   Hoje produzimos em lotes limitados. Cada forno é feito à mão, testado
                   individualmente e entregue com orientação personalizada. Não temos
-                  e-commerce — temos lista de espera. Porque acreditamos que quem leva um
+                  e-commerce — cada forno é montado conforme a demanda, e algumas unidades
+                  prontas saem do ateliê. Porque acreditamos que quem leva um
                   CLAPE merece falar conosco pessoalmente.
                 </p>
               </div>
 
-              <Link
-                href="/#lista-espera"
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-10 inline-flex items-center justify-center rounded-full bg-clape-orange px-8 py-4 text-base font-semibold text-white transition hover:bg-clape-amber"
               >
-                Entrar na Lista de Espera
-              </Link>
+                Falar com o Igor
+              </a>
             </FadeIn>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
-import { NAV_LINKS } from "@/lib/constants";
+import { NAV_LINKS, WHATSAPP_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -58,12 +58,14 @@ export function Navbar() {
           </ul>
 
           <div className="hidden lg:block">
-            <Link
-              href="/#lista-espera"
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center rounded-full bg-clape-orange px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-clape-amber"
             >
-              Entrar na Lista de Espera
-            </Link>
+              Falar com o Igor
+            </a>
           </div>
 
           <button
@@ -113,13 +115,15 @@ export function Navbar() {
                   </motion.li>
                 ))}
               </ul>
-              <Link
-                href="/#lista-espera"
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-10 inline-flex items-center justify-center rounded-full bg-clape-orange px-6 py-3 text-base font-semibold text-white"
                 onClick={() => setMobileOpen(false)}
               >
-                Entrar na Lista de Espera
-              </Link>
+                Falar com o Igor
+              </a>
             </motion.div>
           </>
         )}

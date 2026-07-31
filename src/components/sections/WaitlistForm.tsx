@@ -91,11 +91,12 @@ export function WaitlistForm() {
         <FadeIn>
           <div className="text-center">
             <h2 className="font-display text-3xl font-bold tracking-tight text-clape-cream sm:text-4xl lg:text-5xl">
-              Entre para o mundo CLAPE.
+              Reserve o seu CLAPE.
             </h2>
             <p className="mt-4 text-base leading-relaxed text-clape-cream/80 sm:text-lg">
-              Vagas limitadas para o próximo lote. Deixe seus dados e fale comigo
-              pessoalmente.
+              Os fornos são montados conforme a demanda — e algumas unidades
+              prontas aguardam entrega imediata. Fale comigo no WhatsApp ou
+              deixe seus dados que eu retorno pessoalmente.
             </p>
           </div>
         </FadeIn>
@@ -197,7 +198,7 @@ export function WaitlistForm() {
                   type="submit"
                   className="w-full rounded-full bg-clape-orange py-4 text-base font-semibold text-white transition hover:bg-clape-amber"
                 >
-                  Entrar na Lista de Espera
+                  Quero ser contatado
                 </button>
               </form>
             )}

@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { SITE } from "@/lib/constants";
 import "./globals.css";
 
-const poppins = Poppins({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["600", "700"],
-  variable: "--font-poppins",
+  weight: ["600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -61,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${poppins.variable} ${inter.variable} font-sans antialiased`}
+        className={`${playfair.variable} ${inter.variable} font-sans antialiased`}
       >
         <Navbar />
         <main>{children}</main>

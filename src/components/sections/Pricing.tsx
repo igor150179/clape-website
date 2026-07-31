@@ -1,25 +1,26 @@
-import Link from "next/link";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { ProductShot } from "@/components/ui/ProductShot";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { WHATSAPP_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const products = [
   {
     name: "Forno CLAPE",
-    price: "R$ 5.990,00",
-    description: "Forno completo com pedra Biscotto Saputo italiana legítima inclusa.",
+    availability: "Montado sob encomenda · unidades prontas ocasionais",
+    description:
+      "O forno completo, com pedra Biscotto Saputo italiana legítima inclusa. Cada unidade é montada à mão, uma a uma.",
     featured: true,
   },
   {
     name: "Kit Pás + Cortador",
-    price: "R$ 800,00",
+    availability: "Acompanha a sua encomenda",
     description: "Pá napolitana profissional e cortador de pizza em aço inox.",
     featured: false,
   },
   {
     name: "Suporte CLAPE",
-    price: "R$ 800,00",
+    availability: "Acompanha a sua encomenda",
     description: "Suporte ergonômico em aço inox para posicionamento ideal do forno.",
     featured: false,
   },
@@ -30,7 +31,11 @@ export function Pricing() {
     <section className="bg-clape-cream py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
-          <SectionHeading title="O CLAPE completo" dark={false} />
+          <SectionHeading
+            title="A coleção CLAPE"
+            subtitle="Cada peça é montada conforme a demanda — e, de tempos em tempos, algumas unidades saem prontas do ateliê."
+            dark={false}
+          />
         </FadeIn>
 
         <div className="grid gap-6 md:grid-cols-3">
@@ -62,11 +67,11 @@ export function Pricing() {
                 <h3 className="font-display text-xl font-bold">{product.name}</h3>
                 <p
                   className={cn(
-                    "mt-4 font-display text-3xl font-bold",
+                    "mt-3 text-xs font-semibold uppercase tracking-[0.14em]",
                     product.featured ? "text-clape-amber" : "text-clape-orange",
                   )}
                 >
-                  {product.price}
+                  {product.availability}
                 </p>
                 <p
                   className={cn(
@@ -76,8 +81,10 @@ export function Pricing() {
                 >
                   {product.description}
                 </p>
-                <Link
-                  href="/#lista-espera"
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={cn(
                     "mt-8 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition",
                     product.featured
@@ -85,8 +92,8 @@ export function Pricing() {
                       : "border border-clape-dark/20 text-clape-dark hover:border-clape-orange hover:text-clape-orange",
                   )}
                 >
-                  Entrar na Lista de Espera
-                </Link>
+                  Falar com o Igor
+                </a>
               </article>
             </FadeIn>
           ))}
@@ -94,7 +101,7 @@ export function Pricing() {
 
         <FadeIn delay={0.3}>
           <p className="mt-10 text-center text-sm font-medium text-clape-dark/60">
-            Vagas limitadas. Produção artesanal.
+            Produção artesanal. Fale com o Igor sobre disponibilidade e prazos.
           </p>
         </FadeIn>
       </div>

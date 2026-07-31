@@ -14,7 +14,7 @@ const config: Config = {
         "clape-amber": "#F89C1B", // Laranja Brasa
       },
       fontFamily: {
-        display: ["var(--font-poppins)", "system-ui", "sans-serif"],
+        display: ["var(--font-playfair)", "Georgia", "serif"],
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       backgroundImage: {
