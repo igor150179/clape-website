@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Massa | Clape — A Farinha Certa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Lora:ital,wght@0,400;1,400&family=Source+Sans+3:wght@400;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #f47920;
+    --amber: #f89c1b;
+    --slate: #333b41;
+    --ink: #2b2b2b;
+    --muted: #7a7a7a;
+    --rule: #e7e7e7;
+    --cream-head: #f6ecd9;
+    --ok: #059669;
+    --warn: #d97706;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #fff; color: var(--ink);
+    font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+    display: flex; justify-content: center;
+    padding: clamp(12px, 4vw, 28px) clamp(12px, 4vw, 24px) 48px;
+    min-height: 100vh;
+  }
+  .wrap { max-width: min(560px, 100%); width: 100%; }
+  .brand { text-align: center; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--rule); }
+  .brand img { height: 40px; width: auto; margin-bottom: 10px; }
+  .brand h1 {
+    font-family: 'Playfair Display', Georgia, serif; font-weight: 800;
+    font-size: clamp(1.35rem, 4vw, 1.65rem); margin: 0; color: var(--slate);
+  }
+  .brand h1 em { font-style: italic; color: var(--orange); }
+  .brand .sub {
+    font-family: 'Lora', Georgia, serif; font-style: italic;
+    font-size: .9rem; color: var(--muted); margin: 8px 0 0; line-height: 1.5;
+  }
+  .welcome {
+    position: relative; margin-bottom: 20px; padding: 26px 22px 22px;
+    font-family: 'Lora', Georgia, serif; font-style: italic; color: #4a4a4a;
+    font-size: .95rem; line-height: 1.6; background: #fff;
+    background-image:
+      repeating-linear-gradient(90deg, var(--orange) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(90deg, var(--orange) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(0deg, var(--orange) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(0deg, var(--orange) 0 8px, transparent 8px 16px);
+    background-size: calc(100% - 16px) 2px, calc(100% - 16px) 2px, 2px calc(100% - 16px), 2px calc(100% - 16px);
+    background-position: 8px 0, 8px 100%, 0 8px, 100% 8px;
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  }
+  .welcome::before {
+    content: 'como usar'; position: absolute; top: -13px; left: 18px;
+    background: #fff; padding: 0 10px;
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.25rem; color: var(--orange);
+  }
+  .welcome strong { color: var(--slate); font-style: normal; font-weight: 700; }
+  .card {
+    background: #fff; border-radius: 0; padding: 22px 0 24px;
+    margin-bottom: 8px; border-bottom: 1px solid var(--rule);
+  }
+  .card:last-of-type { border-bottom: none; }
+  .card h2 {
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.55rem;
+    margin: 0 0 14px; color: var(--orange); line-height: 1.1;
+  }
+  label {
+    display: block; font-size: .78rem; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; margin: 14px 0 7px; color: var(--slate);
+  }
+  label:first-child { margin-top: 0; }
+  input, select {
+    width: 100%; padding: 12px 14px; border-radius: 8px;
+    border: 1px solid var(--rule); background: #fff; color: var(--ink);
+    font-family: 'Source Sans 3', sans-serif; font-size: 1rem;
+  }
+  input:focus, select:focus { outline: 2px solid rgba(244,121,32,.25); border-color: var(--orange); }
+  input.locked, select.locked { background: #fafafa; color: var(--muted); cursor: not-allowed; }
+  input[type=range] { padding: 0; accent-color: var(--orange); }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .row > div { flex: 1; min-width: 120px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+  .tab {
+    flex: 1; min-width: 120px; padding: 11px 10px; border-radius: 8px;
+    border: 1px solid var(--rule); background: #fff; color: var(--muted);
+    cursor: pointer; font-size: .82rem; font-weight: 600; text-align: center;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .tab.active { border-color: var(--orange); color: var(--orange); background: #fff; }
+  .check { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; font-size: .88rem; cursor: pointer; line-height: 1.45; font-weight: 400; }
+  .check input { width: auto; margin-top: 3px; accent-color: var(--orange); }
+  .result { font-size: 1.05rem; line-height: 2; }
+  .result b { color: var(--orange); font-weight: 700; }
+  .btn {
+    width: 100%; margin-top: 14px; padding: 15px; border: none; border-radius: 8px;
+    background: var(--orange); color: #fff; font-weight: 700; font-size: .95rem;
+    cursor: pointer; font-family: 'Source Sans 3', sans-serif;
+    transition: background .15s;
+  }
+  .btn:hover { background: #e06a15; }
+  .hint {
+    font-family: 'Lora', Georgia, serif; font-style: italic;
+    font-size: .82rem; color: var(--muted); margin-top: 10px; line-height: 1.55;
+  }
+  .badge { display: inline-block; font-size: .68rem; padding: 2px 8px; border-radius: 999px; font-weight: 700; margin-left: 6px; vertical-align: middle; letter-spacing: .03em; text-transform: uppercase; }
+  .badge-alta { background: #d1fae5; color: var(--ok); }
+  .badge-media { background: var(--cream-head); color: var(--warn); }
+  .badge-baixa { background: #fee2e2; color: #b91c1c; }
+  .farinha-info {
+    background: #fafafa; border-radius: 8px; padding: 14px; margin-top: 12px;
+    font-size: .82rem; line-height: 1.55; border: 1px solid var(--rule);
+  }
+  .farinha-info a { color: var(--orange); word-break: break-all; }
+  .cronograma { margin-top: 12px; }
+  .cron-item { padding: 12px 14px; border-radius: 0; margin-bottom: 8px; font-size: .84rem; line-height: 1.5; border-left: 3px solid var(--rule); background: #fafafa; }
+  .cron-item.info { border-color: #3b82f6; }
+  .cron-item.ambiente { border-color: var(--orange); }
+  .cron-item.frio { border-color: #06b6d4; }
+  .cron-item.aviso { border-color: var(--warn); background: #fff; }
+  .cron-fonte { font-family: 'Lora', Georgia, serif; font-style: italic; font-size: .74rem; color: var(--muted); margin-top: 4px; }
+  .alerta {
+    position: relative; padding: 22px 18px 18px; font-size: .84rem; margin-top: 12px; line-height: 1.5;
+    background: #fff;
+    background-image:
+      repeating-linear-gradient(90deg, var(--amber) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(90deg, var(--amber) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(0deg, var(--amber) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(0deg, var(--amber) 0 8px, transparent 8px 16px);
+    background-size: calc(100% - 12px) 2px, calc(100% - 12px) 2px, 2px calc(100% - 12px), 2px calc(100% - 12px);
+    background-position: 6px 0, 6px 100%, 0 6px, 100% 6px;
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  }
+  .alerta-erro { /* mantém tracejado âmbar */ }
+  .alerta-ok { /* mantém tracejado âmbar */ }
+  .status-fermentacao { border-radius: 8px; padding: 14px 16px; margin-top: 12px; border: 1px solid var(--rule); font-size: .86rem; line-height: 1.5; background: #fafafa; }
+  .status-fermentacao strong { display: block; font-family: 'Playfair Display', serif; font-size: .95rem; margin-bottom: 4px; }
+  .status-alta { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; }
+  .status-ressalva { background: #fff; border-color: var(--amber); color: #92400e; }
+  .status-nao { background: #fef2f2; border-color: #fca5a5; color: #991b1b; }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--slate); color: #fff; padding: 12px 22px; border-radius: 8px;
+    font-size: .85rem; font-weight: 600; opacity: 0; transition: opacity .3s; z-index: 99;
+  }
+  .toast.show { opacity: 1; }
+  .hidden { display: none; }
+  .footer { text-align: center; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: .72rem; color: var(--muted); font-family: 'Lora', Georgia, serif; font-style: italic; }
+  .range-val { float: right; font-weight: 700; color: var(--orange); font-family: 'Source Sans 3', sans-serif; font-style: normal; }
+  optgroup { font-weight: 600; color: var(--slate); }
+  .ilust-card { margin-top: 14px; text-align: center; }
+  .ilust-card img { width: 100%; height: auto; display: block; max-height: 196px; object-fit: contain; margin: 0 auto; }
+  .ilust-card p {
+    font-family: 'Lora', Georgia, serif; font-style: italic;
+    margin: .6rem 0 0; padding: 0; font-size: .82rem; line-height: 1.5; color: var(--muted);
+  }
+  .ilust-card p strong { font-family: 'Playfair Display', serif; font-style: normal; color: var(--slate); display: block; margin-bottom: 2px; font-size: .9rem; }
+  .ilust-result { margin: 14px 0 6px; text-align: center; }
+  .ilust-result img { width: 100%; max-height: 168px; object-fit: contain; display: block; margin: 0 auto; }
+  .ilust-result span {
+    font-family: 'Lora', Georgia, serif; font-style: italic;
+    display: block; padding: .55rem 0 0; font-size: .78rem; color: var(--muted); line-height: 1.45;
+  }
+  @media (min-width: 768px) {
+    .wrap { max-width: 600px; }
+    .card { padding: 24px 4px 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <img src="/calculadora/assets/logo-clape.png" alt="Clape" onerror="this.style.display='none'">
+    <h1>Calculadora de <em>Massa</em></h1>
+    <p class="sub">A Farinha Certa · Igor Oliveira — Clape</p>
+  </div>
+
+  <div class="welcome">
+    Para quem ama cozinhar e quer <strong>entender o porquê</strong> — siga: <strong>receita</strong> → <strong>tempo</strong> → <strong>farinha</strong> → <strong>método</strong> → <strong>massa e instruções</strong>.
+  </div>
+
+  <div class="card">
+    <h2>1. O que você quer fazer?</h2>
+    <label>Estilo de massa</label>
+    <select id="estilo" onchange="aplicarEstilo()">
+      <option value="napolitana">Napolitana (AVPN 55–62%)</option>
+      <option value="ny">Pizza NY (65%)</option>
+      <option value="romana_tonda">Romana Tonda (72%)</option>
+      <option value="romana_pala">Romana in Pala (85%)</option>
+      <option value="focaccia">Focaccia (80%)</option>
+      <option value="contemporanea">Contemporânea (68%)</option>
+      <option value="pao">Pão Rústico (75%)</option>
+      <option value="personalizado">Personalizado</option>
+    </select>
+    <div id="ilustEstilo" class="ilust-card">
+      <img id="ilustEstiloImg" src="/calculadora/assets/ilustracoes/estilo-napolitana.png" alt="">
+      <p id="ilustEstiloTxt"><strong>Napolitana</strong>Massa direta AVPN — panetti, fermentação longa e abertura à mão.</p>
+    </div>
+    <div id="normativoReceita" class="farinha-info"></div>
+  </div>
+
+  <div class="card">
+    <h2>2. Quanto tempo e qual temperatura você tem?</h2>
+    <label>Tempo total disponível <span class="range-val" id="horasVal">24 h</span></label>
+    <input type="range" id="horasFerm" min="4" max="72" value="24" step="1" oninput="onTotalFermChange()" onchange="onTotalFermChange()">
+    <p class="hint" id="hintLimites">Informe a realidade da sua cozinha. A farinha e o método serão avaliados contra este tempo.</p>
+    <div class="row">
+      <div>
+        <label>Temp. ambiente (°C)</label>
+        <input type="number" id="tempAmb" value="22" min="10" max="35" step="0.5" oninput="onTemperaturaAmbienteChange()">
+      </div>
+      <div>
+        <label>Temp. geladeira (°C)</label>
+        <input type="number" id="tempGel" value="4" min="0" max="8" step="0.5" oninput="onFermChange()">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>3. Escolha a farinha</h2>
+    <label>Selecionar farinha</label>
+    <select id="farinhaSel" onchange="aplicarFarinha()">
+      <option value="">— Escolha a farinha —</option>
+    </select>
+    <p class="hint" id="hintFarinhas">A lista considera a receita, o tempo disponível, a temperatura e a hidratação prevista.</p>
+    <div id="farinhaInfo" class="farinha-info hidden"></div>
+  </div>
+
+  <div id="blocoPosFarinha" class="hidden">
+  <div class="card">
+    <h2>4. Escolha o método de fermentação</h2>
+    <label>Método</label>
+    <select id="metodoFermentacao" onchange="onMetodoChange()">
+      <option value="auto">Sugerir o melhor método</option>
+      <option value="ambiente">Somente ambiente</option>
+      <option value="hibrido">Ambiente + geladeira</option>
+    </select>
+    <label>Tempo na geladeira <span class="range-val" id="horasFrioVal">0 h</span></label>
+    <input type="range" id="horasFrio" min="0" max="72" value="0" step="1" oninput="onFrioFermChange()" onchange="onFrioFermChange()">
+    <p class="hint" id="hintDivisaoFrio">Fora da geladeira: 24 h. Se usar frio, escolha de 1 h até 72 h conforme o tempo total.</p>
+    <div id="statusFermentacao" class="status-fermentacao status-ressalva">
+      <strong>Recomendado com ressalvas</strong>
+      Escolha a farinha para calcular a recomendação.
+    </div>
+    <div id="avisoLimite" class="alerta hidden"></div>
+
+    <input type="checkbox" id="usarGeladeira" class="hidden">
+    <p class="hint" id="labelGeladeira">Sem geladeira: use apenas para fermentações curtas/médias em ambiente controlado.</p>
+
+    <label id="label-ferm" class="hidden">Fermento fresco (% sobre farinha) <span id="fermAuto" class="badge badge-alta">auto</span></label>
+    <input type="number" id="ferm" value="0.3" min="0" step="0.01" readonly class="locked hidden" oninput="calcular(false)">
+
+    <label class="check">
+      <input type="checkbox" id="fermSeco" onchange="toggleFermentoSeco()">
+      <span>No resultado, mostrar também fermento seco (1 g seco ≈ 3 g fresco — AVPN)</span>
+    </label>
+
+    <label class="check hidden">
+      <input type="checkbox" id="fermManual" onchange="toggleFermManual()">
+      <span>Ajustar fermento manualmente (desliga cálculo automático)</span>
+    </label>
+
+    <div id="cronograma" class="cronograma"></div>
+  </div>
+
+  <div class="card">
+    <h2>5. Calculando sua massa</h2>
+    <label>Como calcular?</label>
+    <div class="tabs">
+      <button type="button" class="tab active" id="tab-farinha" onclick="setModo('farinha')">Tenho farinha</button>
+      <button type="button" class="tab" id="tab-bolas" onclick="setModo('bolas')">Quero X bolas</button>
+    </div>
+
+    <div id="bloco-farinha">
+      <label>Quantidade de farinha (g)</label>
+      <input type="number" id="farinha" value="1000" min="0" step="1" oninput="calcular()">
+    </div>
+
+    <div id="bloco-bolas" class="hidden">
+      <div class="row">
+        <div>
+          <label id="label-bolas-qty">Quantas bolas?</label>
+          <input type="number" id="bolas" value="4" min="1" step="1" oninput="this.dataset.userEdited='1';calcular()">
+        </div>
+        <div>
+          <label id="label-bolas-peso">Peso de cada (g)</label>
+          <input type="number" id="pesoBola" value="250" min="1" step="1" oninput="this.dataset.userEdited='1';calcular()">
+        </div>
+      </div>
+    </div>
+
+    <div id="blocoHidrNapolitana" class="hidden">
+      <label>Hidratação AVPN (55–62%) <span class="badge badge-alta">norma</span></label>
+      <select id="hidrNapolitana" onchange="aplicarHidrNapolitana()"></select>
+      <p class="hint" id="hintHidrNapolitana">Faixa oficial AVPN para pizza napolitana STG — escolha dentro do intervalo permitido.</p>
+    </div>
+
+    <div id="blocoHidrGeral">
+      <label>Hidratação (%) <span id="hidrLock" class="badge badge-alta hidden">fixo</span></label>
+      <input type="number" id="hidr" value="60" min="0" max="100" step="0.5" oninput="onHidrManual()">
+    </div>
+
+    <label>Sal (% sobre farinha) <span id="salLock" class="badge badge-alta hidden">fixo</span></label>
+    <input type="number" id="sal" value="2.5" min="0" step="0.1" oninput="onSalManual()">
+    <button type="button" class="btn" onclick="calcular(true)">Calcular minha massa e instruções</button>
+  </div>
+
+  <div class="card result hidden" id="out"></div>
+  <button type="button" class="btn hidden" id="copyBtn" onclick="copiar()">📋 Copiar ingredientes e instruções</button>
+  </div>
+
+  <p class="hint">Dados de farinhas: embalagens e sites oficiais (ver link em cada ficha). Onde não há valor único publicado, usamos faixas AVPN ou indicamos ⚠️. Não substitui leitura do rótulo.</p>
+  <p class="footer">Clape · A Farinha Certa · Igor Oliveira</p>
+</div>
+
+<div class="toast" id="toast">Copiado!</div>
+
+<script src="dados/farinhas-embed.js"></script>
+<script>
+  const ESTILOS = {
+    napolitana: { hidr: 60, sal: 2.5, label: 'Napolitana', fonte: 'AVPN 55–62%', hidrMin: 55, hidrMax: 62, estilosIdeais: ['napolitana'] },
+    ny: { hidr: 65, sal: 2.5, label: 'Pizza NY', fonte: 'Referência mercado ⚠️', hidrMin: 63, hidrMax: 68, estilosIdeais: ['napolitana', 'contemporanea'] },
+    romana_tonda: { hidr: 72, sal: 2.5, label: 'Romana Tonda', fonte: 'Referência mercado ⚠️', hidrMin: 70, hidrMax: 75, estilosIdeais: ['contemporanea', 'napolitana'] },
+    romana_pala: { hidr: 85, sal: 2.5, label: 'Romana in Pala', fonte: 'Referência mercado ⚠️', hidrMin: 80, hidrMax: 88, estilosIdeais: ['contemporanea'] },
+    focaccia: { hidr: 80, sal: 2.0, label: 'Focaccia', fonte: '75–82% (referências técnicas)', hidrMin: 75, hidrMax: 82, estilosIdeais: ['contemporanea'] },
+    pao: { hidr: 75, sal: 2.0, label: 'Pão Rústico', fonte: 'Panificação 72–78% ⚠️', hidrMin: 72, hidrMax: 78, estilosIdeais: ['pao'] },
+    contemporanea: { hidr: 68, sal: 2.5, label: 'Contemporânea', fonte: 'Referência mercado ⚠️', hidrMin: 65, hidrMax: 72, estilosIdeais: ['contemporanea', 'napolitana'] },
+    personalizado: { hidr: 60, sal: 2.5, label: 'Personalizado', fonte: 'Manual', hidrMin: 50, hidrMax: 90, estilosIdeais: null },
+  };
+  const NORMATIVOS = {
+    napolitana: 'Normativo AVPN: massa direta com farinha, água, sal e fermento; hidratação 55–62%; sal 40–60 g/L de água; fermento fresco 0,1–3 g/L; fermentação tradicional 12–24 h em ambiente/provadora controlada.',
+    ny: 'Referência prática NY: hidratação média, massa mais elástica, fermentação em ambiente ou frio para sabor e agenda. Não é norma AVPN.',
+    romana_tonda: 'Referência romana tonda: hidratação alta, massa fina/crocante, exige boa extensibilidade e controle de temperatura.',
+    romana_pala: 'Referência romana in pala: hidratação muito alta, farinha forte, mistura cuidadosa, dobras e maturação controlada.',
+    focaccia: 'Referência focaccia: hidratação alta, sal moderado, dobras para estrutura e fermentação controlada; farinha fraca em 80% tende a colapsar.',
+    contemporanea: 'Referência contemporânea: borda alta/alveolada, hidratação média-alta, farinha com boa fermentação e controle de temperatura.',
+    pao: 'Referência pão rústico: hidratação alta, dobras e tempo conforme força da farinha; farinha fraca não deve ir para 72 h.',
+    personalizado: 'Modo personalizado: a calculadora mantém alertas, mas os parâmetros ficam sob responsabilidade do usuário.'
+  };
+
+  const ESTILO_IMG = {
+    napolitana: 'estilo-napolitana.png',
+    ny: 'estilo-ny.png',
+    romana_tonda: 'estilo-romana-tonda.png',
+    romana_pala: 'estilo-romana-pala.png',
+    focaccia: 'estilo-focaccia.png',
+    contemporanea: 'estilo-contemporanea.png',
+    pao: 'il-pao-miolo.png',
+    personalizado: 'il-ingredientes.png',
+  };
+
+  const ILLUSTRACOES = {
+    napolitana: { titulo: 'Napolitana', txt: 'Cornicione alto, migalha macia — massa direta AVPN com panetti e abertura à mão.' },
+    ny: { titulo: 'Pizza NY', txt: 'Bolas grandes, borda fina — fermentação fria ou same-day conforme sua agenda.' },
+    romana_tonda: { titulo: 'Romana Tonda', txt: 'Disco fino e crocante — farinha que estica sem rasgar.' },
+    romana_pala: { titulo: 'Romana in Pala', txt: 'Massa na assadeira, dobras e alta hidratação — sem bolas napolitana.' },
+    focaccia: { titulo: 'Focaccia', txt: 'Espalhe na forma untada, covinhas com os dedos — prova na própria assadeira.' },
+    contemporanea: { titulo: 'Contemporânea', txt: 'Borda alveolada e migalha aberta — fermentação média a longa.' },
+    pao: { titulo: 'Pão Rústico', txt: 'Boules, dobras e miolo aerado — farinha forte para segurar o tempo.' },
+    personalizado: { titulo: 'Personalizado', txt: 'Você define o formato — a calculadora ajusta gramas e alertas.' },
+  };
+
+  const ILUST_RESULTADO = {
+    napolitana: { txt: 'Seu alvo: panetti extensíveis, prontos para abrir à mão.' },
+    ny: { txt: 'Seu alvo: bola relaxada, base fina e borda baixa.' },
+    romana_tonda: { txt: 'Seu alvo: disco fino, crocante, aberto com rolo.' },
+    romana_pala: { txt: 'Seu alvo: massa esticada na forma, alta e alveolada.' },
+    focaccia: { txt: 'Seu alvo: focaccia dourada com alvéolos visíveis na forma.' },
+    contemporanea: { txt: 'Seu alvo: borda cornicione alta e migalha aberta.' },
+    pao: { txt: 'Seu alvo: miolo aerado e crosta dourada após a prova.' },
+    personalizado: { txt: 'Siga as instruções abaixo — uma etapa de cada vez.' },
+  };
+
+  function imgEstilo(estKey) {
+    return ESTILO_IMG[estKey] || ESTILO_IMG.personalizado;
+  }
+
+  function ilustPath(arquivo) {
+    return '/calculadora/assets/ilustracoes/' + arquivo;
+  }
+
+  function atualizarIlustracaoEstilo(estKey) {
+    const il = ILLUSTRACOES[estKey] || ILLUSTRACOES.personalizado;
+    const img = document.getElementById('ilustEstiloImg');
+    const txt = document.getElementById('ilustEstiloTxt');
+    if (!img || !txt) return;
+    img.src = ilustPath(imgEstilo(estKey));
+    img.alt = il.titulo;
+    txt.innerHTML = `<strong>${il.titulo}</strong>${il.txt}`;
+  }
+
+  function blocoIlustResultado(estKey) {
+    const il = ILUST_RESULTADO[estKey] || ILUST_RESULTADO.personalizado;
+    return `<div class="ilust-result"><img src="${ilustPath(imgEstilo(estKey))}" alt=""><span>${il.txt}</span></div>`;
+  }
+
+  /** Instruções de processo por estilo — base AVPN, tradição romana, NY, focaccia, panificação. */
+  const PROCESSO_ESTILO = {
+    napolitana: {
+      fdt: 24,
+      fdtFrio: 21,
+      mistura: 'AVPN: comece pela água; dissolva o sal; adicione ~10% da farinha; incorpore o fermento; vá juntando o restante da farinha até o punto di pasta. Sal e fermento não devem ficar em contato direto por mais de ~5 min. Sem óleo nem açúcar na massa.',
+      sova: 'Misture/masseie 10–20 min (máx. ~20 min no total) até obter uma massa única, lisa e coesa. Pare se a massa aquecer demais.',
+      descanso: 'Primeira fermentação em massa única: ~2 h coberta em ambiente (~20–25 °C), depois faça o staglio (corte em panetti).',
+      formatacao: (total, n, peso) => n > 0
+        ? `Staglio AVPN: forme ${n} panetti de ${peso.toFixed(0)} g cada (referência 200–280 g → pizza 22–35 cm). Boleie com técnica de mozzatura, costura para baixo, em caixa para alimentos.`
+        : `Staglio AVPN: corte em panetti de 200–280 g (≈ ${Math.max(200, Math.min(280, Math.round(total / Math.max(1, Math.round(total / 260)))))} g neste lote) e boleie para segunda fermentação em caixa.`,
+      posFormatacao: 'Segunda fermentazione: panetti cobertos em caixa, em ambiente controlado, até abrir no forno.',
+      fermentacaoAmb: (h, t) => `Fermentação total ~${h} h a ~${t} °C: referência AVPN 12–24 h em ambiente/provadora (18–20 °C ideal). Use dentro de poucas horas após o ponto.`,
+      fermentacaoFrio: (amb, frio, rec, tAmb, tGel, bulk) => [
+        `Bulk ~${bulk} h a ~${tAmb} °C; depois staglio em panetti AVPN.`,
+        `Geladeira ~${frio} h a ${tGel} °C (ideal 0–4 °C) — uso logístico; tradicional napolitana é ambiente.`,
+        `Recuperação ~${rec} h a ~${tAmb} °C antes de abrir; massa extensível e ~20–24 °C no centro.`,
+      ],
+      pontoUso: 'Panetto aerado, macio e extensível; abra à mão sem rolo. Forno muito quente (referência AVPN ~485 °C).',
+      fonte: 'AVPN Disciplinare · Napo.pizza',
+    },
+    ny: {
+      fdt: 22,
+      fdtFrio: 18,
+      mistura: 'NY tradicional: água fria, sal dissolvido, fermento e farinha. Muitas receitas NY incluem azeite (~1–3% sobre farinha) — opcional, não é AVPN.',
+      sova: 'Misture até massa lisa; pode usar batedeira 8–12 min. Alvo de massa final ~21–24 °C em ambiente ou ~18–22 °C se for para geladeira (Lehmann).',
+      descanso: (usarFrio) => usarFrio
+        ? 'Método Lehmann: após misturar, escale e boleie imediatamente — sem bulk longo — para esfriar rápido na geladeira.'
+        : 'Bulk curto 1–2 h em ambiente se não usar frio; depois divida.',
+      formatacao: (total, n, peso) => n > 0
+        ? `Divida em ${n} bolas de ${peso.toFixed(0)} g (NY típico ~450–550 g para pizza grande ~45 cm, ou ajuste ao seu forno).`
+        : `Divida em bolas de ~450–550 g para pizza estilo NY (≈ ${Math.round(total / 500) || 1} unidade(s) neste lote).`,
+      posFormatacao: 'Bolas em caixa untada, bem fechadas; NY costuma usar fermentação fria longa ou same-day 6–10 h em ambiente.',
+      fermentacaoAmb: (h, t) => `Fermentação ~${h} h a ~${t} °C em ambiente; referência prática NY same-day 6–10 h ou temperar bola fria 1–2 h antes de abrir.`,
+      fermentacaoFrio: (amb, frio, rec, tAmb, tGel) => [
+        `Boleie e leve à geladeira em até ~20 min após misturar (Lehmann/PMQ).`,
+        `Frio ~${frio} h a ${tGel} °C; referência comum 24–72 h para sabor.`,
+        `Retire e deixe ~${rec} h a ~${tAmb} °C até ~13–16 °C no centro antes de abrir (não estique gelada).`,
+      ],
+      pontoUso: 'Abra com rolo ou mãos; borda fina, base mais espessa que napolitana. Forno doméstico/alta temperatura ~260–290 °C.',
+      fonte: 'Tom Lehmann/PMQ · PizzaBlab',
+    },
+    romana_tonda: {
+      fdt: 23,
+      fdtFrio: 20,
+      mistura: 'Romana tonda (scrocchiarella): massa direta, hidratação alta; água + sal, depois farinha e fermento. Sem excesso de óleo na massa base.',
+      sova: 'Mistura curta a média; massa mais firme que pala, porém extensível. Alvo ~22–24 °C.',
+      descanso: 'Bulk 1–2 h; depois divida. Romana tonda usa discos finos e crocantes.',
+      formatacao: (total, n, peso) => n > 0
+        ? `Forme ${n} discos/bolas de ${peso.toFixed(0)} g (referência ~180–250 g para pizza romana fina e crocante).`
+        : `Forme discos de ~200 g (≈ ${Math.round(total / 200) || 1} unidade(s)); abertura fina com rolo.`,
+      posFormatacao: 'Segunda prova curta em ambiente; abrir fino antes de assar.',
+      fermentacaoAmb: (h, t) => `Maturação ~${h} h a ~${t} °C; romana costuma usar fermentação média/longa conforme força da farinha.`,
+      fermentacaoFrio: (amb, frio, rec, tAmb, tGel, bulk) => [
+        `Ativação ~${bulk} h a ~${tAmb} °C; divida em discos.`,
+        `Geladeira ~${frio} h a ${tGel} °C se usar maturação fria.`,
+        `Recuperação ~${rec} h antes de abrir fino.`,
+      ],
+      pontoUso: 'Massa fina, crocante, borda baixa; forno alto. Não confundir com panetti napolitana altos.',
+      fonte: 'Tradição romana tonda · referências técnicas',
+    },
+    romana_pala: {
+      fdt: 22,
+      fdtFrio: 19,
+      mistura: 'Pizza in teglia/pala: massa muito hidratada; misture até incorporar, depois use dobras em vez de sova longa.',
+      sova: 'Mistura 5–8 min; complete a estrutura com 2–3 dobras espaçadas de 20–30 min (stretch-and-fold).',
+      descanso: 'Bulk com dobras em recipiente untado; não boleie como napolitana — vai direto para a assadeira.',
+      formatacao: (total, n, peso) => n > 0
+        ? `Divida para ${n} assadeira(s) untada(s) com ~${peso.toFixed(0)} g de massa cada; espalhe com movimentos de pala/teglia.`
+        : `Unte assadeira(s) e distribua ~${Math.round(total / Math.max(1, Math.round(total / 900)))} g por forma (referência 800–1200 g por bandeja doméstica).`,
+      posFormatacao: 'Segunda fermentação já na assadeira untada com azeite; não transferir panetti.',
+      fermentacaoAmb: (h, t) => `Fermentação ~${h} h: parte em bulk com dobras, parte já esticada na forma até crescer.`,
+      fermentacaoFrio: (amb, frio, rec, tAmb, tGel, bulk) => [
+        `Bulk com dobras ~${bulk} h a ~${tAmb} °C.`,
+        `Geladeira ~${frio} h a ${tGel} °C (massa ainda em bloco ou já na forma, conforme sua rotina).`,
+        `Recuperação ~${rec} h; se estava em bloco, estique na assadeira untada e deixe provar antes de assar.`,
+      ],
+      pontoUso: 'Massa alta, alveolada, dourada; assar em assadeira com azeite. Forno forte ~250–300 °C.',
+      fonte: 'Tradição romana in pala · Bonci/teglia',
+    },
+    focaccia: {
+      fdt: 24,
+      fdtFrio: 21,
+      mistura: 'Focaccia: água + sal dissolvidos, farinha e fermento. Tradição genovesa usa azeite na assadeira e no topo — não boleie como pizza napolitana.',
+      sova: 'Misture até massa lisa e pegajosa (normal em 80%); 1–2 dobras leves se necessário. Alvo ~23–26 °C.',
+      descanso: 'Bulk 1–2 h em recipiente untado; depois unte assadeira generosamente com azeite.',
+      formatacao: (total, n, peso) => n > 0
+        ? `Não faça bolas de pizza: distribua a massa em ${n} assadeira(s) untada(s) com ~${peso.toFixed(0)} g cada; espalhe com pontas dos dedos e azeite.`
+        : `Unte assadeira(s) com azeite e espalhe a massa (≈ ${Math.round(total / Math.max(1, Math.round(total / 900)))} g por forma; referência 700–1000 g por bandeja). Sem staglio napolitano.`,
+      posFormatacao: 'Fermentação final na própria assadeira: cubra e deixe crescer; antes de assar, faça covinhas (dimples) com os dedos e regue com azeite/sal.',
+      fermentacaoAmb: (h, t) => `Prova ~${h} h a ~${t} °C: bulk curto + prova final na assadeira untada até dobrar de volume.`,
+      fermentacaoFrio: (amb, frio, rec, tAmb, tGel, bulk) => [
+        `Bulk ~${bulk} h a ~${tAmb} °C em bloco untado.`,
+        `Geladeira ~${frio} h a ${tGel} °C (bloco ou já na assadeira).`,
+        `Recuperação ~${rec} h; faça dimples, azeite e sal grosso antes do forno ~220–250 °C.`,
+      ],
+      pontoUso: 'Focaccia alta, macia, dourada, com alvéolos visíveis; não abrir como disco de pizza.',
+      fonte: 'Tradição focaccia genovese · referências panificação',
+    },
+    contemporanea: {
+      fdt: 24,
+      fdtFrio: 21,
+      mistura: 'Contemporânea: massa direta de alta fermentação; água + sal, fermento, farinha gradualmente. Pode incluir pequena porção de azeite conforme receita.',
+      sova: 'Misture até massa extensível; 10–15 min ou dobras se hidratação alta. Alvo ~23–26 °C.',
+      descanso: 'Bulk 2–4 h ou frio longo conforme farinha (Nuvola/Caputo contemporânea).',
+      formatacao: (total, n, peso) => n > 0
+        ? `Forme ${n} bolas de ${peso.toFixed(0)} g para borda alta/alveolada (referência 250–320 g).`
+        : `Forme bolas de ~280 g (≈ ${Math.round(total / 280) || 1} unidade(s)) para pizza contemporânea.`,
+      posFormatacao: 'Prova em caixa; abrir preservando borda alta.',
+      fermentacaoAmb: (h, t) => `Fermentação ~${h} h a ~${t} °C; farinhas tipo Nuvola costumam 12–36 h conforme ficha.`,
+      fermentacaoFrio: (amb, frio, rec, tAmb, tGel, bulk) => [
+        `Ativação ~${bulk} h a ~${tAmb} °C.`,
+        `Geladeira ~${frio} h a ${tGel} °C.`,
+        `Recuperação ~${rec} h antes de abrir mantendo borda.`,
+      ],
+      pontoUso: 'Borda cornicione alta, migalha aberta; forno muito quente.',
+      fonte: 'Caputo Nuvola · tradição contemporânea',
+    },
+    pao: {
+      fdt: 24,
+      fdtFrio: 21,
+      mistura: 'Pão rústico: autólise opcional (farinha + água 20–30 min), depois sal e fermento; técnica panificação direta.',
+      sova: 'Sove curto ou use 3–4 dobras a cada 30 min até massa estruturada. Alvo ~23–26 °C.',
+      descanso: 'Bulk com dobras até ~50% de volume; pão rústico não usa panetti de pizza.',
+      formatacao: (total, n, peso) => n > 0
+        ? `Divida em ${n} pão(es)/boule(s) de ~${peso.toFixed(0)} g; pré-forme e deixe relaxar 15–20 min antes do formato final.`
+        : `Divida em boules de ~500–800 g (≈ ${Math.round(total / 650) || 1} unidade(s)); pré-forme com tensionamento superficial.`,
+      posFormatacao: 'Prova final em banneton ou forma, coberto, até passar no teste do dedo (mola devagar).',
+      fermentacaoAmb: (h, t) => `Fermentação bulk + prova ~${h} h a ~${t} °C; pão rústico usa dobras e prova final separada.`,
+      fermentacaoFrio: (amb, frio, rec, tAmb, tGel, bulk) => [
+        `Bulk com dobras ~${bulk} h a ~${tAmb} °C.`,
+        `Retarder ~${frio} h a ${tGel} °C (bloco ou já shaped).`,
+        `Recuperação ~${rec} h; score e assar com vapor ~220–250 °C.`,
+      ],
+      pontoUso: 'Assar quando a prova estiver completa; grigne/crosta dourada; não tratar como pizza.',
+      fonte: 'Técnicas panificação artesanal · Forkish/Hamelman',
+    },
+    personalizado: {
+      fdt: 24,
+      fdtFrio: 21,
+      mistura: 'Massa direta: água, sal dissolvido, fermento e farinha gradualmente.',
+      sova: 'Misture até massa lisa; controle temperatura final da massa.',
+      descanso: 'Descanso conforme hidratação e tempo escolhidos.',
+      formatacao: (total, n, peso) => n > 0
+        ? `Divida conforme seu plano: ${n} porção(ões) de ~${peso.toFixed(0)} g.`
+        : `Divida a massa total (~${Math.round(total)} g) conforme o formato que você definiu.`,
+      posFormatacao: 'Siga a prova adequada ao formato escolhido.',
+      fermentacaoAmb: (h, t) => `Fermentação ~${h} h a ~${t} °C em ambiente.`,
+      fermentacaoFrio: (amb, frio, rec, tAmb, tGel) => [
+        `Ambiente ~${amb} h a ~${tAmb} °C.`,
+        `Geladeira ~${frio} h a ${tGel} °C.`,
+        `Recuperação ~${rec} h antes de usar.`,
+      ],
+      pontoUso: 'Ajuste ponto de assar ao formato personalizado.',
+      fonte: 'Parâmetros definidos pelo usuário',
+    },
+  };
+
+  function processoEstilo(estKey) {
+    return PROCESSO_ESTILO[estKey] || PROCESSO_ESTILO.personalizado;
+  }
+
+  function textoFormatacao(estKey, massaTotal) {
+    const proc = processoEstilo(estKey);
+    const n = modo === 'bolas' ? Math.max(1, Math.floor(parseNum('bolas')) || 1) : 0;
+    const peso = modo === 'bolas' ? parseNum('pesoBola') : 0;
+    return proc.formatacao(massaTotal, n, peso);
+  }
+
+  const PORCAO_UI = {
+    napolitana: { plural: 'panetti', singular: 'panetto', peso: 250, qty: 4, tab: 'Quero X panetti' },
+    ny: { plural: 'bolas', singular: 'bola', peso: 500, qty: 2, tab: 'Quero X bolas' },
+    romana_tonda: { plural: 'discos', singular: 'disco', peso: 200, qty: 4, tab: 'Quero X discos' },
+    romana_pala: { plural: 'assadeiras', singular: 'assadeira', peso: 900, qty: 1, tab: 'Quero X assadeiras' },
+    focaccia: { plural: 'assadeiras', singular: 'assadeira', peso: 900, qty: 1, tab: 'Quero X assadeiras' },
+    contemporanea: { plural: 'bolas', singular: 'bola', peso: 280, qty: 4, tab: 'Quero X bolas' },
+    pao: { plural: 'pães', singular: 'pão', peso: 650, qty: 2, tab: 'Quero X pães' },
+    personalizado: { plural: 'porções', singular: 'porção', peso: 250, qty: 4, tab: 'Quero X porções' },
+  };
+
+  function porcaoUI(estKey) {
+    return PORCAO_UI[estKey] || PORCAO_UI.personalizado;
+  }
+
+  function atualizarUIPorcao(estKey) {
+    const ui = porcaoUI(estKey);
+    document.getElementById('tab-bolas').textContent = ui.tab;
+    document.getElementById('label-bolas-qty').textContent = `Quantas ${ui.plural}?`;
+    document.getElementById('label-bolas-peso').textContent = `Peso de cada ${ui.singular} (g)`;
+    if (!document.getElementById('bolas').dataset.userEdited) {
+      document.getElementById('bolas').value = ui.qty;
+    }
+    if (!document.getElementById('pesoBola').dataset.userEdited) {
+      document.getElementById('pesoBola').value = ui.peso;
+    }
+  }
+
+  const ORDEM_ADEQUACAO = { ok: 0, restricoes: 1, nao: 2 };
+  const PREFIXO_ADEQUACAO = { restricoes: '(com restrições) ', nao: '(não indicada) ' };
+
+  let modo = 'farinha';
+  let ultimoTexto = '';
+  let farinhaAtual = null;
+  let paramsLocked = false;
+  let limitesAtuais = null;
+  let ambienteManual = false;
+
+  /** Avaliação 4–72 h: W/proteína + ficha + temperatura + geladeira. */
+  function forçaFarinha(farinha) {
+    if (farinha?.w?.length) return (farinha.w[0] + farinha.w[1]) / 2;
+    if (farinha?.proteina >= 14) return 340;
+    if (farinha?.proteina >= 13) return 300;
+    if (farinha?.proteina >= 12) return 260;
+    if (farinha?.proteina >= 10.5) return 220;
+    return 200;
+  }
+
+  function perfilFermentacao(farinha, estiloKey) {
+    const w = forçaFarinha(farinha);
+    const rt = farinha?.fermentacao_rt_h;
+    let ambiente = rt ? [Math.max(4, rt[0]), Math.min(24, rt[1])] : null;
+    let frio;
+
+    // Referências: JayArr/HouseGardenHobby por W; fabricantes quando há ficha.
+    if (w < 220) {
+      ambiente ||= [4, 8];
+      frio = [8, 12];
+    } else if (w < 260) {
+      ambiente ||= [4, 12];
+      frio = [12, 24];
+    } else if (w < 300) {
+      ambiente ||= [8, 18];
+      frio = [24, 48];
+    } else if (w < 350) {
+      ambiente ||= [12, 24];
+      frio = [24, 72];
+    } else {
+      ambiente ||= [16, 24];
+      frio = [48, 72];
+    }
+
+    if (farinha?.max_ambiente_h) ambiente[1] = Math.min(ambiente[1], farinha.max_ambiente_h);
+    if (farinha?.max_total_h) frio[1] = Math.min(frio[1], farinha.max_total_h);
+    if (estiloKey === 'napolitana') ambiente[0] = Math.max(8, ambiente[0]);
+
+    return { w, ambiente, frio, maxTotal: Math.min(72, farinha?.max_total_h || frio[1]) };
+  }
+
+  function ajustarAmbientePorTemperatura(horas, tempAmbienteC) {
+    const fator = fatorTemperaturaAmbiente(tempAmbienteC);
+    return Math.max(2, Math.round(horas / fator));
+  }
+
+  function clamp(v, min, max) {
+    return Math.max(min, Math.min(max, v));
+  }
+
+  function fatorTemperaturaAmbiente(tempC) {
+    if (!Number.isFinite(tempC) || tempC <= 0) return 1;
+    return clamp(Math.pow(2, (tempC - 22) / 10), 0.45, 2.6);
+  }
+
+  function fatorTemperaturaFrio(tempC) {
+    if (!Number.isFinite(tempC)) return 0.38;
+    return clamp(0.18 + tempC * 0.05, 0.12, 0.58);
+  }
+
+  function pressaoHidratacao(farinha, hidrPct) {
+    const [idealMin, idealMax] = farinha?.hidratação_ideal || farinha?.hidratação || [55, 65];
+    const [tecMin, tecMax] = faixaUso(farinha, true);
+    if (!Number.isFinite(hidrPct) || idealMax == null || tecMax == null) return 0;
+    if (hidrPct <= idealMax) return 0;
+    return clamp((hidrPct - idealMax) / Math.max(1, tecMax - idealMax), 0, 1);
+  }
+
+  function horasEquivalentesFermentacao(horasAmbiente, horasFrio, tempAmbienteC, tempGelC, hidrPressao) {
+    const ambienteEq = horasAmbiente * fatorTemperaturaAmbiente(tempAmbienteC) * (1 + hidrPressao * 0.18);
+    const frioEq = horasFrio * fatorTemperaturaFrio(tempGelC) * (1 + hidrPressao * 0.08);
+    return Math.max(2, ambienteEq + frioEq);
+  }
+
+  function sugerirHorasAmbiente(totalHoras, estiloKey, tempAmbienteC, farinha, hidrPct) {
+    const perfil = perfilFermentacao(farinha, estiloKey);
+    const pressao = pressaoHidratacao(farinha, hidrPct);
+    const ambMaxTemp = clamp(Math.round(perfil.ambiente[1] / fatorTemperaturaAmbiente(tempAmbienteC) * (1 - pressao * 0.22)), 2, 24);
+
+    if (totalHoras <= 24 && tempAmbienteC <= 27 && pressao < 0.6) {
+      return totalHoras;
+    }
+
+    if (totalHoras <= 24) {
+      const limiteQuente = tempAmbienteC > 27 ? 4 : ambMaxTemp;
+      return clamp(Math.min(totalHoras, limiteQuente), 2, totalHoras);
+    }
+
+    const ativacao = tempAmbienteC > 27 ? 2 : tempAmbienteC >= 25 ? 3 : 4;
+    const recuperacao = totalHoras >= 48 ? 2 : 1;
+    const ajusteForca = perfil.w >= 320 ? 1 : perfil.w < 240 ? -1 : 0;
+    const ajusteAgua = pressao > 0.6 ? -1 : 0;
+    const sugestao = ativacao + recuperacao + ajusteForca + ajusteAgua;
+    return clamp(Math.round(sugestao), 2, Math.min(8, totalHoras));
+  }
+
+  function atualizarDivisaoFermentacao(forcarSugestao = false) {
+    const total = parseInt(document.getElementById('horasFerm').value, 10);
+    const estKey = document.getElementById('estilo').value;
+    const tempAmb = parseNum('tempAmb');
+    const hidr = parseNum('hidr');
+    const frio = document.getElementById('horasFrio');
+    const metodo = document.getElementById('metodoFermentacao')?.value || 'auto';
+    frio.max = 72;
+    if (forcarSugestao || !ambienteManual) {
+      if (metodo === 'ambiente') {
+        frio.value = 0;
+      } else {
+        const horasAmbSugeridas = sugerirHorasAmbiente(total, estKey, tempAmb, farinhaAtual, hidr);
+        const frioSugerido = Math.max(0, total - horasAmbSugeridas);
+        frio.value = metodo === 'hibrido' && total >= 8 ? Math.max(1, frioSugerido) : frioSugerido;
+      }
+    }
+    if (parseInt(frio.value, 10) > total) frio.value = total;
+    const horasFrio = parseInt(frio.value, 10);
+    const horasAmb = Math.max(0, total - horasFrio);
+    document.getElementById('horasFrioVal').textContent = horasFrio + ' h';
+    document.getElementById('hintDivisaoFrio').innerHTML =
+      `Fora da geladeira: <b>${horasAmb} h</b>. ` +
+      (horasFrio > 0
+        ? 'Geladeira pode variar de 1 h até 72 h; o limite efetivo é o tempo total escolhido.'
+        : 'Fermentação totalmente em ambiente.');
+    document.getElementById('usarGeladeira').checked = horasFrio > 0;
+    return { total, horasAmb, horasFrio };
+  }
+
+  function avaliarFermentacao(farinha, estiloKey, horas, tempAmbienteC, horasAmbiente, horasFrio, tempGelC, hidrPct) {
+    const perfil = perfilFermentacao(farinha, estiloKey);
+    const ambMax = ajustarAmbientePorTemperatura(perfil.ambiente[1], tempAmbienteC);
+    const ambMin = perfil.ambiente[0];
+    const frioMin = perfil.frio[0];
+    const frioMax = perfil.frio[1];
+    const pressao = pressaoHidratacao(farinha, hidrPct);
+    const eq = horasEquivalentesFermentacao(horasAmbiente, horasFrio, tempAmbienteC, tempGelC, pressao);
+    const gelMax = farinha?.geladeira?.temp_c?.[1] ?? 4;
+    const msgs = [];
+
+    if (horasFrio === 0) {
+      if (estiloKey === 'napolitana' && horas >= 8 && horas <= 24 && tempAmbienteC <= 27 && perfil.w >= 250 && perfil.w <= 320) {
+        return { nivel: 'alta', titulo: 'Altamente recomendado', mensagens: [`Plano tradicional: ${horas} h em ambiente controlado, dentro da lógica AVPN para napolitana.`], perfil, eq };
+      }
+      if (horas >= ambMin && horas <= ambMax && tempAmbienteC <= 27) {
+        return { nivel: 'alta', titulo: 'Altamente recomendado', mensagens: [`Plano simples: ${horas} h em ambiente. Temperatura, farinha e hidratação estão dentro da zona segura.`], perfil, eq };
+      }
+      if (horas < ambMin) {
+        msgs.push(`Tempo curto para esta farinha. Funciona, mas a massa tende a maturar menos.`);
+        return { nivel: 'ressalva', titulo: 'Recomendado com ressalvas', mensagens: msgs, perfil, eq };
+      }
+      msgs.push(`${horas} h fora da geladeira passa do limite seguro estimado (${ambMax} h nesta temperatura).`);
+      if (tempAmbienteC > 27) msgs.push('Acima de 27 °C, use menos tempo fora e mais geladeira.');
+      return { nivel: 'nao', titulo: 'Não recomendado', mensagens: msgs, perfil, eq };
+    }
+
+    if (horas > perfil.maxTotal) {
+      return { nivel: 'nao', titulo: 'Não recomendado', mensagens: [`${horas} h passa do máximo recomendado para esta farinha (${perfil.maxTotal} h).`], perfil, eq };
+    }
+    if (horasFrio > 0 && horas < 8) {
+      return { nivel: 'ressalva', titulo: 'Recomendado com ressalvas', mensagens: ['Com menos de 8 h totais, a geladeira serve só para segurar temperatura; não conte como maturação fria real. Para esse prazo, prefira método ambiente e farinha menos forte.'], perfil, eq };
+    }
+    if (horas <= 24 && tempAmbienteC <= 27 && estiloKey === 'napolitana') {
+      msgs.push('Para napolitana tradicional, até 24 h costuma ser melhor em ambiente controlado. Use geladeira só por logística.');
+      return { nivel: 'ressalva', titulo: 'Recomendado com ressalvas', mensagens: msgs, perfil, eq };
+    }
+    if (horasAmbiente > ambMax) {
+      return { nivel: 'nao', titulo: 'Não recomendado', mensagens: [`Tempo fora da geladeira (${horasAmbiente} h) está alto para ${tempAmbienteC} °C. Reduza o tempo fora ou baixe a temperatura.`], perfil, eq };
+    }
+    if (tempGelC > gelMax) {
+      msgs.push(`Geladeira a ${tempGelC} °C está acima da faixa indicada (${gelMax} °C máx.). Prefira 1–4 °C para longas fermentações.`);
+      return { nivel: 'ressalva', titulo: 'Recomendado com ressalvas', mensagens: msgs, perfil, eq };
+    }
+    if (tempAmbienteC > 27 && horasAmbiente > 4) {
+      msgs.push('Ambiente quente: mantenha 2–4 h fora e deixe o restante na geladeira.');
+      return { nivel: 'ressalva', titulo: 'Recomendado com ressalvas', mensagens: msgs, perfil, eq };
+    }
+    if (horasFrio >= frioMin && horasFrio <= frioMax && horasAmbiente >= 2 && horasAmbiente <= 8) {
+      msgs.push(`Boa combinação: ${horasAmbiente} h fora + ${horasFrio} h em geladeira. A conta ajusta fermento pela temperatura e hidratação.`);
+      if (farinha?.aviso_fermentacao) msgs.push(farinha.aviso_fermentacao);
+      return { nivel: 'alta', titulo: 'Altamente recomendado', mensagens: msgs, perfil, eq };
+    }
+    if (horasFrio < frioMin) {
+      msgs.push(`${horasFrio} h de geladeira é pouco para maturação fria desta farinha; aumente o frio ou use tudo em ambiente se ficar até 24 h.`);
+    } else if (horasAmbiente < 2) {
+      msgs.push('Pouco tempo fora: a massa pode sair fria e resistente. Deixe recuperar antes de abrir.');
+    } else {
+      msgs.push(`${horasFrio} h de frio está no limite alto; observe acidez e estrutura antes de abrir.`);
+    }
+    if (farinha?.aviso_fermentacao) msgs.push(farinha.aviso_fermentacao);
+    return { nivel: 'ressalva', titulo: 'Recomendado com ressalvas', mensagens: msgs, perfil, eq };
+  }
+
+  function atualizarStatusFermentacao(avaliacao) {
+    const box = document.getElementById('statusFermentacao');
+    box.className = `status-fermentacao status-${avaliacao.nivel}`;
+    box.innerHTML = `<strong>${avaliacao.titulo}</strong>${avaliacao.mensagens.join(' ')}`;
+  }
+
+  function planoFermentacao(horas, horasAmbiente, horasFrio) {
+    if (horasFrio === 0) {
+      return { bulk_h: 0, geladeira_h: 0, recuperacao_h: 0, ambiente_ferment_h: horas, ok: true, msg: null };
+    }
+    const bulk = Math.min(2, Math.max(1, Math.round(horasAmbiente * 0.4)));
+    const recuperacao = Math.max(0, horasAmbiente - bulk);
+    return { bulk_h: bulk, geladeira_h: horasFrio, recuperacao_h: recuperacao, ambiente_ferment_h: bulk, ok: true, msg: null };
+  }
+
+  function atualizarLimitesUI() {
+    const estKey = document.getElementById('estilo').value;
+    const tempAmb = parseNum('tempAmb');
+    const tempGel = parseNum('tempGel');
+    const hidr = parseNum('hidr');
+    const divisao = atualizarDivisaoFermentacao();
+    const horas = divisao.total;
+    limitesAtuais = perfilFermentacao(farinhaAtual, estKey);
+
+    const slider = document.getElementById('horasFerm');
+    slider.min = 4;
+    slider.max = 72;
+
+    const avaliacao = avaliarFermentacao(farinhaAtual, estKey, horas, tempAmb, divisao.horasAmb, divisao.horasFrio, tempGel, hidr);
+    atualizarStatusFermentacao(avaliacao);
+
+    document.getElementById('hintLimites').innerHTML =
+      `Sugestão recalculada por farinha, hidratação e temperatura. ` +
+      `Força estimada: <b>W ${Math.round(avaliacao.perfil.w)}</b> · ` +
+      `fermentação equivalente: <b>${Math.round(avaliacao.eq)} h</b>.`;
+
+    aplicarRegraGeladeira(avaliacao);
+  }
+
+  function aplicarRegraGeladeira(avaliacao) {
+    const cb = document.getElementById('usarGeladeira');
+    document.getElementById('labelGeladeira').textContent = cb.checked
+      ? 'Fermentação com geladeira (0–4 °C recomendado para longas fermentações)'
+      : 'Sem geladeira: use apenas para fermentações curtas/médias em ambiente controlado';
+
+    const aviso = document.getElementById('avisoLimite');
+    if (avaliacao.nivel === 'alta') {
+      aviso.classList.add('hidden');
+      return;
+    }
+    aviso.className = avaliacao.nivel === 'nao' ? 'alerta alerta-erro' : 'alerta';
+    aviso.textContent = avaliacao.mensagens.join(' ');
+    aviso.classList.remove('hidden');
+  }
+
+  function initFarinhas() {
+    const estKey = document.getElementById('estilo').value;
+    atualizarUIPorcao(estKey);
+    atualizarIlustracaoEstilo(estKey);
+    atualizarNormativoReceita();
+    rebuildListaFarinhas(true);
+    mostrarPosFarinha(false);
+    atualizarDivisaoFermentacao(true);
+  }
+
+  function atualizarNormativoReceita() {
+    const estKey = document.getElementById('estilo').value;
+    const est = ESTILOS[estKey] || ESTILOS.napolitana;
+    document.getElementById('normativoReceita').innerHTML =
+      `<strong>${est.label}</strong><br>${NORMATIVOS[estKey] || est.fonte}<br>` +
+      `<span style="color:var(--muted)">Hidratação base: ${est.hidr}% · sal base: ${est.sal}% · fonte: ${est.fonte}</span>`;
+  }
+
+  function faixaUso(farinha, tecnica = true) {
+    return (tecnica && farinha?.hidratação_tecnica) || farinha?.hidratação_ideal || farinha?.hidratação || [null, null];
+  }
+
+  function classificarFarinha(farinha, estiloKey) {
+    if (!farinha || farinha.id === 'personalizado' || estiloKey === 'personalizado') {
+      return { nivel: 'ok', motivo: null };
+    }
+    const rec = ESTILOS[estiloKey];
+    const [fMin, fMax] = faixaUso(farinha, true);
+    const rMin = rec.hidrMin;
+    const rMax = rec.hidrMax;
+    const alvo = rec.hidr;
+    const receitas = farinha.receitas || (farinha.estilo ? [farinha.estilo] : []);
+    const receitaIndicada = receitas.includes(estiloKey);
+    const suportaAlvo = alvo >= fMin && alvo <= fMax;
+    const altaHidratacao = alvo >= 75;
+    const suportaAlta = altaHidratacao && farinha.max_alta_hidratacao && alvo <= farinha.max_alta_hidratacao;
+
+    if (fMin == null || fMax == null) {
+      return { nivel: 'restricoes', motivo: 'ficha sem faixa de hidratação' };
+    }
+
+    const overlapMin = Math.max(rMin, fMin);
+    const overlapMax = Math.min(rMax, fMax);
+    if (overlapMin > overlapMax) {
+      return { nivel: 'nao', motivo: `hidratação ${fMin}–${fMax}% fora da receita (${rMin}–${rMax}%)` };
+    }
+
+    const cobreReceita = fMin <= rMin && fMax >= rMax;
+    const estiloIdeal = receitaIndicada || (rec.estilosIdeais && rec.estilosIdeais.includes(farinha.estilo));
+    const estiloOutro = farinha.estilo && rec.estilosIdeais && rec.estilosIdeais.length && !rec.estilosIdeais.includes(farinha.estilo) && !receitaIndicada;
+
+    if (estiloKey === 'pao') {
+      if (receitaIndicada && overlapMin <= overlapMax) {
+        return { nivel: 'ok', motivo: null };
+      }
+      const forte = (farinha.w && farinha.w[0] >= 250) || (farinha.proteina && farinha.proteina >= 12);
+      if (forte && overlapMin <= overlapMax) {
+        return { nivel: 'restricoes', motivo: farinha.estilo && farinha.estilo !== 'pao' ? `ficha indica ${farinha.estilo}` : 'verifique W/proteína no saco' };
+      }
+      if (overlapMin <= overlapMax) return { nivel: 'restricoes', motivo: 'proteína/W baixos para pão rústico' };
+      return { nivel: 'nao', motivo: `hidratação ${fMin}–${fMax}% fora da receita (${rMin}–${rMax}%)` };
+    }
+
+    if (altaHidratacao && suportaAlta && receitaIndicada) return { nivel: 'ok', motivo: null };
+    if (altaHidratacao && suportaAlta) return { nivel: 'restricoes', motivo: 'suporta a hidratação, mas não é a indicação principal da ficha' };
+    if (altaHidratacao && !suportaAlvo) return { nivel: 'nao', motivo: `limite técnico ${fMax}% abaixo dos ${alvo}% da receita` };
+    if (estiloIdeal && cobreReceita) return { nivel: 'ok', motivo: null };
+    if (estiloIdeal && suportaAlvo) return { nivel: 'ok', motivo: null };
+    if (cobreReceita && !estiloOutro) return { nivel: 'ok', motivo: null };
+    if (estiloOutro) return { nivel: 'restricoes', motivo: `ficha indica uso ${farinha.estilo}` };
+    if (farinha.confianca === 'baixa') return { nivel: 'restricoes', motivo: 'dados parciais' };
+    return { nivel: 'restricoes', motivo: `faixa hidr. ${fMin}–${fMax}% vs receita ${rMin}–${rMax}%` };
+  }
+
+  function classificarFarinhaOperacional(farinha, estiloKey) {
+    const base = classificarFarinha(farinha, estiloKey);
+    if (base.nivel === 'nao' || estiloKey === 'personalizado') return base;
+
+    const est = ESTILOS[estiloKey] || ESTILOS.napolitana;
+    const total = parseInt(document.getElementById('horasFerm').value, 10);
+    const tempAmb = parseNum('tempAmb');
+    const tempGel = parseNum('tempGel');
+    const hidr = estiloKey === 'napolitana' ? parseNum('hidr') || est.hidr : est.hidr;
+    const horasAmb = sugerirHorasAmbiente(total, estiloKey, tempAmb, farinha, hidr);
+    const horasFrio = Math.max(0, total - horasAmb);
+    const av = avaliarFermentacao(farinha, estiloKey, total, tempAmb, horasAmb, horasFrio, tempGel, hidr);
+
+    if (av.nivel === 'nao') return { nivel: 'nao', motivo: av.mensagens[0] || base.motivo };
+    if (av.nivel === 'ressalva' && base.nivel === 'ok') return { nivel: 'restricoes', motivo: av.mensagens[0] || 'tempo/temperatura pedem cuidado' };
+    return base;
+  }
+
+  function rebuildListaFarinhas(resetarSelecao) {
+    const estKey = document.getElementById('estilo').value;
+    const sel = document.getElementById('farinhaSel');
+    const prev = resetarSelecao ? '' : sel.value;
+
+    const itens = FARINHAS.filter(f => f.id !== 'personalizado').map(f => {
+      const c = classificarFarinhaOperacional(f, estKey);
+      return { farinha: f, ...c, ordem: ORDEM_ADEQUACAO[c.nivel] ?? 1 };
+    }).sort((a, b) => a.ordem - b.ordem || a.farinha.nome.localeCompare(b.farinha.nome, 'pt'));
+
+    sel.innerHTML = '<option value="">— Escolha a farinha —</option>';
+    const grupos = { importada: '🇮🇹 Importadas', nacional: '🇧🇷 Nacionais' };
+    Object.keys(grupos).forEach(g => {
+      const doGrupo = itens.filter(i => i.farinha.grupo === g);
+      if (!doGrupo.length) return;
+      const og = document.createElement('optgroup');
+      og.label = grupos[g];
+      doGrupo.forEach(({ farinha, nivel }) => {
+        const o = document.createElement('option');
+        o.value = farinha.id;
+        o.textContent = (PREFIXO_ADEQUACAO[nivel] || '') + farinha.nome;
+        o.dataset.nivel = nivel;
+        og.appendChild(o);
+      });
+      sel.appendChild(og);
+    });
+
+    if (estKey === 'personalizado') {
+      const o = document.createElement('option');
+      o.value = 'personalizado';
+      o.textContent = '— Personalizado (sem farinha fixa)';
+      sel.appendChild(o);
+    }
+
+    const still = prev && [...sel.options].some(o => o.value === prev);
+    sel.value = still ? prev : '';
+
+    const nOk = itens.filter(i => i.nivel === 'ok').length;
+    const nRest = itens.filter(i => i.nivel === 'restricoes').length;
+    document.getElementById('hintFarinhas').textContent =
+      estKey === 'personalizado'
+        ? 'Receita personalizada — escolha a farinha ou use «Personalizado».'
+        : `${nOk} adequada(s) · ${nRest} com restrições · demais (não indicada). Escolha a farinha para continuar.`;
+  }
+
+  function mostrarPosFarinha(visivel) {
+    document.getElementById('blocoPosFarinha').classList.toggle('hidden', !visivel);
+  }
+
+  function aplicarParametrosReceita() {
+    const estKey = document.getElementById('estilo').value;
+    toggleHidrUI(estKey);
+    const aviso = document.getElementById('avisoHidr');
+    if (aviso) aviso.remove();
+
+    if (estKey === 'personalizado') {
+      setLock(false);
+      return;
+    }
+
+    const est = ESTILOS[estKey];
+    document.getElementById('sal').value = farinhaAtual?.sal ?? est.sal;
+    setLock(true);
+
+    if (estKey === 'napolitana') {
+      const escolha = renderHidrNapolitanaSelect();
+      document.getElementById('hidr').value = escolha;
+    } else {
+      document.getElementById('hidr').value = hidratacaoEfetiva(farinhaAtual, estKey);
+      const msg = avisoHidracao(farinhaAtual, estKey);
+      if (msg) {
+        const d = document.createElement('div');
+        d.id = 'avisoHidr';
+        d.className = 'alerta';
+        d.textContent = msg;
+        document.getElementById('blocoHidrGeral').appendChild(d);
+      }
+    }
+  }
+
+  function getFarinha(id) {
+    return FARINHAS.find(f => f.id === id) || FARINHAS.find(f => f.id === 'personalizado');
+  }
+
+  function faixaHidrNapolitana(farinha) {
+    const avpnMin = ESTILOS.napolitana.hidrMin;
+    const avpnMax = ESTILOS.napolitana.hidrMax;
+    let min = avpnMin, max = avpnMax;
+    let aviso = null;
+    if (farinha && farinha.id !== 'personalizado') {
+      const [fMin, fMax] = faixaUso(farinha, true);
+      min = Math.max(avpnMin, fMin);
+      max = Math.min(avpnMax, fMax);
+      if (min > max) {
+        min = avpnMin;
+        max = avpnMax;
+        aviso = `Ficha da farinha (${fMin}–${fMax}%) não coincide plenamente com AVPN — opções AVPN completas; valide na prática.`;
+      } else if (min > avpnMin || max < avpnMax) {
+        aviso = `Faixa ajustada à interseção AVPN (${avpnMin}–${avpnMax}%) e ficha da farinha (${fMin}–${fMax}%).`;
+      }
+    }
+    return { min, max, aviso };
+  }
+
+  const HIDR_NAPOLITANA_LABELS = {
+    55: '55% — limite inferior AVPN (massa mais firme)',
+    56: '56%',
+    57: '57%',
+    58: '58%',
+    59: '59%',
+    60: '60% — ponto médio (recomendado)',
+    61: '61%',
+    62: '62% — limite superior AVPN (massa mais úmida)',
+  };
+
+  function renderHidrNapolitanaSelect() {
+    const faixa = faixaHidrNapolitana(farinhaAtual);
+    const sel = document.getElementById('hidrNapolitana');
+    const atual = parseFloat(document.getElementById('hidr').value) || 60;
+    sel.innerHTML = '';
+    for (let v = faixa.min; v <= faixa.max; v++) {
+      const o = document.createElement('option');
+      o.value = v;
+      o.textContent = HIDR_NAPOLITANA_LABELS[v] || `${v}%`;
+      sel.appendChild(o);
+    }
+    let escolha = Math.round(atual);
+    if (escolha < faixa.min) escolha = faixa.min;
+    if (escolha > faixa.max) escolha = faixa.max;
+    if (!sel.querySelector(`option[value="${escolha}"]`)) escolha = faixa.min;
+    sel.value = escolha;
+    document.getElementById('hintHidrNapolitana').textContent = faixa.aviso
+      ? faixa.aviso
+      : 'Disciplinare AVPN — hidratação típica 55–62% para pizza napolitana STG.';
+    return escolha;
+  }
+
+  function toggleHidrUI(estKey) {
+    const nap = estKey === 'napolitana';
+    document.getElementById('blocoHidrNapolitana').classList.toggle('hidden', !nap);
+    document.getElementById('blocoHidrGeral').classList.toggle('hidden', nap);
+  }
+
+  function aplicarHidrNapolitana() {
+    const v = parseInt(document.getElementById('hidrNapolitana').value, 10);
+    document.getElementById('hidr').value = v;
+    onFermChange();
+  }
+
+  function hidratacaoEfetiva(farinha, estiloKey) {
+    const est = ESTILOS[estiloKey] || ESTILOS.napolitana;
+    if (!farinha || farinha.id === 'personalizado') return est.hidr;
+    const alvo = est.hidr;
+    const [min, max] = faixaUso(farinha, true);
+    if (alvo >= min && alvo <= max) return alvo;
+    const mid = (min + max) / 2;
+    return Math.round(mid * 10) / 10;
+  }
+
+  function avisoHidracao(farinha, estiloKey) {
+    const est = ESTILOS[estiloKey];
+    if (!farinha || !est || farinha.id === 'personalizado') return '';
+    const alvo = est.hidr;
+    const [min, max] = faixaUso(farinha, true);
+    if (alvo >= min && alvo <= max) return '';
+    return `⚠️ ${est.label} pede ~${alvo}% hidratação, mas o limite técnico registrado desta farinha é ${min}–${max}%. Usamos o ponto mais próximo — resultado pode variar.`;
+  }
+
+  function fermentoFreshPct(farinha, horas, tempAmb, usarGel, hidr, horasAmbiente = null, horasFrio = null, tempGel = 4) {
+    const h = Math.max(2, Math.min(72, horas));
+    const hidrPct = hidr || 60;
+    const ambH = horasAmbiente == null ? (usarGel ? Math.min(6, h) : h) : horasAmbiente;
+    const frioH = horasFrio == null ? (usarGel ? Math.max(0, h - ambH) : 0) : horasFrio;
+    const pressao = pressaoHidratacao(farinha, hidrPct);
+    const horasEq = horasEquivalentesFermentacao(ambH, frioH, tempAmb, tempGel, pressao);
+
+    // Âncora: fermento base da ficha no meio da janela RT (ou 24 h)
+    const rt = farinha?.fermentacao_rt_h;
+    const anchorH = rt ? (rt[0] + rt[1]) / 2 : 24;
+    let base = farinha?.fermento_fresh_pct_base ?? null;
+
+    if (base == null || farinha?.id === 'personalizado') {
+      // Faixa AVPN 0,1–3 g / L água → % sobre farinha
+      const aguaL = hidrPct / 100;
+      const gMin = 0.1, gMax = 3;
+      let pos = horasEq <= 6 ? 0.9 : horasEq <= 12 ? 0.55 : horasEq <= 24 ? 0.3 : horasEq <= 48 ? 0.12 : 0.05;
+      const gFresh = (gMin + (gMax - gMin) * pos) * aguaL;
+      base = gFresh / 10;
+    } else {
+      // A divisão ambiente/frio entra como horas equivalentes de fermentação.
+      base = base * (anchorH / horasEq);
+    }
+
+    base *= (1 - pressao * 0.12);
+    if (frioH > 0 && ambH <= 3) base *= 1.08;
+
+    const aguaL = hidrPct / 100;
+    const minPct = (0.1 * aguaL) / 10;
+
+    if (farinha?.fermento_fresh_pct_base != null && farinha?.id !== 'personalizado') {
+      // Ficha da farinha: escala com tempo, piso AVPN
+      return Math.round(Math.max(minPct, base) * 1000) / 1000;
+    }
+
+    const maxPct = (3 * aguaL) / 10;
+    base = Math.max(minPct, Math.min(maxPct, base));
+    return Math.round(base * 1000) / 1000;
+  }
+
+  function cronograma(farinha, horas, tempAmb, horasAmbiente, horasFrio, tempGel, limites) {
+    const linhas = [];
+    const estKey = document.getElementById('estilo').value;
+    const hidr = parseNum('hidr');
+    const perfil = limites || perfilFermentacao(farinha, estKey);
+    const avaliacao = avaliarFermentacao(farinha, estKey, horas, tempAmb, horasAmbiente, horasFrio, tempGel, hidr);
+    const plano = planoFermentacao(horas, horasAmbiente, horasFrio);
+    const fermentoAtual = fermentoFrescoPct();
+
+    linhas.push({
+      tipo: 'info',
+      texto: `Plano calculado: ${horas} h total = ${horasAmbiente} h fora + ${horasFrio} h geladeira. Fermento fresco: ${fermentoAtual.toFixed(3)}% sobre a farinha.`,
+      fonte: 'Modelo integrado: tempo + temperatura + farinha + hidratação',
+    });
+
+    if (horasFrio === 0) {
+      const proc = processoEstilo(estKey);
+      linhas.push({
+        tipo: 'ambiente',
+        texto: proc.fermentacaoAmb(horas, tempAmb),
+        fonte: proc.fonte,
+      });
+    } else {
+      const tMin = farinha?.geladeira?.temp_c?.[0] ?? 0;
+      const tMax = farinha?.geladeira?.temp_c?.[1] ?? 4;
+      const proc = processoEstilo(estKey);
+      const frioLinhas = proc.fermentacaoFrio(horasAmbiente, horasFrio, plano.recuperacao_h || 2, tempAmb, tempGel, plano.bulk_h);
+      linhas.push({
+        tipo: 'ambiente',
+        texto: frioLinhas[0],
+        fonte: proc.fonte,
+      });
+      linhas.push({
+        tipo: 'frio',
+        texto: `${frioLinhas[1]} Faixa recomendada: ${tMin}–${tMax} °C.`,
+        fonte: farinha?.geladeira?.fonte || proc.fonte,
+      });
+      if (frioLinhas[2]) {
+        linhas.push({
+          tipo: 'ambiente',
+          texto: frioLinhas[2],
+          fonte: proc.fonte,
+        });
+      }
+    }
+
+    if (avaliacao.nivel !== 'alta' || tempAmb > 27) {
+      linhas.push({
+        tipo: 'aviso',
+        texto: avaliacao.mensagens.join(' '),
+        fonte: avaliacao.nivel === 'nao' ? 'Correção necessária antes de usar' : 'Atenção prática',
+      });
+    }
+
+    return linhas;
+  }
+
+  function renderFarinhaInfo(f) {
+    const box = document.getElementById('farinhaInfo');
+    if (!f || f.id === 'personalizado') { box.classList.add('hidden'); return; }
+    const estKey = document.getElementById('estilo').value;
+    const { nivel, motivo } = classificarFarinhaOperacional(f, estKey);
+    const conf = f.confianca === 'alta' ? 'badge-alta' : f.confianca === 'baixa' ? 'badge-baixa' : 'badge-media';
+    let specs = [];
+    if (f.w) specs.push(`W ${f.w[0]}${f.w[1] !== f.w[0] ? '–' + f.w[1] : ''}`);
+    if (f.proteina) specs.push(`${f.proteina}% proteína`);
+    if (f.pl) specs.push(`P/L ${f.pl[0]}–${f.pl[1]}`);
+    if (f.hidratação_ideal) specs.push(`Hidr. ideal ${f.hidratação_ideal[0]}–${f.hidratação_ideal[1]}%`);
+    if (f.hidratação_tecnica) specs.push(`Limite técnico ${f.hidratação_tecnica[0]}–${f.hidratação_tecnica[1]}%`);
+    else if (f.hidratação) specs.push(`Hidr. ${f.hidratação[0]}–${f.hidratação[1]}%`);
+    const adequacao = nivel === 'ok' ? '🟢 Adequada para sua receita, tempo e temperatura'
+      : nivel === 'restricoes' ? '🟡 Com restrições' + (motivo ? ': ' + motivo : '')
+      : '🔴 Não indicada' + (motivo ? ': ' + motivo : '');
+    box.classList.remove('hidden');
+    box.innerHTML = `<strong>${f.nome}</strong> <span class="badge ${conf}">${f.confianca || 'n/a'}</span><br>` +
+      `<em>${adequacao}</em><br>` +
+      (specs.length ? specs.join(' · ') + '<br>' : '') +
+      (f.nota ? `<em>${f.nota}</em><br>` : '') +
+      `<a href="${f.fonte}" target="_blank" rel="noopener">Fonte ↗</a>` +
+      (f.verificado ? ` · verificado ${f.verificado}` : '');
+  }
+
+  function setLock(locked) {
+    const estKey = document.getElementById('estilo').value;
+    paramsLocked = locked && farinhaAtual?.id !== 'personalizado';
+    const lockHidr = paramsLocked && estKey !== 'napolitana';
+    const hidrEl = document.getElementById('hidr');
+    hidrEl.readOnly = lockHidr;
+    hidrEl.classList.toggle('locked', lockHidr);
+    document.getElementById('hidrLock').classList.toggle('hidden', !lockHidr);
+    const salEl = document.getElementById('sal');
+    salEl.readOnly = paramsLocked;
+    salEl.classList.toggle('locked', paramsLocked);
+    document.getElementById('salLock').classList.toggle('hidden', !paramsLocked);
+  }
+
+  function aplicarFarinha() {
+    const id = document.getElementById('farinhaSel').value;
+    if (!id) {
+      mostrarPosFarinha(false);
+      farinhaAtual = null;
+      document.getElementById('farinhaInfo').classList.add('hidden');
+      return;
+    }
+    farinhaAtual = getFarinha(id);
+    mostrarPosFarinha(true);
+    ambienteManual = false;
+    ocultarResultado();
+    aplicarParametrosReceita();
+    renderFarinhaInfo(farinhaAtual);
+    onFermChange();
+  }
+
+  function aplicarEstilo() {
+    ambienteManual = false;
+    const estKey = document.getElementById('estilo').value;
+    atualizarUIPorcao(estKey);
+    atualizarIlustracaoEstilo(estKey);
+    atualizarNormativoReceita();
+    rebuildListaFarinhas(true);
+    mostrarPosFarinha(false);
+    farinhaAtual = null;
+    ocultarResultado();
+    document.getElementById('farinhaInfo').classList.add('hidden');
+    const aviso = document.getElementById('avisoHidr');
+    if (aviso) aviso.remove();
+  }
+
+  function ocultarResultado() {
+    document.getElementById('out').classList.add('hidden');
+    document.getElementById('copyBtn').classList.add('hidden');
+  }
+
+  function onHidrManual() {
+    if (paramsLocked) return;
+    document.getElementById('estilo').value = 'personalizado';
+    atualizarNormativoReceita();
+    ambienteManual = false;
+    atualizarDivisaoFermentacao(true);
+    onFermChange();
+    calcular(false);
+  }
+
+  function onSalManual() {
+    if (paramsLocked) return;
+    ocultarResultado();
+    calcular(false);
+  }
+
+  function onMetodoChange() {
+    ambienteManual = false;
+    atualizarDivisaoFermentacao(true);
+    onFermChange();
+  }
+
+  function onTotalFermChange() {
+    ambienteManual = false;
+    atualizarDivisaoFermentacao(true);
+    rebuildListaFarinhas(false);
+    onFermChange();
+  }
+
+  function onFrioFermChange() {
+    const frio = parseInt(document.getElementById('horasFrio').value, 10);
+    const total = document.getElementById('horasFerm');
+    if (frio > parseInt(total.value, 10)) {
+      total.value = frio;
+    }
+    ambienteManual = true;
+    onFermChange();
+  }
+
+  function onTemperaturaAmbienteChange() {
+    ambienteManual = false;
+    atualizarDivisaoFermentacao(true);
+    rebuildListaFarinhas(false);
+    onFermChange();
+  }
+
+  function onFermChange() {
+    ocultarResultado();
+    atualizarLimitesUI();
+    const h = parseInt(document.getElementById('horasFerm').value, 10);
+    document.getElementById('horasVal').textContent = h + ' h';
+    if (!document.getElementById('fermManual').checked) {
+      atualizarFermentoAuto();
+    }
+    renderCronograma();
+    if (farinhaAtual) renderFarinhaInfo(farinhaAtual);
+    calcular(false);
+  }
+
+  function atualizarFermentoAuto() {
+    const horas = parseInt(document.getElementById('horasFerm').value, 10);
+    const tempAmb = parseNum('tempAmb');
+    const usarGel = document.getElementById('usarGeladeira').checked;
+    const hidr = parseNum('hidr');
+    const horasFrio = parseInt(document.getElementById('horasFrio').value, 10);
+    const horasAmb = Math.max(0, horas - horasFrio);
+    const pct = fermentoFreshPct(farinhaAtual, horas, tempAmb, usarGel, hidr, horasAmb, horasFrio, parseNum('tempGel'));
+    setFermentoInput(pct);
+  }
+
+  function renderCronograma() {
+    const el = document.getElementById('cronograma');
+    const total = parseInt(document.getElementById('horasFerm').value, 10);
+    const horasFrio = parseInt(document.getElementById('horasFrio').value, 10);
+    const horasAmb = Math.max(0, total - horasFrio);
+    const linhas = cronograma(
+      farinhaAtual,
+      total,
+      parseNum('tempAmb'),
+      horasAmb,
+      horasFrio,
+      parseNum('tempGel'),
+      limitesAtuais
+    );
+    el.innerHTML = linhas.map(l =>
+      `<div class="cron-item ${l.tipo}">${l.texto}<div class="cron-fonte">Fonte: ${l.fonte}</div></div>`
+    ).join('');
+  }
+
+  function toggleGeladeira() {
+    onFermChange();
+  }
+
+  function toggleFermManual() {
+    const manual = document.getElementById('fermManual').checked;
+    const ferm = document.getElementById('ferm');
+    ferm.readOnly = !manual;
+    ferm.classList.toggle('locked', !manual);
+    document.getElementById('fermAuto').classList.toggle('hidden', manual);
+    if (!manual) atualizarFermentoAuto();
+    calcular(false);
+  }
+
+  function setModo(m) {
+    modo = m;
+    ocultarResultado();
+    document.getElementById('tab-farinha').classList.toggle('active', m === 'farinha');
+    document.getElementById('tab-bolas').classList.toggle('active', m === 'bolas');
+    document.getElementById('bloco-farinha').classList.toggle('hidden', m !== 'farinha');
+    document.getElementById('bloco-bolas').classList.toggle('hidden', m !== 'bolas');
+    calcular(false);
+  }
+
+  function parseNum(id) {
+    const v = parseFloat(document.getElementById(id).value);
+    return Number.isFinite(v) ? v : 0;
+  }
+
+  function fermentoFrescoPct() {
+    const v = parseNum('ferm');
+    return document.getElementById('fermSeco').checked ? v * 3 : v;
+  }
+
+  function setFermentoInput(freshPct) {
+    const val = document.getElementById('fermSeco').checked ? freshPct / 3 : freshPct;
+    document.getElementById('ferm').value = val.toFixed(3);
+  }
+
+  function toggleFermentoSeco() {
+    const seco = document.getElementById('fermSeco').checked;
+    document.getElementById('label-ferm').innerHTML = (seco ? 'Fermento seco (% sobre farinha)' : 'Fermento fresco (% sobre farinha)') +
+      ' <span id="fermAuto" class="badge badge-alta' + (document.getElementById('fermManual').checked ? ' hidden' : '') + '">auto</span>';
+    if (!document.getElementById('fermManual').checked) atualizarFermentoAuto();
+    else setFermentoInput(fermentoFrescoPct());
+    calcular(false);
+  }
+
+  function farinhaFromMassa(total, h, s, fe) {
+    const f = 1 + h/100 + s/100 + fe/100;
+    return f > 0 ? total / f : 0;
+  }
+
+  function calcularIngredientes(f, h, s, fe) {
+    const agua = f * h / 100, sal = f * s / 100, fermFresco = f * fe / 100, fermSeco = fermFresco / 3;
+    return { f, agua, sal, fermFresco, fermSeco, total: f + agua + sal + fermFresco };
+  }
+
+  function instrucoesProcesso(estKey, r, h, totalFerm, ambFerm, frioFerm) {
+    const tempAmb = parseNum('tempAmb');
+    const tempGel = parseNum('tempGel');
+    const proc = processoEstilo(estKey);
+    const alvoMassa = frioFerm > 0 ? proc.fdtFrio : proc.fdt;
+    const tempAgua = Math.round((alvoMassa * 3) - (tempAmb + tempAmb + (frioFerm > 0 ? 4 : 2)));
+    const aguaTxt = tempAgua < 4
+      ? `use água bem gelada e parte em gelo para buscar massa final ~${alvoMassa} °C`
+      : `use água em torno de ${clamp(tempAgua, 4, 28)} °C para buscar massa final ~${alvoMassa} °C`;
+    const descansoTxt = typeof proc.descanso === 'function' ? proc.descanso(frioFerm > 0) : proc.descanso;
+    const plano = planoFermentacao(totalFerm, ambFerm, frioFerm);
+
+    const passos = [
+      `Temperatura da massa (${proc.fonte.split('·')[0].trim()}): ${aguaTxt}. Meça ao final da mistura.`,
+      proc.mistura,
+      proc.sova,
+      descansoTxt,
+      textoFormatacao(estKey, r.total),
+      proc.posFormatacao,
+    ];
+
+    if (frioFerm > 0) {
+      proc.fermentacaoFrio(ambFerm, frioFerm, plano.recuperacao_h || 2, tempAmb, tempGel, plano.bulk_h).forEach(l => passos.push(l));
+    } else {
+      passos.push(proc.fermentacaoAmb(totalFerm, tempAmb));
+    }
+
+    passos.push(proc.pontoUso);
+    return passos;
+  }
+
+  function calcular(revelar = false) {
+    if (!document.getElementById('fermManual').checked) {
+      atualizarFermentoAuto();
+    }
+    const h = parseNum('hidr'), s = parseNum('sal'), fe = fermentoFrescoPct();
+    const seco = document.getElementById('fermSeco').checked;
+    const estKey = document.getElementById('estilo').value;
+    const est = ESTILOS[estKey] || ESTILOS.napolitana;
+    const ui = porcaoUI(estKey);
+    let f, extra = '';
+    if (modo === 'farinha') {
+      f = parseNum('farinha');
+    } else {
+      const bolas = Math.max(1, Math.floor(parseNum('bolas')) || 1), peso = parseNum('pesoBola'), massa = bolas * peso;
+      f = farinhaFromMassa(massa, h, s, fe);
+      extra = `<span style="color:var(--muted);font-size:.9rem">🎯 <b>${bolas}</b> ${ui.plural} × <b>${peso.toFixed(0)} g</b> → massa <b>${massa.toFixed(0)} g</b></span><br><br>`;
+    }
+    const r = calcularIngredientes(f, h, s, fe);
+    const fermPct = fe;
+    const fermLabel = seco
+      ? `Fermento seco: <b>${r.fermSeco.toFixed(2)} g</b> <span style="opacity:.65">(${fermPct.toFixed(3)}% eq. fresco · ≈ ${r.fermFresco.toFixed(1)} g fresco)</span>`
+      : `Fermento fresco: <b>${r.fermFresco.toFixed(1)} g</b> <span style="opacity:.65">(${fermPct.toFixed(3)}% · ≈ ${r.fermSeco.toFixed(2)} g seco)</span>`;
+    const farinhaNome = farinhaAtual?.nome || '—';
+    const totalFerm = parseInt(document.getElementById('horasFerm').value, 10);
+    const frioFerm = parseInt(document.getElementById('horasFrio').value, 10);
+    const ambFerm = Math.max(0, totalFerm - frioFerm);
+    const metodo = document.getElementById('metodoFermentacao')?.selectedOptions?.[0]?.textContent || 'Método calculado';
+    const passos = instrucoesProcesso(estKey, r, h, totalFerm, ambFerm, frioFerm);
+    ultimoTexto =
+      `${est.label} · ${farinhaNome}\n` +
+      (modo === 'bolas' ? `${Math.floor(parseNum('bolas'))} ${ui.plural} × ${parseNum('pesoBola').toFixed(0)} g\n` : '') +
+      `Método: ${metodo}\nFermentação: ${totalFerm} h total · ${ambFerm} h fora · ${frioFerm} h geladeira · ambiente ${parseNum('tempAmb')}°C\n` +
+      `Farinha: ${r.f.toFixed(0)} g\nÁgua: ${r.agua.toFixed(0)} g (${h}%)\nSal: ${r.sal.toFixed(1)} g\n` +
+      (seco ? `Fermento seco: ${r.fermSeco.toFixed(2)} g\n` : `Fermento fresco: ${r.fermFresco.toFixed(1)} g\n`) +
+      `Massa total: ${r.total.toFixed(0)} g\n\nInstruções:\n- ${passos.join('\n- ')}`;
+    document.getElementById('out').innerHTML = extra +
+      `<span style="font-size:.85rem;color:var(--muted)">${est.label} · ${farinhaNome}</span><br>` +
+      `<span style="font-size:.85rem;color:var(--muted)">${metodo} · ${totalFerm} h total · ${ambFerm} h fora · ${frioFerm} h geladeira</span><br>` +
+      `Farinha: <b>${r.f.toFixed(0)} g</b><br>Água: <b>${r.agua.toFixed(0)} g</b> <span style="opacity:.65">(${h}%)</span><br>` +
+      `Sal: <b>${r.sal.toFixed(1)} g</b><br>${fermLabel}<br>` +
+      `<hr style="border:none;border-top:1px solid var(--rule);margin:14px 0">` +
+      `Massa total: <b>${r.total.toFixed(0)} g</b>` +
+      (modo === 'bolas' ? `<br><span style="opacity:.65;font-size:.85rem">≈ ${(r.total/Math.max(1,parseNum('bolas'))).toFixed(0)} g/${ui.singular}</span>` : '') +
+      `<hr style="border:none;border-top:1px solid var(--rule);margin:14px 0">` +
+      blocoIlustResultado(estKey) +
+      `<strong>Instruções guiadas</strong><ol style="line-height:1.55;margin-top:8px;padding-left:20px">${passos.map(p => `<li>${p}</li>`).join('')}</ol>`;
+    if (revelar) {
+      document.getElementById('out').classList.remove('hidden');
+      document.getElementById('copyBtn').classList.remove('hidden');
+      document.getElementById('out').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  async function copiar() {
+    try { await navigator.clipboard.writeText(ultimoTexto); } catch {
+      const ta = document.createElement('textarea'); ta.value = ultimoTexto;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    }
+    const t = document.getElementById('toast'); t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  initFarinhas();
+</script>
+</body>
+</html>
