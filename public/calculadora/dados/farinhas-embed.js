@@ -1016,6 +1016,1207 @@ const FARINHAS = [
     "max_alta_hidratacao": 82
   },
   {
+    "id": "renata-dia-a-dia",
+    "nome": "Renata Dia a Dia (Tipo 1 Especial)",
+    "grupo": "nacional",
+    "tipo": "1",
+    "proteina": 13,
+    "hidratação": [
+      58,
+      65
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.35,
+    "fonte": "https://renata.com.br/produto/farinha-de-trigo-renata-dia-a-dia",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "Proteína 13 g/100 g — site Renata. W não declarado; faixa operacional conservadora.",
+    "receitas": [
+      "napolitana",
+      "ny"
+    ],
+    "hidratação_ideal": [
+      58,
+      65
+    ],
+    "hidratação_tecnica": [
+      58,
+      68
+    ],
+    "max_alta_hidratacao": 68
+  },
+  {
+    "id": "renata-super-premium",
+    "nome": "Renata Super Premium (Tipo 1)",
+    "grupo": "nacional",
+    "tipo": "1",
+    "proteina": 12,
+    "hidratação": [
+      58,
+      65
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.35,
+    "fonte": "https://renata.com.br/produto/farinha-de-trigo-super-premium-renata",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "Proteína 12 g/100 g — site Renata. W não declarado.",
+    "receitas": [
+      "napolitana",
+      "ny"
+    ],
+    "hidratação_ideal": [
+      58,
+      65
+    ],
+    "hidratação_tecnica": [
+      58,
+      68
+    ],
+    "max_alta_hidratacao": 68
+  },
+  {
+    "id": "renata-semolina-durum",
+    "nome": "Renata Semolina de Trigo Durum (Tipo 1)",
+    "grupo": "nacional",
+    "tipo": "1",
+    "proteina": 14,
+    "hidratação": [
+      58,
+      65
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.3,
+    "fonte": "https://renata.com.br/produto/farinha-renata-semolina-de-trigo-durum",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "Proteína 14 g/100 g; site Renata indica uso em pizzas. W não declarado.",
+    "receitas": [
+      "napolitana",
+      "ny"
+    ],
+    "hidratação_ideal": [
+      58,
+      65
+    ],
+    "hidratação_tecnica": [
+      58,
+      70
+    ],
+    "max_alta_hidratacao": 70
+  },
+  {
+    "id": "dona-benta-tipo1",
+    "nome": "Dona Benta Tradicional (Tipo 1)",
+    "grupo": "nacional",
+    "tipo": "1",
+    "proteina": 11,
+    "hidratação": [
+      58,
+      62
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.4,
+    "fonte": "https://www.jmacedo.com.br/dona-benta/produtos/farinha-de-trigo-dona-benta-tipo-1-1kg-saco/",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "Proteína 11 g/100 g — J.Macêdo. W não declarado.",
+    "receitas": [
+      "napolitana"
+    ],
+    "hidratação_ideal": [
+      58,
+      62
+    ],
+    "hidratação_tecnica": [
+      58,
+      65
+    ],
+    "max_alta_hidratacao": 65
+  },
+  {
+    "id": "orquidea-tipo1",
+    "nome": "Orquídea Tradicional (Tipo 1)",
+    "grupo": "nacional",
+    "tipo": "1",
+    "proteina": 11,
+    "hidratação": [
+      58,
+      62
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.4,
+    "fonte": "https://orquidea.com.br/produtos/farinha-de-trigo-1kg",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "Proteína 11 g/100 g — Moinho Orquídea. W não declarado.",
+    "receitas": [
+      "napolitana"
+    ],
+    "hidratação_ideal": [
+      58,
+      62
+    ],
+    "hidratação_tecnica": [
+      58,
+      65
+    ],
+    "max_alta_hidratacao": 65
+  },
+  {
+    "id": "finna-tipo1",
+    "nome": "Finna Tipo 1 (M. Dias Branco)",
+    "grupo": "nacional",
+    "tipo": "1",
+    "proteina": 9.3,
+    "hidratação": [
+      55,
+      60
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.45,
+    "fonte": "https://finna.com.br/pt/produtos/farinha-de-trigo-finna-tipo-1/",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "Proteína 9,3 g/100 g — site Finna. W não declarado; proteína abaixo da média das farinhas de pizza.",
+    "receitas": [
+      "napolitana"
+    ],
+    "hidratação_ideal": [
+      55,
+      60
+    ],
+    "hidratação_tecnica": [
+      55,
+      62
+    ],
+    "max_alta_hidratacao": 62
+  },
+  {
+    "id": "finna-pizza",
+    "nome": "Finna Pizza (M. Dias Branco)",
+    "grupo": "nacional",
+    "tipo": "1",
+    "proteina": 12,
+    "hidratação": [
+      58,
+      62
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.35,
+    "fonte": "https://finna.com.br/pt/produtos/farinha-de-trigo-tipo-1-pizza-5kg/",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "Proteína 6 g/50 g porção (= 12 g/100 g) — site Finna. W não declarado.",
+    "receitas": [
+      "napolitana",
+      "ny"
+    ],
+    "hidratação_ideal": [
+      58,
+      62
+    ],
+    "hidratação_tecnica": [
+      58,
+      65
+    ],
+    "max_alta_hidratacao": 65
+  },
+  {
+    "id": "boa-sorte-tipo1",
+    "nome": "Boa Sorte Tradicional (Tipo 1)",
+    "grupo": "nacional",
+    "tipo": "1",
+    "proteina": 11,
+    "hidratação": [
+      58,
+      62
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.4,
+    "fonte": "https://www.jmacedo.com.br/outras-marcas/produtos/farinha-de-trigo-tradicional-boa-sorte-1kg-embalagem-papel/",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "Proteína 11 g/100 g — J.Macêdo. W não declarado.",
+    "receitas": [
+      "napolitana"
+    ],
+    "hidratação_ideal": [
+      58,
+      62
+    ],
+    "hidratação_tecnica": [
+      58,
+      65
+    ],
+    "max_alta_hidratacao": 65
+  },
+  {
+    "id": "nacional-especial-tipo1",
+    "nome": "Nacional Especial (Tipo 1)",
+    "grupo": "nacional",
+    "tipo": "1",
+    "proteina": 11,
+    "hidratação": [
+      58,
+      62
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.4,
+    "fonte": "https://www.moinhonacional.com.br/produtos/farinha-de-trigo-especial-nacional-tipo-1-25kg",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "Proteína 5,5 g/50 g porção (= 11 g/100 g) — Moinho Nacional. W não declarado.",
+    "receitas": [
+      "napolitana"
+    ],
+    "hidratação_ideal": [
+      58,
+      62
+    ],
+    "hidratação_tecnica": [
+      58,
+      65
+    ],
+    "max_alta_hidratacao": 65
+  },
+  {
+    "id": "primor-tradicional",
+    "nome": "Primor Tradicional (Bunge)",
+    "grupo": "nacional",
+    "tipo": "1",
+    "proteina": 11,
+    "hidratação": [
+      58,
+      62
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.4,
+    "fonte": "https://world.openfoodfacts.org/product/7891080147951/farinha-de-trigo-tradicional-primor",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "Proteína 11 g/100 g conforme tabela do rótulo (EAN 7891080147951). W não declarado; site Bunge não publica ficha nutricional online.",
+    "receitas": [
+      "napolitana"
+    ],
+    "hidratação_ideal": [
+      58,
+      62
+    ],
+    "hidratação_tecnica": [
+      58,
+      65
+    ],
+    "max_alta_hidratacao": 65
+  },
+  {
+    "id": "divella-00-pizza",
+    "nome": "Divella 00 Pizza (1 kg / 5 kg)",
+    "grupo": "importada",
+    "tipo": "00",
+    "proteina": 10.5,
+    "hidratação": [
+      55,
+      62
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.4,
+    "fermentacao_rt_h": [
+      4,
+      12
+    ],
+    "fonte": "https://www.divella.it/en/products/flour-type-00-pizza-1kg-5kg/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "Proteína 10,5 g/100 g — Divella. Lievitazione media; W não publicado nesta ficha.",
+    "receitas": [
+      "napolitana"
+    ],
+    "hidratação_ideal": [
+      55,
+      62
+    ],
+    "hidratação_tecnica": [
+      55,
+      65
+    ],
+    "max_alta_hidratacao": 65
+  },
+  {
+    "id": "divella-00-napoletana",
+    "nome": "Divella 00 Napoletana (5 kg)",
+    "grupo": "importada",
+    "tipo": "00",
+    "proteina": 11.6,
+    "hidratação": [
+      58,
+      65
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.3,
+    "fermentacao_rt_h": [
+      6,
+      18
+    ],
+    "fonte": "https://www.divella.it/en/products/flour-type-00-for-neapolitan-pizza-5-kg/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "Proteína 11,6 g/100 g — Divella, farinha para pizza napolitana.",
+    "receitas": [
+      "napolitana",
+      "ny"
+    ],
+    "hidratação_ideal": [
+      58,
+      65
+    ],
+    "hidratação_tecnica": [
+      58,
+      68
+    ],
+    "max_alta_hidratacao": 68
+  },
+  {
+    "id": "divella-manitoba",
+    "nome": "Divella Manitoba (Tipo 0, 1 kg)",
+    "grupo": "importada",
+    "tipo": "0",
+    "proteina": 13,
+    "hidratação": [
+      65,
+      75
+    ],
+    "sal": 2,
+    "estilo": "pao",
+    "fermento_fresh_pct_base": 0.15,
+    "fermentacao_rt_h": [
+      12,
+      48
+    ],
+    "fonte": "https://www.divella.it/en/products/manitoba-flour-type-0-1-kg/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "Proteína 13 g/100 g — Divella; indicada para lievitazioni lunghe.",
+    "receitas": [
+      "pao",
+      "contemporanea",
+      "focaccia"
+    ],
+    "hidratação_ideal": [
+      65,
+      75
+    ],
+    "hidratação_tecnica": [
+      65,
+      80
+    ],
+    "max_alta_hidratacao": 80
+  },
+  {
+    "id": "divella-00",
+    "nome": "Divella 00 Multiuso (1 kg / 5 kg)",
+    "grupo": "importada",
+    "tipo": "00",
+    "proteina": 9.5,
+    "hidratação": [
+      55,
+      60
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.45,
+    "fermentacao_rt_h": [
+      2,
+      8
+    ],
+    "fonte": "https://www.divella.it/en/products/flour-type-00-1kg-5kg/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "Proteína 9,5 g/100 g — Divella 00 uso geral; fase di lievitazione media.",
+    "receitas": [
+      "napolitana"
+    ],
+    "hidratação_ideal": [
+      55,
+      60
+    ],
+    "hidratação_tecnica": [
+      55,
+      62
+    ],
+    "max_alta_hidratacao": 62
+  },
+  {
+    "id": "grassi-00-pizza-focaccia",
+    "nome": "Molino Grassi 00 Pizza e Focaccia",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      290,
+      290
+    ],
+    "pl": [
+      0.5,
+      0.5
+    ],
+    "hidratação": [
+      56,
+      68
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.3,
+    "fermentacao_rt_h": [
+      6,
+      18
+    ],
+    "fonte": "https://www.molinograssi.it/prodotto/farina-00-pizza-e-focaccia/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W290, P/L 0,50, assorbimento farinográfico A 56,0% — ficha Molino Grassi.",
+    "receitas": [
+      "napolitana",
+      "ny",
+      "focaccia"
+    ],
+    "hidratação_ideal": [
+      56,
+      65
+    ],
+    "hidratação_tecnica": [
+      56,
+      68
+    ],
+    "max_alta_hidratacao": 68
+  },
+  {
+    "id": "garofalo-w260",
+    "nome": "Garofalo W260 (Tipo 00)",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      225,
+      295
+    ],
+    "proteina": 12,
+    "pl": [
+      0.4,
+      1
+    ],
+    "hidratação": [
+      53,
+      68
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.3,
+    "fermentacao_rt_h": [
+      8,
+      24
+    ],
+    "fonte": "http://www.farine-garofalo.com/pdf/W260.pdf",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W225–295, proteína ≥12%, assorbimento >53% — scheda tecnica Garofalo. Pizza, pane, focacce; lievitazioni medio lunghe.",
+    "receitas": [
+      "napolitana",
+      "ny",
+      "focaccia",
+      "pao"
+    ],
+    "hidratação_ideal": [
+      58,
+      65
+    ],
+    "hidratação_tecnica": [
+      53,
+      68
+    ],
+    "max_alta_hidratacao": 68
+  },
+  {
+    "id": "garofalo-w350",
+    "nome": "Garofalo W350 (Tipo 00)",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      310,
+      390
+    ],
+    "proteina": 13,
+    "pl": [
+      0.4,
+      1
+    ],
+    "hidratação": [
+      54,
+      75
+    ],
+    "sal": 2,
+    "estilo": "contemporanea",
+    "fermento_fresh_pct_base": 0.15,
+    "fermentacao_rt_h": [
+      12,
+      48
+    ],
+    "max_ambiente_h": 24,
+    "max_total_h": 72,
+    "fonte": "http://www.farine-garofalo.com/pdf/W350.pdf",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W310–390, proteína ≥13%, assorbimento >54% — scheda Garofalo. Pizza in teglia, grandi lievitati, alte idratazioni.",
+    "receitas": [
+      "focaccia",
+      "romana_pala",
+      "contemporanea",
+      "pao"
+    ],
+    "hidratação_ideal": [
+      65,
+      75
+    ],
+    "hidratação_tecnica": [
+      54,
+      80
+    ],
+    "max_alta_hidratacao": 80
+  },
+  {
+    "id": "padano-s20",
+    "nome": "Mulino Padano S20 (Pizza)",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      380,
+      420
+    ],
+    "proteina": 15,
+    "pl": [
+      0,
+      0.7
+    ],
+    "hidratação": [
+      59,
+      75
+    ],
+    "sal": 2,
+    "estilo": "contemporanea",
+    "fermento_fresh_pct_base": 0.12,
+    "fermentacao_rt_h": [
+      24,
+      72
+    ],
+    "max_ambiente_h": 24,
+    "max_total_h": 72,
+    "fonte": "https://store.mulinopadano.it/en/product/s20-pizza-flour/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W380–420, proteína min. 15%, assorbimento 59% — Mulino Padano. Longa maturação direct/indirect dough.",
+    "receitas": [
+      "focaccia",
+      "romana_pala",
+      "contemporanea",
+      "pao"
+    ],
+    "hidratação_ideal": [
+      59,
+      72
+    ],
+    "hidratação_tecnica": [
+      59,
+      78
+    ],
+    "max_alta_hidratacao": 78
+  },
+  {
+    "id": "mariani-00-rinforzata-pizza",
+    "nome": "Molino Paolo Mariani 00 Rinforzata Pizza",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      280,
+      300
+    ],
+    "proteina": 14,
+    "pl": [
+      0.45,
+      0.55
+    ],
+    "hidratação": [
+      58,
+      70
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.25,
+    "fermentacao_rt_h": [
+      8,
+      24
+    ],
+    "fonte": "https://www.molinopaolomariani.com/wp-content/uploads/2025/05/T00-RINFORZATA-PIZZA-25-12.5-kg_Rev.04.pdf",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W280–300, proteína 13,5–14,5%, assorbimento min. 58% — scheda tecnica Molino Paolo Mariani.",
+    "receitas": [
+      "napolitana",
+      "ny",
+      "contemporanea"
+    ],
+    "hidratação_ideal": [
+      58,
+      68
+    ],
+    "hidratação_tecnica": [
+      58,
+      70
+    ],
+    "max_alta_hidratacao": 70
+  },
+  {
+    "id": "clitunno-00-sr-pizza",
+    "nome": "Molino sul Clitunno 00 SR Pizza",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      300,
+      330
+    ],
+    "hidratação": [
+      58,
+      70
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.2,
+    "fermentacao_rt_h": [
+      24,
+      60
+    ],
+    "max_ambiente_h": 24,
+    "max_total_h": 60,
+    "fonte": "https://www.molinosulclitunno.com/en/flours/farina-00-sr-pizza/",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "W300–330 — site Molino sul Clitunno; maturação média/longa 36–60 h. Proteína não publicada na ficha resumida online.",
+    "receitas": [
+      "napolitana",
+      "ny",
+      "contemporanea"
+    ],
+    "hidratação_ideal": [
+      58,
+      68
+    ],
+    "hidratação_tecnica": [
+      58,
+      72
+    ],
+    "max_alta_hidratacao": 72
+  },
+  {
+    "id": "caputo-americana",
+    "nome": "Caputo Americana (saco NY)",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      360,
+      380
+    ],
+    "proteina": 14.25,
+    "pl": [
+      0.45,
+      0.5
+    ],
+    "hidratação": [
+      60,
+      68
+    ],
+    "sal": 2.5,
+    "estilo": "ny",
+    "fermento_fresh_pct_base": 0.25,
+    "fermentacao_rt_h": [
+      8,
+      24
+    ],
+    "fonte": "https://www.mulinocaputo.it/en/products/00-american/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W360–380, 14,25% proteína — Caputo indica pizza americana artesanal; hidratação não fixada na ficha.",
+    "receitas": [
+      "ny",
+      "contemporanea"
+    ],
+    "hidratação_ideal": [
+      60,
+      68
+    ],
+    "hidratação_tecnica": [
+      58,
+      72
+    ],
+    "max_alta_hidratacao": 72
+  },
+  {
+    "id": "caputo-americana-super",
+    "nome": "Caputo Americana Super",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      380,
+      400
+    ],
+    "proteina": 15.25,
+    "pl": [
+      0.5,
+      0.6
+    ],
+    "hidratação": [
+      62,
+      72
+    ],
+    "sal": 2.5,
+    "estilo": "ny",
+    "fermento_fresh_pct_base": 0.2,
+    "fermentacao_rt_h": [
+      12,
+      48
+    ],
+    "fonte": "https://www.mulinocaputo.it/en/products/00-American-super/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W380–400, 15,25% proteína — Caputo para pizza americana clássica.",
+    "receitas": [
+      "ny",
+      "contemporanea",
+      "focaccia"
+    ],
+    "hidratação_ideal": [
+      62,
+      72
+    ],
+    "hidratação_tecnica": [
+      60,
+      75
+    ],
+    "max_alta_hidratacao": 75
+  },
+  {
+    "id": "caputo-integrale",
+    "nome": "Caputo Integrale",
+    "grupo": "importada",
+    "tipo": "integral",
+    "w": [
+      170,
+      190
+    ],
+    "proteina": 13,
+    "pl": [
+      0.8,
+      0.9
+    ],
+    "hidratação": [
+      65,
+      75
+    ],
+    "sal": 2,
+    "estilo": "pao",
+    "fermento_fresh_pct_base": 0.2,
+    "fermentacao_rt_h": [
+      8,
+      24
+    ],
+    "fonte": "https://www.mulinocaputo.it/en/products/integral/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W170–190, 13% proteína — farinha integral Caputo; P/L 0,80–0,90.",
+    "receitas": [
+      "pao",
+      "contemporanea"
+    ],
+    "hidratação_ideal": [
+      65,
+      75
+    ],
+    "hidratação_tecnica": [
+      65,
+      78
+    ],
+    "max_alta_hidratacao": 78
+  },
+  {
+    "id": "padano-s10",
+    "nome": "Mulino Padano S10 (Pizza)",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      290,
+      320
+    ],
+    "proteina": 12,
+    "pl": [
+      0,
+      0.65
+    ],
+    "hidratação": [
+      57,
+      65
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.35,
+    "fermentacao_rt_h": [
+      4,
+      12
+    ],
+    "fonte": "https://store.mulinopadano.it/en/product/s10-pizza-flour/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W290–320, proteína min. 12%, assorbimento 57% — Mulino Padano; lievitazioni brevi/medie.",
+    "receitas": [
+      "napolitana",
+      "ny"
+    ],
+    "hidratação_ideal": [
+      57,
+      65
+    ],
+    "hidratação_tecnica": [
+      57,
+      68
+    ],
+    "max_alta_hidratacao": 68
+  },
+  {
+    "id": "padano-s15",
+    "nome": "Mulino Padano S15 (Pizza)",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      330,
+      360
+    ],
+    "proteina": 13.5,
+    "pl": [
+      0,
+      0.65
+    ],
+    "hidratação": [
+      58,
+      68
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.3,
+    "fermentacao_rt_h": [
+      6,
+      18
+    ],
+    "fonte": "https://store.mulinopadano.it/en/product/s15-pizza-flour/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W330–360, proteína min. 13,5%, assorbimento 58% — Mulino Padano; teglia romana e impasti indiretti.",
+    "receitas": [
+      "napolitana",
+      "ny",
+      "romana_pala",
+      "contemporanea"
+    ],
+    "hidratação_ideal": [
+      58,
+      68
+    ],
+    "hidratação_tecnica": [
+      58,
+      72
+    ],
+    "max_alta_hidratacao": 72
+  },
+  {
+    "id": "ambrosio-regina",
+    "nome": "Molini Ambrosio Regina",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      290,
+      310
+    ],
+    "proteina": 13,
+    "pl": [
+      0.6,
+      0.7
+    ],
+    "hidratação": [
+      57,
+      68
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.3,
+    "fermentacao_rt_h": [
+      6,
+      12
+    ],
+    "max_ambiente_h": 12,
+    "max_total_h": 48,
+    "geladeira": {
+      "temp_c": [
+        0,
+        4
+      ],
+      "max_dias": 2,
+      "fonte": "Ambrosio Regina: maturazione in cella a 4°C fino a 48 ore"
+    },
+    "fonte": "https://www.moliniambrosio.com/en/product/regina/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W290–310, 13 g proteína, hidratação min. 57%, assorbimento fino a 68% — Molini Ambrosio.",
+    "receitas": [
+      "napolitana",
+      "ny",
+      "contemporanea"
+    ],
+    "hidratação_ideal": [
+      57,
+      68
+    ],
+    "hidratação_tecnica": [
+      57,
+      68
+    ],
+    "max_alta_hidratacao": 68
+  },
+  {
+    "id": "ambrosio-napoli-antica",
+    "nome": "Molini Ambrosio Napoli Antica",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      240,
+      260
+    ],
+    "proteina": 12,
+    "pl": [
+      0.6,
+      0.7
+    ],
+    "hidratação": [
+      56.5,
+      63
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.4,
+    "fermentacao_rt_h": [
+      2,
+      6
+    ],
+    "max_ambiente_h": 6,
+    "max_total_h": 24,
+    "geladeira": {
+      "temp_c": [
+        0,
+        4
+      ],
+      "max_dias": 1,
+      "fonte": "Ambrosio Napoli Antica: maturazione a 4°C fino a 24 ore"
+    },
+    "fonte": "https://www.moliniambrosio.com/en/product/napoli-antica/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W240–260, 12 g proteína, hidratação min. 56,5%, assorbimento fino a 63% — lievitazione breve napoletana.",
+    "receitas": [
+      "napolitana"
+    ],
+    "hidratação_ideal": [
+      56.5,
+      63
+    ],
+    "hidratação_tecnica": [
+      56.5,
+      65
+    ],
+    "max_alta_hidratacao": 65
+  },
+  {
+    "id": "ambrosio-sorrentina",
+    "nome": "Molini Ambrosio Sorrentina",
+    "grupo": "importada",
+    "tipo": "00",
+    "proteina": 14,
+    "hidratação": [
+      58,
+      70
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.2,
+    "fermentacao_rt_h": [
+      12,
+      24
+    ],
+    "max_ambiente_h": 24,
+    "max_total_h": 72,
+    "geladeira": {
+      "temp_c": [
+        0,
+        4
+      ],
+      "max_dias": 3,
+      "fonte": "Ambrosio Sorrentina: maturazione a 4°C fino a 72 ore; biga e poolish"
+    },
+    "fonte": "https://www.moliniambrosio.com/en/product/sorrentina/",
+    "verificado": "2026-06-24",
+    "confianca": "media",
+    "nota": "14 g proteína — Molini Ambrosio; lievitazione lunga 12–24 h ambiente. W não publicado na ficha resumida online.",
+    "receitas": [
+      "napolitana",
+      "ny",
+      "contemporanea"
+    ],
+    "hidratação_ideal": [
+      58,
+      68
+    ],
+    "hidratação_tecnica": [
+      58,
+      72
+    ],
+    "max_alta_hidratacao": 72
+  },
+  {
+    "id": "vigevano-verace",
+    "nome": "Molino Vigevano Verace",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      200,
+      230
+    ],
+    "proteina": 11.2,
+    "hidratação": [
+      55,
+      62
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.4,
+    "fermentacao_rt_h": [
+      4,
+      12
+    ],
+    "fonte": "https://molinovigevano.com/prodotto/verace/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W200–230, 11,2% proteína — Molino Vigevano; impasti diretti 4–12 h, croccantezza marcata.",
+    "receitas": [
+      "napolitana"
+    ],
+    "hidratação_ideal": [
+      55,
+      62
+    ],
+    "hidratação_tecnica": [
+      55,
+      65
+    ],
+    "max_alta_hidratacao": 65
+  },
+  {
+    "id": "le5-manitoba",
+    "nome": "Le 5 Stagioni Manitoba",
+    "grupo": "importada",
+    "tipo": "00",
+    "proteina": 14.5,
+    "hidratação": [
+      65,
+      78
+    ],
+    "sal": 2,
+    "estilo": "pao",
+    "fermento_fresh_pct_base": 0.12,
+    "fermentacao_rt_h": [
+      24,
+      72
+    ],
+    "max_ambiente_h": 24,
+    "max_total_h": 72,
+    "fonte": "https://le5stagioni.com/de/prodotto/manitoba-2/",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "Proteína min. 14,5% (s.s.), cinzas max. 0,55% — Le 5 Stagioni; biga, poolish e longa fermentação a frio. W não publicado nesta ficha.",
+    "receitas": [
+      "pao",
+      "focaccia",
+      "contemporanea",
+      "romana_pala"
+    ],
+    "hidratação_ideal": [
+      65,
+      78
+    ],
+    "hidratação_tecnica": [
+      65,
+      82
+    ],
+    "max_alta_hidratacao": 82
+  },
+  {
+    "id": "soncini-pizza-red",
+    "nome": "Molino Soncini Cesare Pizza Red",
+    "grupo": "importada",
+    "tipo": "00",
+    "w": [
+      260,
+      340
+    ],
+    "proteina": 14.5,
+    "pl": [
+      0.5,
+      0.6
+    ],
+    "hidratação": [
+      58,
+      68
+    ],
+    "sal": 2.5,
+    "estilo": "napolitana",
+    "fermento_fresh_pct_base": 0.2,
+    "fermentacao_rt_h": [
+      20,
+      24
+    ],
+    "fonte": "https://www.molinosoncinicesare.com/msc_upload/1526155524_48_eng-SCHEDA-PIZZA-Red.pdf",
+    "verificado": "2026-06-24",
+    "confianca": "alta",
+    "nota": "W260–340 (±20), 14,5% proteína, assorbimento 60% — Soncini; pizza media-lunga 20–24 h, metodo indireto.",
+    "receitas": [
+      "napolitana",
+      "ny",
+      "contemporanea"
+    ],
+    "hidratação_ideal": [
+      58,
+      65
+    ],
+    "hidratação_tecnica": [
+      58,
+      68
+    ],
+    "max_alta_hidratacao": 68
+  },
+  {
     "id": "personalizado",
     "nome": "— Personalizado (sem farinha fixa)",
     "grupo": "outro",
