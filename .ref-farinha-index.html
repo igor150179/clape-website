@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Farinha Certa — eBook + Calculadora de Massa | Igor Oliveira · Clape</title>
+<meta name="description" content="Escolha a farinha certa e calcule sua massa em gramas. eBook + Calculadora offline. Napolitana, NY, romana e pão. Por Igor Oliveira — Clape.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Source+Sans+3:wght@400;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2b2b2b; --head:#1d1d1d; --muted:#7a7a7a;
+  --orange:#f47920; --amber:#f89c1b; --slate:#333b41;
+  --cream:#faf4e8; --rule:#e7e7e7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',system-ui,sans-serif;color:var(--ink);line-height:1.65;background:#fff}
+img{max-width:100%;display:block}
+.wrap{max-width:1020px;margin:0 auto;padding:0 22px}
+.kicker{font-family:'Caveat',cursive;font-weight:700;color:var(--orange);font-size:1.7rem;line-height:1}
+h1,h2{font-family:'Playfair Display',Georgia,serif;color:var(--head);line-height:1.12}
+h1{font-weight:900;font-size:clamp(2.1rem,5.4vw,3.4rem)}
+h1 em,h2 em{font-style:italic;color:var(--orange)}
+h2{font-weight:800;font-size:clamp(1.6rem,3.6vw,2.3rem);margin-bottom:.9rem}
+.sub{font-family:'Lora',Georgia,serif;font-style:italic;color:#555;font-size:clamp(1.05rem,2.2vw,1.3rem)}
+section{padding:64px 0}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--orange),var(--amber));color:#fff;
+  font-weight:700;font-size:1.12rem;padding:17px 38px;border-radius:60px;text-decoration:none;
+  box-shadow:0 8px 24px rgba(244,121,32,.35);transition:transform .15s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn small{display:block;font-weight:400;font-size:.8rem;opacity:.92}
+.center{text-align:center}
+
+/* hero */
+.hero{background:var(--cream);padding:70px 0 60px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+.hero-logo{width:96px;margin-bottom:18px}
+.hero p.lead{margin:16px 0 26px}
+.hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.badge{background:#fff;border:1px solid var(--rule);border-radius:40px;padding:7px 15px;font-size:.86rem;font-weight:600;color:var(--slate)}
+.hero-book{position:relative}
+.hero-book img{border-radius:10px;box-shadow:0 24px 60px rgba(51,59,65,.28);transform:rotate(2deg)}
+.seal{position:absolute;top:-18px;right:-10px;background:var(--slate);color:#fff;border-radius:50%;
+  width:110px;height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-weight:700;transform:rotate(8deg);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.seal b{font-size:1.5rem;color:var(--amber)}
+.seal span{font-size:.72rem;font-weight:600}
+
+/* dor */
+.dor{border-bottom:1px solid var(--rule)}
+.dor .wrap{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.dor ul{list-style:none;margin-top:14px}
+.dor li{padding:10px 0 10px 34px;position:relative;font-size:1.05rem;border-bottom:1px dashed var(--rule)}
+.dor li::before{content:'✗';position:absolute;left:4px;color:var(--orange);font-weight:700}
+.dor .virada{margin-top:20px;font-family:'Lora',serif;font-style:italic;font-size:1.12rem;color:var(--slate)}
+.dor img{border-radius:12px}
+
+/* recebe */
+.recebe{background:var(--cream)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:30px}
+.card{background:#fff;border-radius:14px;padding:26px 22px;box-shadow:0 6px 20px rgba(51,59,65,.08)}
+.card .ico{font-size:1.9rem}
+.card h3{font-family:'Playfair Display',serif;font-size:1.12rem;margin:10px 0 6px;color:var(--head)}
+.card p{font-size:.95rem;color:#555}
+.card .tag{display:inline-block;margin-top:12px;background:var(--cream);color:var(--orange);font-weight:700;font-size:.8rem;padding:4px 12px;border-radius:30px}
+
+/* aprender */
+.aprende .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center}
+.aprende img{border-radius:12px}
+.check{list-style:none;margin-top:14px}
+.check li{padding:9px 0 9px 34px;position:relative;font-size:1.03rem}
+.check li::before{content:'✓';position:absolute;left:2px;top:9px;color:#fff;background:var(--orange);
+  width:22px;height:22px;border-radius:50%;font-size:.8rem;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* prova / números */
+.numeros{background:var(--slate);color:#fff;padding:52px 0}
+.numeros .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;text-align:center}
+.num b{font-family:'Playfair Display',serif;font-size:2.3rem;color:var(--amber);display:block}
+.num span{font-size:.92rem;opacity:.9}
+
+/* oferta */
+.oferta{background:var(--cream)}
+.oferta-box{background:#fff;border-radius:20px;max-width:640px;margin:30px auto 0;padding:40px 36px;
+  box-shadow:0 16px 44px rgba(51,59,65,.14);text-align:center;border-top:6px solid var(--orange)}
+.oferta-box ul{list-style:none;text-align:left;margin:20px auto 8px;max-width:420px}
+.oferta-box li{padding:8px 0 8px 30px;position:relative;border-bottom:1px dashed var(--rule)}
+.oferta-box li::before{content:'🎁';position:absolute;left:0;font-size:.95rem}
+.oferta-box li b{color:var(--slate)}
+.valor-de{color:var(--muted);text-decoration:line-through;font-size:1.05rem}
+.valor{font-family:'Playfair Display',serif;font-weight:900;font-size:3rem;color:var(--head);line-height:1.05}
+.valor small{font-size:1.05rem;font-weight:600;color:var(--muted)}
+.garantia{display:flex;gap:16px;align-items:center;max-width:640px;margin:26px auto 0;background:#fff;
+  border:1.5px dashed var(--orange);border-radius:14px;padding:18px 22px}
+.garantia .selo{font-size:2.2rem}
+.garantia p{font-size:.95rem;color:#444}
+
+/* autor */
+.autor .wrap{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;max-width:860px}
+.autor-foto{width:150px;height:150px;border-radius:50%;overflow:hidden;border:5px solid var(--cream);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.autor-foto img{width:100%;height:100%;object-fit:cover}
+.autor p{margin-top:8px;color:#444}
+
+/* faq */
+.faq{background:var(--cream)}
+details{background:#fff;border-radius:12px;margin-top:12px;padding:18px 22px;box-shadow:0 4px 14px rgba(51,59,65,.06)}
+summary{font-weight:700;color:var(--slate);cursor:pointer;font-size:1.02rem}
+details p{margin-top:10px;color:#555;font-size:.97rem}
+
+/* cta final */
+.final{background:linear-gradient(135deg,var(--slate) 0%,#22282c 100%);color:#fff;text-align:center;padding:80px 0}
+.final h2{color:#fff}
+.final .kicker{color:var(--amber)}
+.final p{opacity:.92;max-width:560px;margin:12px auto 30px}
+footer{background:#1a1f22;color:#8b949a;font-size:.82rem;text-align:center;padding:26px 18px}
+footer a{color:#b9c2c8}
+
+@media(max-width:760px){
+  .hero .wrap,.dor .wrap,.aprende .wrap{grid-template-columns:1fr}
+  .hero-book{max-width:320px;margin:0 auto}
+  .autor .wrap{grid-template-columns:1fr;text-align:center}
+  .autor-foto{margin:0 auto}
+  section{padding:48px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <img class="hero-logo" src="img/logo-clape.png" alt="Clape">
+      <p class="kicker">pra quem cansou de errar massa</p>
+      <h1>A Farinha <em>Certa.</em></h1>
+      <p class="sub lead">Escolha a farinha perfeita no supermercado brasileiro e calcule sua massa <strong>em gramas</strong> — pizza napolitana, NY, romana e pão. eBook + Calculadora offline.</p>
+      <a class="btn" href="[LINK-CHECKOUT-HOTMART]">QUERO A FARINHA CERTA — R$ 57<small>acesso imediato · garantia de 7 dias</small></a>
+      <div class="hero-badges">
+        <span class="badge">📕 PDF + EPUB</span>
+        <span class="badge">🧮 Calculadora offline</span>
+        <span class="badge">📚 Referências AVPN citadas</span>
+      </div>
+    </div>
+    <div class="hero-book">
+      <img src="img/capa-livro.png" alt="Capa do eBook A Farinha Certa, por Igor Oliveira">
+      <div class="seal"><b>R$ 57</b><span>pagamento único</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- DOR -->
+<section class="dor">
+  <div class="wrap">
+    <div>
+      <p class="kicker">te parece familiar?</p>
+      <h2>A receita era a mesma. <em>O resultado, nunca.</em></h2>
+      <ul>
+        <li>A massa rasga na hora de abrir o disco</li>
+        <li>Cresce bonito… e murcha no forno</li>
+        <li>Gruda na bancada e você "conserta" com mais farinha</li>
+        <li>Comprou "tipo 00" achando que era farinha forte</li>
+        <li>Receita em xícara que nunca repete o resultado</li>
+      </ul>
+      <p class="virada">O problema quase nunca é a sua técnica. É <strong>farinha inadequada</strong> + <strong>proporção no chute</strong>. Este guia corrige os dois.</p>
+    </div>
+    <img src="img/il-maos-massa.png" alt="Mãos trabalhando a massa">
+  </div>
+</section>
+
+<!-- O QUE RECEBE -->
+<section class="recebe">
+  <div class="wrap center">
+    <p class="kicker">o pacote completo</p>
+    <h2>O que você <em>recebe</em></h2>
+    <div class="cards">
+      <div class="card">
+        <div class="ico">📕</div>
+        <h3>eBook A Farinha Certa</h3>
+        <p>8 capítulos + anexos. W, P/L, proteína, rótulo BR, farinha por estilo, diagnóstico de erros. PDF e EPUB.</p>
+        <span class="tag">valor R$ 67</span>
+      </div>
+      <div class="card">
+        <div class="ico">🧮</div>
+        <h3>Calculadora de Massa</h3>
+        <p>Offline, no navegador do celular. Presets napolitana, NY, romana e pão. Modo "quero X bolas" e fermento seco 1:3.</p>
+        <span class="tag">bônus · valor R$ 37</span>
+      </div>
+      <div class="card">
+        <div class="ico">📊</div>
+        <h3>Tabela-mestra + Glossário</h3>
+        <p>Referência rápida de farinha por objetivo, hidratação por estilo e o vocabulário do padeiro.</p>
+        <span class="tag">bônus · valor R$ 27</span>
+      </div>
+      <div class="card">
+        <div class="ico">📋</div>
+        <h3>Templates + Exercícios</h3>
+        <p>Ficha de receita, Diário de farinha imprimível e 6 exercícios com gabarito para fixar o baker's math.</p>
+        <span class="tag">bônus · valor R$ 17</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE APRENDE -->
+<section class="aprende">
+  <div class="wrap">
+    <img src="img/il-supermercado.png" alt="Escolhendo farinha no supermercado">
+    <div>
+      <p class="kicker">do rótulo ao forno</p>
+      <h2>O que você vai <em>aprender</em></h2>
+      <ul class="check">
+        <li>Ler os <strong>5 números</strong> que definem qualquer farinha: W, P/L, proteína, Falling Number e cinzas</li>
+        <li>Por que <strong>"tipo 00" não é farinha forte</strong> — e como não cair nesse mito</li>
+        <li>Escolher farinha no mercado BR usando só o rótulo (proteína ≥ 12 g como bússola)</li>
+        <li>A farinha certa por estilo: <strong>napolitana (faixas AVPN), NY, romana, pão e levain</strong></li>
+        <li><strong>Baker's math</strong>: farinha = 100% e todos os ingredientes em gramas</li>
+        <li>Diagnosticar por que a massa deu errado — e corrigir na próxima fornada</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- NÚMEROS -->
+<section class="numeros">
+  <div class="wrap">
+    <div class="num"><b>8</b><span>capítulos + anexos completos</span></div>
+    <div class="num"><b>5</b><span>presets de massa na calculadora</span></div>
+    <div class="num"><b>100%</b><span>das afirmações com fonte ou rótulo de mercado</span></div>
+    <div class="num"><b>0</b><span>estatística inventada ou promessa vazia</span></div>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section class="oferta">
+  <div class="wrap center">
+    <p class="kicker">oferta completa</p>
+    <h2>Tudo isso, <em>hoje</em></h2>
+    <div class="oferta-box">
+      <ul>
+        <li><b>eBook A Farinha Certa</b> (PDF + EPUB) — R$ 67</li>
+        <li><b>Calculadora de Massa v2</b> offline — R$ 37</li>
+        <li><b>Tabela-mestra + glossário</b> — R$ 27</li>
+        <li><b>Templates + exercícios</b> — R$ 17</li>
+      </ul>
+      <p class="valor-de">valor total: R$ 148</p>
+      <p class="valor">R$ 57 <small>· pagamento único</small></p>
+      <p style="color:#777;font-size:.92rem;margin:6px 0 22px">Menos que dois deliveries de pizza — para usar toda semana.</p>
+      <a class="btn" href="[LINK-CHECKOUT-HOTMART]">GARANTIR MEU ACESSO AGORA<small>compra segura via Hotmart</small></a>
+    </div>
+    <div class="garantia">
+      <div class="selo">🛡️</div>
+      <p><strong>Garantia incondicional de 7 dias.</strong> Se o guia e a calculadora não simplificarem sua próxima massa, peça reembolso direto na Hotmart. Sem perguntas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AUTOR -->
+<section class="autor">
+  <div class="wrap">
+    <div class="autor-foto"><img src="img/il-margherita.png" alt="Igor Oliveira — Clape"></div>
+    <div>
+      <p class="kicker">quem escreveu</p>
+      <h2>Igor Oliveira — <em>Clape</em></h2>
+      <p>Desenvolve conteúdo prático para quem faz pizza e pão em casa e cansou de receitas em xícaras que nunca repetem o resultado. Em <em>A Farinha Certa</em>, reuniu escolha de farinha (W, proteína, rótulo BR), referências AVPN verificáveis e a Calculadora de Massa offline — gramas certos, sem prometer certificação napolitana.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="wrap" style="max-width:760px">
+    <p class="kicker center" style="display:block;text-align:center">dúvidas comuns</p>
+    <h2 class="center">Perguntas <em>frequentes</em></h2>
+    <details><summary>Só quero a calculadora — vale a pena?</summary><p>A Parte II resolve o cálculo, mas a Parte I explica por que sua farinha falha. Juntas, eliminam o chute.</p></details>
+    <details><summary>Já existem calculadoras grátis na internet.</summary><p>Nenhuma com presets AVPN, modo bolas, guia de farinha brasileira e funcionamento offline no mesmo pacote.</p></details>
+    <details><summary>Sou iniciante, vou entender?</summary><p>Sim. Comece pelo capítulo 4 (rótulo) e use o modo "4 bolas × 250 g" na calculadora — o resto vem com a prática.</p></details>
+    <details><summary>Funciona no celular?</summary><p>Sim. A calculadora abre no navegador, sem instalar nada, e funciona offline.</p></details>
+    <details><summary>Certifica pizza AVPN?</summary><p>Não. O guia usa as faixas do Disciplinare como referência técnica e ensina a adaptar ao forno caseiro.</p></details>
+    <details><summary>Quais marcas de farinha comprar?</summary><p>O capítulo 7 traz o guia de compra BR — sempre conferindo a proteína no rótulo do lote.</p></details>
+    <details><summary>E se eu não gostar?</summary><p>Garantia de 7 dias pela Hotmart. Reembolso integral, sem perguntas.</p></details>
+    <details><summary>Como recebo o material?</summary><p>Acesso imediato após a compra, direto na sua área de membros da Hotmart.</p></details>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="final">
+  <div class="wrap">
+    <p class="kicker">sua próxima fornada</p>
+    <h2>No chute — ou <em>em gramas?</em></h2>
+    <p>Pare de adivinhar farinha e proporção. Entre na próxima massa sabendo exatamente o que comprar e quanto pesar.</p>
+    <a class="btn" href="[LINK-CHECKOUT-HOTMART]">QUERO A FARINHA CERTA — R$ 57<small>acesso imediato · garantia de 7 dias</small></a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Igor Oliveira — Clape · Todos os direitos reservados.</p>
+  <p style="margin-top:6px">Material educativo. Não substitui orientação nutricional ou formação profissional. Não certifica pizza AVPN.<br>Suporte: [e-mail de suporte Clape]</p>
+</footer>
+
+</body>
+</html>
