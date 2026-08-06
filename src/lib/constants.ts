@@ -15,6 +15,11 @@ export const INSTAGRAM_URL = "https://www.instagram.com/clape.forno/";
 export const FACEBOOK_URL = "https://www.facebook.com/p/Clape-61556664961261/";
 export const YOUTUBE_URL = "https://www.youtube.com/@clapeforno";
 
+/** Checkout Hotmart — substitua pelo link real do produto */
+export const FARINHA_CHECKOUT_URL =
+  process.env.NEXT_PUBLIC_FARINHA_CHECKOUT_URL ?? "#checkout";
+export const FARINHA_SUPPORT_EMAIL = "contato@clape.com.br";
+
 export const NAV_LINKS = [
   { label: "O Forno", href: "/#diferenciais" },
   { label: "O Padrão CLAPE", href: "/#padrao" },
