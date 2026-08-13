@@ -164,20 +164,20 @@ export default function FarinhaPage() {
               <span className="tag">bônus · valor R$ 37</span>
             </div>
             <div className="card">
+              <div className="ico">🥖</div>
+              <h3>Bônus: Da Pizza ao Pão</h3>
+              <p>
+                Farinha para pão e fermentação natural. W 280+, proteína ≥ 12%, hidratação
+                70–85% e como criar levain em ~5 dias.
+              </p>
+              <span className="tag">bônus · valor R$ 27</span>
+            </div>
+            <div className="card">
               <div className="ico">📊</div>
               <h3>Tabela-mestra + Glossário</h3>
               <p>
                 Referência rápida de farinha por objetivo, hidratação por estilo
                 e o vocabulário do padeiro.
-              </p>
-              <span className="tag">bônus · valor R$ 27</span>
-            </div>
-            <div className="card">
-              <div className="ico">📋</div>
-              <h3>Templates + Exercícios</h3>
-              <p>
-                Ficha de receita, Diário de farinha imprimível e 6 exercícios
-                com gabarito para fixar o baker&apos;s math.
               </p>
               <span className="tag">bônus · valor R$ 17</span>
             </div>
@@ -264,10 +264,10 @@ export default function FarinhaPage() {
                 <b>Calculadora de Massa v2</b> online — R$ 37
               </li>
               <li>
-                <b>Tabela-mestra + glossário</b> — R$ 27
+                <b>Bônus: Da Pizza ao Pão</b> (eBook) — R$ 27
               </li>
               <li>
-                <b>Templates + exercícios</b> — R$ 17
+                <b>Tabela-mestra + glossário</b> — R$ 17
               </li>
             </ul>
             <p className="valor-de">valor total: R$ 148</p>
