@@ -15,9 +15,9 @@ export const INSTAGRAM_URL = "https://www.instagram.com/clape.forno/";
 export const FACEBOOK_URL = "https://www.facebook.com/p/Clape-61556664961261/";
 export const YOUTUBE_URL = "https://www.youtube.com/@clapeforno";
 
-/** Checkout Hotmart — substitua pelo link real do produto */
+/** Checkout Hotmart — produto Pizza Começa na Farinha */
 export const FARINHA_CHECKOUT_URL =
-  process.env.NEXT_PUBLIC_FARINHA_CHECKOUT_URL ?? "#checkout";
+  "https://pay.hotmart.com/N107038173E?checkoutMode=2";
 export const FARINHA_SUPPORT_EMAIL = "contato@clape.com.br";
 
 export const NAV_LINKS = [

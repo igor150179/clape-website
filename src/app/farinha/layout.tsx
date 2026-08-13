@@ -38,11 +38,12 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "A Farinha Certa — eBook + Calculadora de Massa | Igor Oliveira · Clape",
+  title:
+    "Pizza Começa na Farinha — eBook + Calculadora de Massa | Igor Oliveira · Clape",
   description:
-    "Escolha a farinha certa e calcule sua massa em gramas. eBook + Calculadora online exclusiva. Napolitana, NY, romana e pão. Por Igor Oliveira — Clape.",
+    "Escolha a farinha certa no supermercado brasileiro e calcule sua massa em gramas. eBook + Calculadora online exclusiva. Napolitana, NY, romana e pão. Por Igor Oliveira — Clape.",
   openGraph: {
-    title: "A Farinha Certa — eBook + Calculadora de Massa",
+    title: "Pizza Começa na Farinha — eBook + Calculadora de Massa",
     description:
       "Escolha a farinha perfeita no supermercado brasileiro e calcule sua massa em gramas.",
     url: "https://clape.com.br/farinha",
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
         url: "/farinha/capa-livro.png",
         width: 800,
         height: 1000,
-        alt: "Capa do eBook A Farinha Certa",
+        alt: "Capa do eBook Pizza Começa na Farinha",
       },
     ],
   },

@@ -74,7 +74,7 @@ export default function FarinhaPage() {
             />
             <p className="kicker">pra quem cansou de errar massa</p>
             <h1>
-              A Farinha <em>Certa.</em>
+              Pizza Começa <em>na Farinha.</em>
             </h1>
             <p className="sub lead">
               Escolha a farinha perfeita no supermercado brasileiro e calcule
@@ -83,9 +83,9 @@ export default function FarinhaPage() {
             </p>
             <CtaButton
               href={FARINHA_CHECKOUT_URL}
-              note="acesso imediato · garantia de 7 dias"
+              note="12× R$ 8,17 ou R$ 79 à vista · acesso imediato"
             >
-              QUERO A FARINHA CERTA — R$ 57
+              QUERO A FARINHA CERTA
             </CtaButton>
             <div className="hero-badges">
               <span className="badge">📕 PDF + EPUB</span>
@@ -96,14 +96,14 @@ export default function FarinhaPage() {
           <div className="hero-book">
             <Image
               src="/farinha/capa-livro.png"
-              alt="Capa do eBook A Farinha Certa, por Igor Oliveira"
+              alt="Capa do eBook Pizza Começa na Farinha, por Igor Oliveira"
               width={480}
               height={640}
               priority
             />
             <div className="seal">
-              <b>R$ 57</b>
-              <span>pagamento único</span>
+              <b>R$ 79</b>
+              <span>ou 12× R$ 8,17</span>
             </div>
           </div>
         </div>
@@ -147,7 +147,7 @@ export default function FarinhaPage() {
           <div className="cards">
             <div className="card">
               <div className="ico">📕</div>
-              <h3>eBook A Farinha Certa</h3>
+              <h3>eBook Pizza Começa na Farinha</h3>
               <p>
                 8 capítulos + anexos. W, P/L, proteína, rótulo BR, farinha por
                 estilo, diagnóstico de erros. PDF e EPUB.
@@ -258,7 +258,7 @@ export default function FarinhaPage() {
           <div className="oferta-box">
             <ul>
               <li>
-                <b>eBook A Farinha Certa</b> (PDF + EPUB) — R$ 67
+                <b>eBook Pizza Começa na Farinha</b> (PDF + EPUB) — R$ 67
               </li>
               <li>
                 <b>Calculadora de Massa v2</b> online — R$ 37
@@ -272,7 +272,7 @@ export default function FarinhaPage() {
             </ul>
             <p className="valor-de">valor total: R$ 148</p>
             <p className="valor">
-              R$ 57 <small>· pagamento único</small>
+              12× R$ 8,17 <small>ou R$ 79 à vista</small>
             </p>
             <p
               style={{
@@ -285,7 +285,7 @@ export default function FarinhaPage() {
             </p>
             <CtaButton
               href={FARINHA_CHECKOUT_URL}
-              note="compra segura via Hotmart"
+              note="12× R$ 8,17 ou R$ 79 à vista · compra segura via Hotmart"
             >
               GARANTIR MEU ACESSO AGORA
             </CtaButton>
@@ -319,9 +319,10 @@ export default function FarinhaPage() {
             <p>
               Desenvolve conteúdo prático para quem faz pizza e pão em casa e
               cansou de receitas em xícaras que nunca repetem o resultado. Em{" "}
-              <em>A Farinha Certa</em>, reuniu escolha de farinha (W, proteína,
-              rótulo BR), referências AVPN verificáveis e a Calculadora de Massa
-              online — gramas certos, sem prometer certificação napolitana.
+              <em>Pizza Começa na Farinha</em>, reuniu escolha de farinha (W,
+              proteína, rótulo BR), referências AVPN verificáveis e a Calculadora
+              de Massa online — gramas certos, sem prometer certificação
+              napolitana.
             </p>
           </div>
         </div>
@@ -356,9 +357,9 @@ export default function FarinhaPage() {
           </p>
           <CtaButton
             href={FARINHA_CHECKOUT_URL}
-            note="acesso imediato · garantia de 7 dias"
+            note="12× R$ 8,17 ou R$ 79 à vista · acesso imediato"
           >
-            QUERO A FARINHA CERTA — R$ 57
+            QUERO A FARINHA CERTA
           </CtaButton>
         </div>
       </section>
