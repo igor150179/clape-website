@@ -163,6 +163,18 @@
     font-family: 'Lora', Georgia, serif; font-style: italic;
     display: block; padding: .55rem 0 0; font-size: .78rem; color: var(--muted); line-height: 1.45;
   }
+  .agua-box {
+    margin-top: 12px; padding: 14px 16px; border-radius: 8px;
+    background: linear-gradient(135deg, #f6ecd9 0%, #fff 100%);
+    border: 1px solid var(--amber); font-size: .88rem; line-height: 1.5;
+  }
+  .agua-box b { color: var(--orange); font-size: 1.15rem; }
+  .btn-geo {
+    width: 100%; margin-top: 8px; padding: 11px; border-radius: 8px;
+    border: 1px dashed var(--orange); background: #fff; color: var(--orange);
+    font-weight: 600; font-size: .82rem; cursor: pointer; font-family: inherit;
+  }
+  .btn-geo:disabled { opacity: .6; cursor: wait; }
   @media (min-width: 768px) {
     .wrap { max-width: 600px; }
     .card { padding: 24px 4px 28px; }
@@ -209,13 +221,36 @@
     <div class="row">
       <div>
         <label>Temp. ambiente (°C)</label>
-        <input type="number" id="tempAmb" value="22" min="10" max="35" step="0.5" oninput="onTemperaturaAmbienteChange()">
+        <input type="number" id="tempAmb" value="22" min="10" max="45" step="0.5" oninput="onTemperaturaAmbienteChange();atualizarPreviewAgua()">
       </div>
       <div>
         <label>Temp. geladeira (°C)</label>
         <input type="number" id="tempGel" value="4" min="0" max="8" step="0.5" oninput="onFermChange()">
       </div>
     </div>
+    <button type="button" class="btn-geo" id="btnGeo" onclick="buscarTempLocal()">📍 Usar minha localização (temperatura ambiente)</button>
+    <p class="hint" id="geoHint">Opcional: detecta a temperatura do ar na sua cidade via GPS (Open-Meteo). Você pode editar o valor acima.</p>
+  </div>
+
+  <div class="card">
+    <h2>2b. Temperatura da água</h2>
+    <p class="hint" style="margin-top:0">Fórmula profissional: <strong>Tágua = (Tmassa × 3) − Tfarinha − Tambiente − atrito</strong></p>
+    <div class="row">
+      <div>
+        <label>Temp. desejada da massa (°C)</label>
+        <input type="number" id="tempMassaDesejada" value="24" min="18" max="28" step="0.5" oninput="atualizarPreviewAgua()">
+      </div>
+      <div>
+        <label>Temp. da farinha (°C)</label>
+        <input type="number" id="tempFarinha" value="22" min="5" max="40" step="0.5" oninput="atualizarPreviewAgua()">
+      </div>
+    </div>
+    <label>Como você amassa?</label>
+    <select id="tipoAmassamento" onchange="atualizarPreviewAgua()">
+      <option value="mao">À mão (atrito +1 a +2 °C)</option>
+      <option value="masseira">Masseira espiral doméstica (+4 a +6 °C)</option>
+    </select>
+    <div id="previewAgua" class="agua-box hidden"></div>
   </div>
 
   <div class="card">
@@ -1265,6 +1300,10 @@
   function aplicarEstilo() {
     ambienteManual = false;
     const estKey = document.getElementById('estilo').value;
+    const proc = processoEstilo(estKey);
+    const frioFerm = parseInt(document.getElementById('horasFrio')?.value || '0', 10);
+    const alvo = frioFerm > 0 ? proc.fdtFrio : proc.fdt;
+    document.getElementById('tempMassaDesejada').value = alvo;
     atualizarUIPorcao(estKey);
     atualizarIlustracaoEstilo(estKey);
     atualizarNormativoReceita();
@@ -1275,6 +1314,80 @@
     document.getElementById('farinhaInfo').classList.add('hidden');
     const aviso = document.getElementById('avisoHidr');
     if (aviso) aviso.remove();
+    atualizarPreviewAgua();
+  }
+
+  function atritoAmassamento() {
+    const t = document.getElementById('tipoAmassamento')?.value || 'mao';
+    return t === 'masseira' ? 5 : 2;
+  }
+
+  function calcTempAgua() {
+    const tMassa = parseNum('tempMassaDesejada');
+    const tFarinha = parseNum('tempFarinha');
+    const tAmb = parseNum('tempAmb');
+    const atrito = atritoAmassamento();
+    const raw = (tMassa * 3) - tFarinha - tAmb - atrito;
+    return { tMassa, tFarinha, tAmb, atrito, raw, arred: Math.round(raw * 10) / 10 };
+  }
+
+  function textoTempAgua(calc) {
+    if (calc.raw < 4) {
+      return {
+        titulo: `Use água bem gelada + gelo`,
+        detalhe: `Cálculo: (${calc.tMassa} × 3) − ${calc.tFarinha} − ${calc.tAmb} − ${calc.atrito} = <b>${calc.arred} °C</b>. Com massa alvo ~${calc.tMassa} °C, misture água gelada e gelo até a massa final estabilizar na temperatura desejada.`,
+        valor: calc.arred,
+      };
+    }
+    const t = clamp(calc.arred, 4, 35);
+    return {
+      titulo: `Água a ~${t} °C`,
+      detalhe: `(${calc.tMassa} × 3) − ${calc.tFarinha} °C farinha − ${calc.tAmb} °C ambiente − ${calc.atrito} °C atrito = <b>${calc.arred} °C</b>. Meça a massa ao final da mistura — alvo ~${calc.tMassa} °C.`,
+      valor: t,
+    };
+  }
+
+  function atualizarPreviewAgua() {
+    const el = document.getElementById('previewAgua');
+    if (!el) return;
+    const calc = calcTempAgua();
+    const txt = textoTempAgua(calc);
+    el.innerHTML = `<strong>🌡️ ${txt.titulo}</strong><br>${txt.detalhe}`;
+    el.classList.remove('hidden');
+  }
+
+  async function buscarTempLocal() {
+    const btn = document.getElementById('btnGeo');
+    const hint = document.getElementById('geoHint');
+    if (!navigator.geolocation) {
+      hint.textContent = 'Seu navegador não suporta geolocalização. Informe a temperatura manualmente.';
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Localizando…';
+    hint.textContent = 'Aguardando permissão de localização…';
+    try {
+      const pos = await new Promise((resolve, reject) =>
+        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 12000, maximumAge: 600000 })
+      );
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&timezone=auto`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('meteo');
+      const data = await res.json();
+      const temp = data.current?.temperature_2m;
+      if (temp == null) throw new Error('sem dado');
+      const arred = Math.round(temp * 10) / 10;
+      document.getElementById('tempAmb').value = arred;
+      hint.textContent = `Temperatura local detectada: ${arred} °C (Open-Meteo). Ajuste se a sua cozinha estiver mais quente ou fria.`;
+      onTemperaturaAmbienteChange();
+      atualizarPreviewAgua();
+    } catch {
+      hint.textContent = 'Não foi possível obter a temperatura. Verifique a permissão de localização ou informe manualmente.';
+    }
+    btn.disabled = false;
+    btn.textContent = '📍 Usar minha localização (temperatura ambiente)';
   }
 
   function ocultarResultado() {
@@ -1433,16 +1546,14 @@
     const tempAmb = parseNum('tempAmb');
     const tempGel = parseNum('tempGel');
     const proc = processoEstilo(estKey);
-    const alvoMassa = frioFerm > 0 ? proc.fdtFrio : proc.fdt;
-    const tempAgua = Math.round((alvoMassa * 3) - (tempAmb + tempAmb + (frioFerm > 0 ? 4 : 2)));
-    const aguaTxt = tempAgua < 4
-      ? `use água bem gelada e parte em gelo para buscar massa final ~${alvoMassa} °C`
-      : `use água em torno de ${clamp(tempAgua, 4, 28)} °C para buscar massa final ~${alvoMassa} °C`;
+    const calc = calcTempAgua();
+    const aguaInfo = textoTempAgua(calc);
+    const amass = document.getElementById('tipoAmassamento')?.selectedOptions?.[0]?.textContent || 'à mão';
     const descansoTxt = typeof proc.descanso === 'function' ? proc.descanso(frioFerm > 0) : proc.descanso;
     const plano = planoFermentacao(totalFerm, ambFerm, frioFerm);
 
     const passos = [
-      `Temperatura da massa (${proc.fonte.split('·')[0].trim()}): ${aguaTxt}. Meça ao final da mistura.`,
+      `Temperatura da água (${proc.fonte.split('·')[0].trim()}): ${aguaInfo.titulo} — ${amass}. Fórmula: (Tmassa × 3) − Tfarinha − Tambiente − atrito. Meça a massa ao final (~${calc.tMassa} °C).`,
       proc.mistura,
       proc.sova,
       descansoTxt,
@@ -1488,16 +1599,20 @@
     const ambFerm = Math.max(0, totalFerm - frioFerm);
     const metodo = document.getElementById('metodoFermentacao')?.selectedOptions?.[0]?.textContent || 'Método calculado';
     const passos = instrucoesProcesso(estKey, r, h, totalFerm, ambFerm, frioFerm);
+    const calcAgua = calcTempAgua();
+    const aguaTxt = textoTempAgua(calcAgua);
     ultimoTexto =
       `${est.label} · ${farinhaNome}\n` +
       (modo === 'bolas' ? `${Math.floor(parseNum('bolas'))} ${ui.plural} × ${parseNum('pesoBola').toFixed(0)} g\n` : '') +
       `Método: ${metodo}\nFermentação: ${totalFerm} h total · ${ambFerm} h fora · ${frioFerm} h geladeira · ambiente ${parseNum('tempAmb')}°C\n` +
+      `🌡️ Água: ${aguaTxt.titulo} (${calcAgua.tMassa}×3 − ${calcAgua.tFarinha} − ${calcAgua.tAmb} − ${calcAgua.atrito} = ${calcAgua.arred}°C)\n` +
       `Farinha: ${r.f.toFixed(0)} g\nÁgua: ${r.agua.toFixed(0)} g (${h}%)\nSal: ${r.sal.toFixed(1)} g\n` +
       (seco ? `Fermento seco: ${r.fermSeco.toFixed(2)} g\n` : `Fermento fresco: ${r.fermFresco.toFixed(1)} g\n`) +
       `Massa total: ${r.total.toFixed(0)} g\n\nInstruções:\n- ${passos.join('\n- ')}`;
     document.getElementById('out').innerHTML = extra +
       `<span style="font-size:.85rem;color:var(--muted)">${est.label} · ${farinhaNome}</span><br>` +
       `<span style="font-size:.85rem;color:var(--muted)">${metodo} · ${totalFerm} h total · ${ambFerm} h fora · ${frioFerm} h geladeira</span><br>` +
+      `<div class="agua-box"><strong>🌡️ ${aguaTxt.titulo}</strong><br>${aguaTxt.detalhe}</div>` +
       `Farinha: <b>${r.f.toFixed(0)} g</b><br>Água: <b>${r.agua.toFixed(0)} g</b> <span style="opacity:.65">(${h}%)</span><br>` +
       `Sal: <b>${r.sal.toFixed(1)} g</b><br>${fermLabel}<br>` +
       `<hr style="border:none;border-top:1px solid var(--rule);margin:14px 0">` +
@@ -1522,6 +1637,7 @@
   }
 
   initFarinhas();
+  atualizarPreviewAgua();
 </script>
 </body>
 </html>
