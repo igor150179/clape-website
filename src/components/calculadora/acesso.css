@@ -1,0 +1,120 @@
+.acesso-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 48px;
+  background: #fff;
+  color: #2b2b2b;
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+
+.acesso-card {
+  width: min(420px, 100%);
+  border: 1px solid #e7e7e7;
+  border-radius: 16px;
+  padding: 28px 24px 24px;
+  box-shadow: 0 8px 32px rgba(51, 59, 65, 0.06);
+}
+
+.acesso-kicker {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f47920;
+  font-weight: 700;
+}
+
+.acesso-card h1 {
+  margin: 0 0 10px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.65rem;
+  color: #333b41;
+}
+
+.acesso-lead {
+  margin: 0 0 20px;
+  color: #555;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.acesso-form {
+  display: grid;
+  gap: 14px;
+}
+
+.acesso-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #333b41;
+}
+
+.acesso-form input {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.acesso-form input:focus {
+  outline: 2px solid rgba(244, 121, 32, 0.35);
+  border-color: #f47920;
+}
+
+.acesso-form button[type="submit"] {
+  margin-top: 4px;
+  border: 0;
+  border-radius: 999px;
+  padding: 13px 18px;
+  background: linear-gradient(135deg, #f47920, #f89c1b);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.acesso-form button[type="submit"]:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.acesso-link {
+  border: 0;
+  background: none;
+  color: #f47920;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  padding: 4px;
+}
+
+.acesso-error {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 0.9rem;
+}
+
+.acesso-message {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 0.9rem;
+}
+
+.acesso-foot {
+  margin: 18px 0 0;
+  font-size: 0.82rem;
+  color: #777;
+  line-height: 1.45;
+}

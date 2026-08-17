@@ -2,12 +2,21 @@ import { NextResponse } from "next/server";
 import {
   generatePassword,
   normalizeEmail,
+  parseProduct,
 } from "@/lib/calculadora-auth/constants";
 import { sendWelcomeAccess } from "@/lib/calculadora-auth/email";
 import { hashPassword } from "@/lib/calculadora-auth/password";
-import { getUser, saveUser } from "@/lib/calculadora-auth/redis";
+import { getUser, saveUser } from "@/lib/calculadora-auth/store";
 
-/** Webhook Hotmart — ajuste o parser conforme o payload real do seu produto. */
+function productFromPayload(payload: Record<string, unknown>): "farinha" | "biga" {
+  const custom =
+    (payload?.data as Record<string, unknown>)?.product ??
+    payload?.product ??
+    process.env.HOTMART_DEFAULT_PRODUCT;
+  return parseProduct(custom);
+}
+
+/** Webhook Hotmart — configure um webhook por produto ou passe product no payload. */
 export async function POST(request: Request) {
   const secret = process.env.HOTMART_WEBHOOK_SECRET;
   if (!secret) {
@@ -23,11 +32,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    const payload = await request.json();
-    const event = payload?.event ?? payload?.data?.event;
+    const payload = (await request.json()) as Record<string, unknown>;
+    const data = payload?.data as Record<string, unknown> | undefined;
+    const event = payload?.event ?? data?.event;
     const buyerEmail =
-      payload?.data?.buyer?.email ??
-      payload?.buyer?.email ??
+      (data?.buyer as Record<string, unknown>)?.email ??
+      (payload?.buyer as Record<string, unknown>)?.email ??
       payload?.email;
 
     if (!buyerEmail) {
@@ -35,17 +45,18 @@ export async function POST(request: Request) {
     }
 
     const email = normalizeEmail(String(buyerEmail));
+    const product = productFromPayload(payload);
 
     if (
       event === "PURCHASE_REFUNDED" ||
       event === "PURCHASE_CHARGEBACK" ||
       event === "SUBSCRIPTION_CANCELLATION"
     ) {
-      const existing = await getUser(email);
+      const existing = await getUser(product, email);
       if (existing) {
-        await saveUser(email, { ...existing, active: false });
+        await saveUser(product, email, { ...existing, active: false });
       }
-      return NextResponse.json({ ok: true, action: "deactivated" });
+      return NextResponse.json({ ok: true, action: "deactivated", product });
     }
 
     if (
@@ -55,16 +66,16 @@ export async function POST(request: Request) {
     ) {
       const plainPassword = generatePassword();
       const passwordHash = await hashPassword(plainPassword);
-      const existing = await getUser(email);
+      const existing = await getUser(product, email);
 
-      await saveUser(email, {
+      await saveUser(product, email, {
         passwordHash,
         active: true,
         createdAt: existing?.createdAt ?? new Date().toISOString(),
       });
 
-      await sendWelcomeAccess(email, plainPassword);
-      return NextResponse.json({ ok: true, action: "provisioned" });
+      await sendWelcomeAccess(email, plainPassword, product);
+      return NextResponse.json({ ok: true, action: "provisioned", product });
     }
 
     return NextResponse.json({ ok: true, skipped: event ?? "evento ignorado" });

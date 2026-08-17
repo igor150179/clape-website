@@ -2,15 +2,17 @@ import { NextResponse } from "next/server";
 import {
   generatePassword,
   normalizeEmail,
+  parseProduct,
 } from "@/lib/calculadora-auth/constants";
 import { sendWelcomeAccess } from "@/lib/calculadora-auth/email";
 import { hashPassword } from "@/lib/calculadora-auth/password";
-import { getUser, saveUser } from "@/lib/calculadora-auth/redis";
+import { getUser, saveUser } from "@/lib/calculadora-auth/store";
 
 type Body = {
   email?: string;
   password?: string;
   sendEmail?: boolean;
+  product?: string;
 };
 
 function authorized(request: Request): boolean {
@@ -28,6 +30,7 @@ export async function POST(request: Request) {
 
   try {
     const body = (await request.json()) as Body;
+    const product = parseProduct(body.product);
     const email = normalizeEmail(body.email ?? "");
     if (!email) {
       return NextResponse.json({ error: "E-mail obrigatório." }, { status: 400 });
@@ -35,21 +38,22 @@ export async function POST(request: Request) {
 
     const plainPassword = body.password?.trim() || generatePassword();
     const passwordHash = await hashPassword(plainPassword);
-    const existing = await getUser(email);
+    const existing = await getUser(product, email);
 
-    await saveUser(email, {
+    await saveUser(product, email, {
       passwordHash,
       active: true,
       createdAt: existing?.createdAt ?? new Date().toISOString(),
     });
 
     if (body.sendEmail !== false) {
-      await sendWelcomeAccess(email, plainPassword);
+      await sendWelcomeAccess(email, plainPassword, product);
     }
 
     return NextResponse.json({
       ok: true,
       email,
+      product,
       password: body.password ? undefined : plainPassword,
     });
   } catch (error) {
@@ -68,19 +72,20 @@ export async function DELETE(request: Request) {
   }
 
   try {
-    const body = (await request.json()) as { email?: string };
+    const body = (await request.json()) as { email?: string; product?: string };
+    const product = parseProduct(body.product);
     const email = normalizeEmail(body.email ?? "");
     if (!email) {
       return NextResponse.json({ error: "E-mail obrigatório." }, { status: 400 });
     }
 
-    const existing = await getUser(email);
+    const existing = await getUser(product, email);
     if (!existing) {
       return NextResponse.json({ error: "Usuário não encontrado." }, { status: 404 });
     }
 
-    await saveUser(email, { ...existing, active: false });
-    return NextResponse.json({ ok: true });
+    await saveUser(product, email, { ...existing, active: false });
+    return NextResponse.json({ ok: true, product });
   } catch (error) {
     console.error("[admin/provision DELETE]", error);
     return NextResponse.json({ error: "Falha ao desativar." }, { status: 500 });

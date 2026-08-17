@@ -1,15 +1,24 @@
 import { Resend } from "resend";
-import { OTP_TTL_SECONDS } from "./constants";
+import {
+  CALC_PRODUCTS,
+  OTP_TTL_SECONDS,
+  type CalcProduct,
+} from "./constants";
 
 const FROM =
   process.env.CALCULADORA_EMAIL_FROM ?? "Clape <acesso@clape.com.br>";
 
-export async function sendLoginCode(email: string, code: string): Promise<void> {
+export async function sendLoginCode(
+  email: string,
+  code: string,
+  product: CalcProduct = "farinha",
+): Promise<void> {
+  const label = CALC_PRODUCTS[product].label;
   const minutes = Math.round(OTP_TTL_SECONDS / 60);
   const subject = `${code} — código de acesso à Calculadora Clape`;
   const html = `
     <div style="font-family: system-ui, sans-serif; max-width: 480px; color: #2b2b2b;">
-      <p style="font-size: 1.1rem;">Seu código de acesso à <strong>Calculadora de Massa</strong>:</p>
+      <p style="font-size: 1.1rem;">Seu código de acesso à <strong>${label}</strong>:</p>
       <p style="font-size: 2rem; letter-spacing: 0.3em; font-weight: 700; color: #f47920;">${code}</p>
       <p>Válido por ${minutes} minutos. Depois de confirmar, você fica logado por <strong>3 dias</strong> neste aparelho.</p>
       <p style="color: #777; font-size: 0.9rem;">Se outro aparelho entrar com sua conta, esta sessão será encerrada automaticamente.</p>
@@ -39,12 +48,14 @@ export async function sendLoginCode(email: string, code: string): Promise<void> 
 export async function sendWelcomeAccess(
   email: string,
   password: string,
+  product: CalcProduct = "farinha",
 ): Promise<void> {
-  const loginUrl = "https://clape.com.br/calculadora/acesso";
-  const subject = "Seu acesso à Calculadora de Massa — A Farinha Certa";
+  const { loginPath, label } = CALC_PRODUCTS[product];
+  const loginUrl = "https://clape.com.br" + loginPath;
+  const subject = `Seu acesso — ${label}`;
   const html = `
     <div style="font-family: system-ui, sans-serif; max-width: 520px; color: #2b2b2b;">
-      <p>Obrigado pela compra de <strong>A Farinha Certa</strong>!</p>
+      <p>Obrigado pela compra de <strong>${label}</strong>!</p>
       <p>Sua calculadora online está em:<br><a href="${loginUrl}">${loginUrl}</a></p>
       <p><strong>E-mail:</strong> ${email}<br>
       <strong>Senha inicial:</strong> ${password}</p>

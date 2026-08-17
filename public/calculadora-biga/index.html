@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora BIGA | Clape — Fermentação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Lora:ital,wght@0,400;1,400&family=Source+Sans+3:wght@400;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #f47920; --amber: #f89c1b; --slate: #333b41; --ink: #2b2b2b;
+    --muted: #7a7a7a; --rule: #e7e7e7; --cream: #f6ecd9; --ok: #059669; --warn: #d97706;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #fff; color: var(--ink);
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    display: flex; justify-content: center;
+    padding: clamp(12px, 4vw, 28px) clamp(12px, 4vw, 24px) 48px; min-height: 100vh;
+  }
+  .wrap { max-width: min(580px, 100%); width: 100%; }
+  .brand { text-align: center; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .brand img { height: 38px; margin-bottom: 8px; }
+  .brand h1 { font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: clamp(1.3rem, 4vw, 1.6rem); margin: 0; color: var(--slate); }
+  .brand h1 em { font-style: italic; color: var(--orange); }
+  .brand .sub { font-family: 'Lora', Georgia, serif; font-style: italic; font-size: .88rem; color: var(--muted); margin: 6px 0 0; }
+  .welcome {
+    position: relative; margin-bottom: 18px; padding: 24px 18px 18px;
+    font-family: 'Lora', Georgia, serif; font-style: italic; font-size: .92rem; line-height: 1.55; color: #4a4a4a;
+    background-image:
+      repeating-linear-gradient(90deg, var(--orange) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(90deg, var(--orange) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(0deg, var(--orange) 0 8px, transparent 8px 16px),
+      repeating-linear-gradient(0deg, var(--orange) 0 8px, transparent 8px 16px);
+    background-size: calc(100% - 16px) 2px, calc(100% - 16px) 2px, 2px calc(100% - 16px), 2px calc(100% - 16px);
+    background-position: 8px 0, 8px 100%, 0 8px, 100% 8px; background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  }
+  .welcome::before {
+    content: 'como usar'; position: absolute; top: -12px; left: 16px; background: #fff; padding: 0 8px;
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.2rem; color: var(--orange);
+  }
+  .card { padding: 20px 0 22px; border-bottom: 1px solid var(--rule); }
+  .card h2 { font-family: 'Caveat', cursive; font-size: 1.5rem; margin: 0 0 12px; color: var(--orange); }
+  label { display: block; font-size: .76rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin: 12px 0 6px; color: var(--slate); }
+  input, select { width: 100%; padding: 11px 13px; border-radius: 8px; border: 1px solid var(--rule); font: inherit; font-size: .98rem; }
+  input:focus, select:focus { outline: 2px solid rgba(244,121,32,.25); border-color: var(--orange); }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .row > div { flex: 1; min-width: 110px; }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+  .tab { flex: 1; min-width: 110px; padding: 10px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; color: var(--muted); cursor: pointer; font-size: .8rem; font-weight: 600; text-align: center; }
+  .tab.active { border-color: var(--orange); color: var(--orange); }
+  .hint { font-family: 'Lora', Georgia, serif; font-style: italic; font-size: .8rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+  .info { background: #fafafa; border: 1px solid var(--rule); border-radius: 8px; padding: 12px; margin-top: 10px; font-size: .82rem; line-height: 1.55; }
+  .info a { color: var(--orange); }
+  .alerta { padding: 12px 14px; margin-top: 10px; font-size: .82rem; line-height: 1.5; border-left: 3px solid var(--amber); background: #fffbeb; color: #92400e; }
+  .result { font-size: 1rem; line-height: 1.9; }
+  .result b { color: var(--orange); }
+  .bloco { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule); }
+  .bloco h3 { font-family: 'Playfair Display', serif; font-size: 1rem; margin: 0 0 8px; color: var(--slate); }
+  .cron-item { padding: 10px 12px; margin-bottom: 6px; font-size: .82rem; line-height: 1.45; border-left: 3px solid var(--orange); background: #fafafa; }
+  .cron-item.frio { border-color: #06b6d4; }
+  .btn { width: 100%; margin-top: 12px; padding: 14px; border: none; border-radius: 8px; background: var(--orange); color: #fff; font-weight: 700; cursor: pointer; font: inherit; }
+  .btn:hover { background: #e06a15; }
+  .btn-sec { background: transparent; color: var(--orange); border: 1px solid var(--orange); margin-top: 8px; }
+  .hidden { display: none; }
+  .range-val { float: right; color: var(--orange); font-weight: 700; }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--slate); color: #fff; padding: 10px 18px; border-radius: 8px; font-size: .84rem; opacity: 0; transition: .3s; z-index: 99; }
+  .toast.show { opacity: 1; }
+  .footer { text-align: center; margin-top: 24px; font-size: .72rem; color: var(--muted); font-family: 'Lora', serif; font-style: italic; }
+  .check { display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; font-size: .86rem; cursor: pointer; font-weight: 400; text-transform: none; letter-spacing: 0; }
+  .check input { width: auto; margin-top: 3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <img src="/calculadora-biga/assets/logo-clape.png" alt="Clape" onerror="this.style.display='none'">
+    <h1>Calculadora <em>BIGA</em></h1>
+    <p class="sub">Fermentação · Igor Oliveira — Clape</p>
+  </div>
+
+  <div class="welcome">
+    Escolha um <strong>preset com fonte</strong>, ajuste farinha(s) e massa final. A calculadora separa <strong>biga</strong> e <strong>refresco</strong> em gramas — nada inventado: cada preset cita a referência.
+  </div>
+
+  <div class="card">
+    <h2>1. Preset de biga</h2>
+    <label>Método</label>
+    <select id="presetSel" onchange="aplicarPreset()"></select>
+    <div id="presetInfo" class="info"></div>
+    <div id="avisoAvpn" class="alerta hidden"></div>
+  </div>
+
+  <div class="card">
+    <h2>2. Massa final (pizza)</h2>
+    <label>Estilo do refresco</label>
+    <select id="estiloFinal" onchange="onEstiloChange()">
+      <option value="auto">Usar hidratação do preset</option>
+      <option value="le5stagioni">Clássica 60% (Le 5 Stagioni)</option>
+      <option value="napolitana_moderna">Moderna 70–80% (referência mercado)</option>
+      <option value="contemporanea">Contemporânea 68%</option>
+      <option value="focaccia">Focaccia 80%</option>
+      <option value="bonus_pao">Bônus — Pão/Ciabatta 75%</option>
+      <option value="personalizado">Personalizado</option>
+    </select>
+    <div id="rowHidrCustom" class="row hidden">
+      <div>
+        <label>Hidratação total (%)</label>
+        <input type="number" id="hidrCustom" value="60" min="50" max="90" step="0.5" oninput="recalcular()">
+      </div>
+    </div>
+    <p class="hint" id="hintEstilo"></p>
+  </div>
+
+  <div class="card">
+    <h2>3. Farinha</h2>
+    <label class="check"><input type="checkbox" id="duasFarinhas" onchange="toggleDuasFarinhas()"> Duas farinhas (forte na biga + refresco separado)</label>
+    <div id="blocoFarinhaUnica">
+      <label>Farinha (biga e refresco)</label>
+      <select id="farinhaUnica" onchange="recalcular()"></select>
+    </div>
+    <div id="blocoDuasFarinhas" class="hidden">
+      <label>Farinha da biga (forte)</label>
+      <select id="farinhaBiga" onchange="recalcular()"></select>
+      <label>Farinha do refresco</label>
+      <select id="farinhaRefresh" onchange="recalcular()"></select>
+    </div>
+    <p class="hint">Lista importada da calculadora A Farinha Certa. Para biga, priorize farinhas com W ≥ 300 quando a fonte exigir farinha forte.</p>
+  </div>
+
+  <div class="card">
+    <h2>4. Parâmetros da biga</h2>
+    <div class="row">
+      <div>
+        <label>% farinha na biga <span class="range-val" id="pctVal">40%</span></label>
+        <input type="range" id="bigaPct" min="20" max="100" value="40" step="1" oninput="onPctChange()">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Hidratação biga (%)</label>
+        <input type="number" id="bigaHidr" value="45" min="44" max="55" step="0.5" oninput="recalcular()">
+      </div>
+      <div>
+        <label>Fermento fresco biga (%)</label>
+        <input type="number" id="bigaFerm" value="1" min="0.1" max="2" step="0.1" oninput="recalcular()">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Horas biga</label>
+        <input type="number" id="bigaHoras" value="18" min="8" max="48" step="1" oninput="recalcular()">
+      </div>
+      <div>
+        <label>Temp. repouso (°C)</label>
+        <input type="number" id="bigaTemp" value="18" min="4" max="26" step="0.5" oninput="recalcular()">
+      </div>
+    </div>
+    <p class="hint" id="hintAgua">Fórmula Giorilli (°C): Tágua ≈ 55 − Trepouso − Tfarinha</p>
+    <div class="row">
+      <div>
+        <label>Tfarinha (°C)</label>
+        <input type="number" id="tempFarinha" value="20" min="5" max="35" step="0.5" oninput="atualizarAguaSugerida()">
+      </div>
+      <div>
+        <label>Tágua sugerida (°C)</label>
+        <input type="number" id="tempAguaSug" readonly>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>5. Quanto massa?</h2>
+    <div class="tabs">
+      <button type="button" class="tab active" id="tabFar" onclick="setModo('farinha')">Tenho farinha total</button>
+      <button type="button" class="tab" id="tabBol" onclick="setModo('bolas')">Quero bolas</button>
+    </div>
+    <div id="modoFar">
+      <label>Farinha total (g)</label>
+      <input type="number" id="farinhaTotal" value="1000" min="100" step="10" oninput="recalcular()">
+    </div>
+    <div id="modoBol" class="hidden">
+      <div class="row">
+        <div><label>Bolas</label><input type="number" id="numBolas" value="4" min="1" max="30" oninput="recalcular()"></div>
+        <div><label>Peso (g)</label><input type="number" id="pesoBola" value="250" min="80" max="500" oninput="recalcular()"></div>
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="fermSeco" onchange="recalcular()"> Mostrar fermento seco (1 g seco ≈ 3 g fresco)</label>
+  </div>
+
+  <div class="card">
+    <button type="button" class="btn" onclick="calcular(true)">Calcular biga + refresco</button>
+    <div id="out" class="result hidden"></div>
+    <button type="button" class="btn btn-sec hidden" id="copyBtn" onclick="copiar()">Copiar receita e cronograma</button>
+  </div>
+
+  <p class="hint">Parâmetros com faixa exibem intervalo da fonte. O Disciplinare AVPN não inclui biga — presets AVPN aplicam-se só à massa direta.</p>
+  <p class="footer">Clape · Fermentação · Igor Oliveira</p>
+</div>
+<div class="toast" id="toast">Copiado!</div>
+
+<script src="/calculadora-biga/dados/presets-biga-embed.js"></script>
+<script src="/calculadora-biga/dados/farinhas-embed.js"></script>
+<script>
+const ESTILOS_FINAL = {
+  le5stagioni: { hidr: 60, sal: 2.7, oleo: 3, label: 'Clássica Le 5 Stagioni', fonte: 'Receita Le 5 Stagioni (60% hidr. total verificada)' },
+  napolitana_moderna: { hidr: 72, sal: 2.5, oleo: 0, hidrMin: 70, hidrMax: 80, label: 'Napolitana moderna', fonte: 'PizzaBlab — 70–80% ⚠️ não AVPN' },
+  contemporanea: { hidr: 68, sal: 2.5, oleo: 0, label: 'Contemporânea', fonte: 'Referência mercado ⚠️' },
+  focaccia: { hidr: 80, sal: 2.0, oleo: 5, label: 'Focaccia', fonte: 'Referência panificação ⚠️' },
+  bonus_pao: { hidr: 75, sal: 2.0, oleo: 3, label: 'Pão/Ciabatta (bônus)', fonte: 'Capítulo bônus — referências panificação ⚠️' },
+};
+
+let modo = 'farinha';
+let ultimoResultado = '';
+
+function fmt(n) { return (Math.round(n * 10) / 10).toLocaleString('pt-BR'); }
+
+function getPreset() {
+  const id = document.getElementById('presetSel').value;
+  return PRESETS_BIGA.find(p => p.id === id) || PRESETS_BIGA[0];
+}
+
+function initPresets() {
+  const sel = document.getElementById('presetSel');
+  PRESETS_BIGA.forEach(p => {
+    const o = document.createElement('option');
+    o.value = p.id;
+    o.textContent = p.nome;
+    sel.appendChild(o);
+  });
+  aplicarPreset();
+}
+
+function aplicarPreset() {
+  const p = getPreset();
+  document.getElementById('bigaPct').value = p.biga_pct_default;
+  document.getElementById('pctVal').textContent = p.biga_pct_default + '%';
+  document.getElementById('bigaHidr').value = p.biga_hidratação_default;
+  document.getElementById('bigaFerm').value = p.fermento_fresh_pct_biga;
+  document.getElementById('bigaHoras').value = p.fermentacao_default;
+  document.getElementById('bigaTemp').value = p.temp_repouso_default ?? 18;
+  document.getElementById('duasFarinhas').checked = !!p.duas_farinhas;
+  toggleDuasFarinhas();
+
+  const info = document.getElementById('presetInfo');
+  info.innerHTML = '<p>' + p.descricao + '</p>' +
+    (p.farinha_biga?.nota ? '<p><strong>Biga:</strong> ' + p.farinha_biga.nota + '</p>' : '') +
+    (p.farinha_refresco?.nota ? '<p><strong>Refresco:</strong> ' + p.farinha_refresco.nota + '</p>' : '') +
+    '<p><a href="' + p.fonte + '" target="_blank" rel="noopener">Fonte: ' + p.fonte_label + ' ↗</a></p>' +
+    (p.notas ? '<p class="hint">' + p.notas + '</p>' : '');
+
+  const aviso = document.getElementById('avisoAvpn');
+  if (p.aviso_avpn) {
+    aviso.classList.remove('hidden');
+    aviso.textContent = '⚠️ Este preset não é método AVPN. O Disciplinare descreve massa direta (farinha, água, sal, lievito).';
+  } else {
+    aviso.classList.add('hidden');
+  }
+
+  if (p.id === 'le5stagioni-pizza-classica') {
+    document.getElementById('estiloFinal').value = 'le5stagioni';
+  } else if (p.id === 'napolitana-moderna-biga') {
+    document.getElementById('estiloFinal').value = 'napolitana_moderna';
+  } else {
+    document.getElementById('estiloFinal').value = 'auto';
+  }
+  onEstiloChange();
+  recalcular();
+}
+
+function onEstiloChange() {
+  const v = document.getElementById('estiloFinal').value;
+  document.getElementById('rowHidrCustom').classList.toggle('hidden', v !== 'personalizado');
+  const hint = document.getElementById('hintEstilo');
+  if (v === 'auto') {
+    hint.textContent = 'Hidratação total definida pelo preset (quando houver) ou 60% padrão documentado em receitas com biga.';
+  } else if (ESTILOS_FINAL[v]) {
+    hint.textContent = ESTILOS_FINAL[v].label + ' — ' + ESTILOS_FINAL[v].fonte;
+  } else {
+    hint.textContent = '';
+  }
+  recalcular();
+}
+
+function hidrataçãoFinal() {
+  const p = getPreset();
+  const est = document.getElementById('estiloFinal').value;
+  if (est === 'personalizado') return parseFloat(document.getElementById('hidrCustom').value) || 60;
+  if (est === 'auto') {
+    if (typeof p.massa_final_hidratação === 'number') return p.massa_final_hidratação;
+    if (Array.isArray(p.massa_final_hidratação)) return p.massa_final_hidratação_default ?? ((p.massa_final_hidratação[0] + p.massa_final_hidratação[1]) / 2);
+    return 60;
+  }
+  return ESTILOS_FINAL[est]?.hidr ?? 60;
+}
+
+function salOleoFinal() {
+  const p = getPreset();
+  const est = document.getElementById('estiloFinal').value;
+  if (p.refresco_sal_pct != null) return { sal: p.refresco_sal_pct, oleo: p.refresco_oleo_pct ?? 0 };
+  if (est !== 'auto' && ESTILOS_FINAL[est]) return { sal: ESTILOS_FINAL[est].sal, oleo: ESTILOS_FINAL[est].oleo ?? 0 };
+  return { sal: 2.5, oleo: 0 };
+}
+
+function initFarinhas() {
+  const opts = FARINHAS.filter(f => f.id !== 'personalizado').sort((a, b) => a.nome.localeCompare(b.nome, 'pt'));
+  ['farinhaUnica', 'farinhaBiga', 'farinhaRefresh'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = '<option value="">— Escolher —</option>';
+    opts.forEach(f => {
+      const o = document.createElement('option');
+      o.value = f.id;
+      const w = f.w ? (Array.isArray(f.w) ? f.w[0] + '–' + f.w[1] : f.w) : '?';
+      o.textContent = f.nome + ' (W ' + w + ')';
+      sel.appendChild(o);
+    });
+  });
+}
+
+function toggleDuasFarinhas() {
+  const duas = document.getElementById('duasFarinhas').checked;
+  document.getElementById('blocoFarinhaUnica').classList.toggle('hidden', duas);
+  document.getElementById('blocoDuasFarinhas').classList.toggle('hidden', !duas);
+  recalcular();
+}
+
+function setModo(m) {
+  modo = m;
+  document.getElementById('tabFar').classList.toggle('active', m === 'farinha');
+  document.getElementById('tabBol').classList.toggle('active', m === 'bolas');
+  document.getElementById('modoFar').classList.toggle('hidden', m !== 'farinha');
+  document.getElementById('modoBol').classList.toggle('hidden', m !== 'bolas');
+  recalcular();
+}
+
+function onPctChange() {
+  document.getElementById('pctVal').textContent = document.getElementById('bigaPct').value + '%';
+  recalcular();
+}
+
+function atualizarAguaSugerida() {
+  const tRep = parseFloat(document.getElementById('bigaTemp').value) || 18;
+  const tFar = parseFloat(document.getElementById('tempFarinha').value) || 20;
+  const tAgua = 55 - tRep - tFar;
+  document.getElementById('tempAguaSug').value = Math.round(tAgua * 10) / 10;
+  document.getElementById('hintAgua').textContent =
+    'Fórmula Giorilli (Baking With Theory): Tágua = 55 − ' + tRep + ' − ' + tFar + ' = ' + fmt(tAgua) + ' °C';
+}
+
+function farinhaFromMassa(totalMassa, hidr, sal, oleo, fermPctBiga, bigaPct, bigaHidr) {
+  const pct = bigaPct / 100;
+  const bh = bigaHidr / 100;
+  const fe = fermPctBiga / 100 * pct;
+  const f = 1 + hidr/100 + sal/100 + oleo/100 + fe;
+  return totalMassa / f;
+}
+
+function calcularCore() {
+  const p = getPreset();
+  const bigaPct = parseFloat(document.getElementById('bigaPct').value) / 100;
+  const bigaHidr = parseFloat(document.getElementById('bigaHidr').value);
+  const fermPct = parseFloat(document.getElementById('bigaFerm').value);
+  const hidrFinal = hidrataçãoFinal();
+  const { sal, oleo } = salOleoFinal();
+  const seco = document.getElementById('fermSeco').checked;
+
+  let farinhaTotal;
+  if (modo === 'farinha') {
+    farinhaTotal = parseFloat(document.getElementById('farinhaTotal').value) || 1000;
+  } else {
+    const massa = (parseFloat(document.getElementById('numBolas').value) || 4) * (parseFloat(document.getElementById('pesoBola').value) || 250);
+    farinhaTotal = farinhaFromMassa(massa, hidrFinal, sal, oleo, fermPct, bigaPct * 100, bigaHidr);
+  }
+
+  const farinhaBiga = farinhaTotal * bigaPct;
+  const farinhaRefresh = farinhaTotal - farinhaBiga;
+  const aguaBiga = farinhaBiga * bigaHidr / 100;
+  const aguaTotal = farinhaTotal * hidrFinal / 100;
+  const aguaRefresh = Math.max(0, aguaTotal - aguaBiga);
+  const fermBigaF = farinhaBiga * fermPct / 100;
+  const salTotal = farinhaTotal * sal / 100;
+  const oleoTotal = farinhaTotal * oleo / 100;
+  const massaFinal = farinhaTotal + aguaTotal + salTotal + oleoTotal + fermBigaF;
+
+  const duas = document.getElementById('duasFarinhas').checked;
+  const nomeFarUnica = document.getElementById('farinhaUnica').selectedOptions[0]?.text || '—';
+  const nomeBiga = duas ? (document.getElementById('farinhaBiga').selectedOptions[0]?.text || '—') : nomeFarUnica;
+  const nomeRefresh = duas ? (document.getElementById('farinhaRefresh').selectedOptions[0]?.text || '—') : nomeFarUnica;
+
+  return {
+    p, farinhaTotal, farinhaBiga, farinhaRefresh, aguaBiga, aguaRefresh, aguaTotal,
+    fermBigaF, fermBigaS: fermBigaF / 3, salTotal, oleoTotal, massaFinal,
+    hidrFinal, sal, oleo, bigaHidr, bigaPct: bigaPct * 100, fermPct, seco, duas, nomeBiga, nomeRefresh,
+    horas: parseFloat(document.getElementById('bigaHoras').value),
+    temp: parseFloat(document.getElementById('bigaTemp').value),
+  };
+}
+
+function cronograma(r) {
+  const items = [];
+  items.push({ t: 'Dia 1 — Preparar a biga', d: 'Dissolva o fermento na água (' + fmt(r.aguaBiga) + ' g). Misture com ' + fmt(r.farinhaBiga) + ' g de farinha rapidamente — massa áspera, sem desenvolver glúten (fontes: Giorilli, Le 5 Stagioni).', cls: '' });
+  items.push({ t: 'Repouso da biga — ' + r.horas + ' h a ~' + r.temp + ' °C', d: 'Temperatura ideal documentada: 16–20 °C (Giorilli). Pronta: levemente abombada, aroma de nozes, bolhas visíveis.', cls: '' });
+  if (r.p.fermentacao_fases) {
+    r.p.fermentacao_fases.forEach(f => {
+      items.push({ t: f.fase === 'frio' ? 'Fase fria' : 'Fase ambiente', d: f.horas + ' h a ' + f.temp_c + ' °C — ' + f.nota, cls: f.fase === 'frio' ? 'frio' : '' });
+    });
+  }
+  items.push({ t: 'Dia 2 — Refresco (impasto)', d: 'Incorpore a biga madura com ' + fmt(r.farinhaRefresh) + ' g farinha, ' + fmt(r.aguaRefresh) + ' g água, ' + fmt(r.salTotal) + ' g sal' + (r.oleoTotal > 0 ? ', ' + fmt(r.oleoTotal) + ' g óleo' : '') + '.', cls: '' });
+  if (r.p.maturacao_frio_h) {
+    items.push({ t: 'Maturação — ' + r.p.maturacao_frio_h + ' h a ' + (r.p.maturacao_frio_temp_c ?? 4) + ' °C', d: 'Conforme receita Le 5 Stagioni.', cls: 'frio' });
+  }
+  if (r.p.regeneracao_ambiente_h) {
+    items.push({ t: 'Regeneração — ' + r.p.regeneracao_ambiente_h + ' h ambiente', d: 'Antes de abrir os discos (Le 5 Stagioni).', cls: '' });
+  }
+  if (r.p.cozimento) {
+    items.push({ t: 'Cozimento (referência receita)', d: r.p.cozimento, cls: '' });
+  }
+  return items;
+}
+
+function calcular(show) {
+  atualizarAguaSugerida();
+  const r = calcularCore();
+  const out = document.getElementById('out');
+
+  let html = '<div class="bloco"><h3>🥣 BIGA</h3>';
+  html += 'Farinha: <b>' + fmt(r.farinhaBiga) + ' g</b> (' + r.nomeBiga + ')<br>';
+  html += 'Água: <b>' + fmt(r.aguaBiga) + ' g</b> (' + r.bigaHidr + '% sobre farinha da biga)<br>';
+  html += 'Fermento fresco: <b>' + fmt(r.fermBigaF) + ' g</b> (' + r.fermPct + '% sobre farinha da biga — Giorilli/Le 5 Stagioni)<br>';
+  if (r.seco) html += 'Fermento seco: <b>' + fmt(r.fermBigaS) + ' g</b><br>';
+  html += '<span class="hint">≈ ' + fmt(r.bigaPct) + '% da farinha total · ' + r.horas + ' h a ' + r.temp + ' °C</span></div>';
+
+  html += '<div class="bloco"><h3>🍕 REFRESCO (massa final)</h3>';
+  html += 'Farinha: <b>' + fmt(r.farinhaRefresh) + ' g</b> (' + r.nomeRefresh + ')<br>';
+  html += 'Água: <b>' + fmt(r.aguaRefresh) + ' g</b><br>';
+  html += 'Sal: <b>' + fmt(r.salTotal) + ' g</b> (' + r.sal + '% total)<br>';
+  if (r.oleoTotal > 0) html += 'Óleo: <b>' + fmt(r.oleoTotal) + ' g</b> (' + r.oleo + '% total)<br>';
+  html += 'Fermento extra no refresco: <b>0 g</b> <span class="hint">(receita Le 5 Stagioni — fermento só na biga)</span><br>';
+  html += '<span class="hint">Hidratação total da massa: ' + fmt(r.hidrFinal) + '% · Massa final ≈ <b>' + fmt(r.massaFinal) + ' g</b></span></div>';
+
+  html += '<div class="bloco"><h3>📅 Cronograma</h3>';
+  cronograma(r).forEach(c => {
+    html += '<div class="cron-item ' + c.cls + '"><strong>' + c.t + '</strong><br>' + c.d + '</div>';
+  });
+  html += '</div>';
+
+  html += '<p class="hint"><a href="' + r.p.fonte + '" target="_blank" rel="noopener">Fonte ↗</a> · ' + r.p.fonte_label + '</p>';
+
+  out.innerHTML = html;
+  ultimoResultado = out.innerText;
+  if (show) {
+    out.classList.remove('hidden');
+    document.getElementById('copyBtn').classList.remove('hidden');
+  }
+}
+
+function recalcular() {
+  if (!document.getElementById('out').classList.contains('hidden')) calcular(true);
+  else atualizarAguaSugerida();
+}
+
+function copiar() {
+  calcular(true);
+  navigator.clipboard.writeText(ultimoResultado).then(() => {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
+}
+
+initPresets();
+initFarinhas();
+atualizarAguaSugerida();
+</script>
+</body>
+</html>

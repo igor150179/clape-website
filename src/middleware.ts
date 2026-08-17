@@ -1,52 +1,74 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { SESSION_COOKIE } from "@/lib/calculadora-auth/constants";
-import { readSessionCookieFromHeader } from "@/lib/calculadora-auth/session-cookie";
+import {
+  sessionCookieForProduct,
+  type CalcProduct,
+} from "@/lib/calculadora-auth/constants";
+import {
+  loginPathForProduct,
+  productFromPathname,
+  readSessionCookieFromHeader,
+} from "@/lib/calculadora-auth/session-cookie";
 import { validateSession } from "@/lib/calculadora-auth/validate-session";
 
-const PUBLIC_PATHS = new Set(["/calculadora/acesso"]);
+const PUBLIC_SUFFIX = "/acesso";
+
+function isPublicPath(pathname: string): boolean {
+  return pathname.endsWith(PUBLIC_SUFFIX);
+}
+
+function homePath(product: CalcProduct): string {
+  return product === "biga" ? "/calculadora-biga" : "/calculadora";
+}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const product = productFromPathname(pathname);
+  if (!product) return NextResponse.next();
 
-  if (PUBLIC_PATHS.has(pathname)) {
-    const sessionId = request.cookies.get(SESSION_COOKIE)?.value;
+  const cookieName = sessionCookieForProduct(product);
+  const sessionId =
+    request.cookies.get(cookieName)?.value ??
+    readSessionCookieFromHeader(request.headers.get("cookie"), product);
+
+  if (isPublicPath(pathname)) {
     if (sessionId) {
       try {
-        const result = await validateSession(sessionId);
+        const result = await validateSession(product, sessionId);
         if (result.ok) {
-          return NextResponse.redirect(new URL("/calculadora", request.url));
+          return NextResponse.redirect(new URL(homePath(product), request.url));
         }
       } catch {
-        // Redis indisponível — deixa entrar na tela de login
+        // Redis indisponível
       }
     }
     return NextResponse.next();
   }
 
-  const sessionId =
-    request.cookies.get(SESSION_COOKIE)?.value ??
-    readSessionCookieFromHeader(request.headers.get("cookie"));
-
   try {
-    const result = await validateSession(sessionId);
+    const result = await validateSession(product, sessionId);
     if (result.ok) {
       return NextResponse.next();
     }
 
-    const login = new URL("/calculadora/acesso", request.url);
+    const login = new URL(loginPathForProduct(product), request.url);
     if (result.reason === "kicked") {
       login.searchParams.set("reason", "kicked");
     }
     login.searchParams.set("next", pathname);
     return NextResponse.redirect(login);
   } catch {
-    const login = new URL("/calculadora/acesso", request.url);
+    const login = new URL(loginPathForProduct(product), request.url);
     login.searchParams.set("reason", "unavailable");
     return NextResponse.redirect(login);
   }
 }
 
 export const config = {
-  matcher: ["/calculadora", "/calculadora/:path*"],
+  matcher: [
+    "/calculadora-biga",
+    "/calculadora-biga/:path*",
+    "/calculadora",
+    "/calculadora/:path*",
+  ],
 };

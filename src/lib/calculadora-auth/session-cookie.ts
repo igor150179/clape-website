@@ -1,7 +1,9 @@
 import { cookies } from "next/headers";
 import {
-  SESSION_COOKIE,
+  type CalcProduct,
+  CALC_PRODUCTS,
   SESSION_TTL_SECONDS,
+  sessionCookieForProduct,
 } from "./constants";
 
 export function sessionCookieOptions() {
@@ -14,24 +16,39 @@ export function sessionCookieOptions() {
   };
 }
 
-export async function setSessionCookie(sessionId: string): Promise<void> {
+export async function setSessionCookie(
+  product: CalcProduct,
+  sessionId: string,
+): Promise<void> {
   const jar = await cookies();
-  jar.set(SESSION_COOKIE, sessionId, sessionCookieOptions());
+  jar.set(sessionCookieForProduct(product), sessionId, sessionCookieOptions());
 }
 
-export async function clearSessionCookie(): Promise<void> {
+export async function clearSessionCookie(product: CalcProduct): Promise<void> {
   const jar = await cookies();
-  jar.delete(SESSION_COOKIE);
+  jar.delete(sessionCookieForProduct(product));
 }
 
 export function readSessionCookieFromHeader(
   cookieHeader: string | null,
+  product: CalcProduct,
 ): string | undefined {
   if (!cookieHeader) return undefined;
+  const name = sessionCookieForProduct(product);
   const match = cookieHeader
     .split(";")
     .map((part) => part.trim())
-    .find((part) => part.startsWith(`${SESSION_COOKIE}=`));
+    .find((part) => part.startsWith(`${name}=`));
   if (!match) return undefined;
-  return decodeURIComponent(match.slice(SESSION_COOKIE.length + 1));
+  return decodeURIComponent(match.slice(name.length + 1));
+}
+
+export function productFromPathname(pathname: string): CalcProduct | null {
+  if (pathname.startsWith("/calculadora-biga")) return "biga";
+  if (pathname.startsWith("/calculadora")) return "farinha";
+  return null;
+}
+
+export function loginPathForProduct(product: CalcProduct): string {
+  return CALC_PRODUCTS[product].loginPath;
 }
